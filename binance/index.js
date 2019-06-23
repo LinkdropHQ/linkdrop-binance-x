@@ -1,6 +1,6 @@
-import { ethers } from 'ethers'
-import utils from './utils'
-import axios from 'axios'
+const ethers = require('ethers')
+const utils = require('./utils')
+const axios = require('axios')
 
 /**
  * Function to check whether a `linkId` has already been claimed
