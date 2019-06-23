@@ -1,9 +1,9 @@
 {
-  "name": "linkdrop-binance-sdk",
+  "name": "linkdrop-sdk",
   "version": "1.0.0",
-  "description": "Linkdrop SDK for Binance Chain",
+  "description": "Linkdrop SDK",
   "main": "index.js",
-  "repository": "https://github.com/amiromayer/linkdrop-binance-sdk",
+  "repository": "https://github.com/LinkdropProtocol/linkdrop-sdk",
   "author": "Amir Jumaniyazov <amir@linkdrop.io>",
   "license": "MIT",
   "dependencies": {
