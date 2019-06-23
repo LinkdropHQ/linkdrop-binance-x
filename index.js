@@ -1,5 +1,5 @@
-import binance from './binance'
+const binance = require('./binance')
 
-export default {
+module.exports = {
   binance
 }

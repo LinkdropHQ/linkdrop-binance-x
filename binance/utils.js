@@ -1,5 +1,5 @@
-import axios from 'axios'
-import BncClient from '@binance-chain/javascript-sdk'
+const axios = require('axios')
+const BncClient = require('@binance-chain/javascript-sdk')
 const { crypto } = BncClient
 
 const apiHost = 'https://dex.binance.org'
@@ -110,7 +110,7 @@ const initBncClient = async privateKey => {
 const getPrivateKeyFromMnemonic = mnemonic =>
   crypto.getPrivateKeyFromMnemonic(mnemonic)
 
-export default {
+module.exports = {
   initBncClient,
   getTransaction,
   getBalance,

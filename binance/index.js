@@ -1,6 +1,6 @@
-import { ethers } from 'ethers'
-import utils from './utils'
-import axios from 'axios'
+const ethers = require('ethers')
+const utils = require('./utils')
+const axios = require('axios')
 
 /**
  * Function to check whether a `linkId` has already been claimed
@@ -176,7 +176,7 @@ const checkReceiverSignature = async ({
  * @param {String} address Address to check balance of
  * @return {Promise<Boolean} True if success
  */
-export const checkBalanceAvailable = async ({ asset, amount, address }) => {
+const checkBalanceAvailable = async ({ asset, amount, address }) => {
   try {
     const balance = await utils.getBalance({ address, asset })
     const freeBalance = utils.parseUnits(balance['free'])
@@ -299,7 +299,7 @@ const claim = async ({
   }
 }
 
-export default {
+module.exports = {
   isClaimed,
   claim,
   generateLink,
