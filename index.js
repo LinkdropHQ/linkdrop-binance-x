@@ -1,5 +1,5 @@
 import binance from './binance'
 
-export default {
+module.exports = {
   binance
 }

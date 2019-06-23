@@ -110,7 +110,7 @@ const initBncClient = async privateKey => {
 const getPrivateKeyFromMnemonic = mnemonic =>
   crypto.getPrivateKeyFromMnemonic(mnemonic)
 
-export default {
+module.exports = {
   initBncClient,
   getTransaction,
   getBalance,
