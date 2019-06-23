@@ -5,5 +5,10 @@
   "main": "index.js",
   "repository": "https://github.com/amiromayer/linkdrop-binance-sdk",
   "author": "Amir Jumaniyazov <amir@linkdrop.io>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@binance-chain/javascript-sdk": "^2.13.8",
+    "axios": "^0.19.0",
+    "ethers": "^4.0.31"
+  }
 }
