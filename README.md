@@ -13,16 +13,16 @@
 </p>
 
 
-## Install dependencies
-
-```sh
-yarn install
-```
-
-## Add to your project
+## Install
 
 ```sh
 yarn add @linkdrop/sdk@https://github.com/LinkdropProtocol/linkdrop-sdk
+```
+
+## Usage 
+
+```js
+import LinkdropSDK from '@linkdrop/sdk'
 ```
 
 ## Contributors
