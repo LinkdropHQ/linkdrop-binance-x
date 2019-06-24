@@ -40,7 +40,6 @@ Contributions, issues and feature requests are welcome !<br />Feel free to check
 
 Give a ✨ if this project helped you !
 
-## License
+## Copyright
 
 Copyright © 2019 [Linkdrop Labs, Inc.](https://github.com/LinkdropProtocol) &lt;hi@linkdrop.io&gt;.<br />
-This project is [MIT](https://github.com/LinkdropProtocol/linkdrop-sdk/blob/master/LICENSE) licensed.
