@@ -28,7 +28,7 @@ Linkdropper running the server should update configs on the server to use the VE
 
 ## 2. Generate Claim Links
 
-Use SIGNING_PRIVATE_KEY generated at step 1 to create claim links via SDK:
+Use VERIFIER_PRIVATE_KEY generated at step 1 to create claim links via SDK:
 ```js
 // import library
 import LinkdropSDK from '@linkdrop/sdk'
