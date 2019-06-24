@@ -19,6 +19,12 @@
 yarn install
 ```
 
+## Add to your project
+
+```sh
+yarn add @linkdrop/sdk@https://github.com/LinkdropProtocol/linkdrop-sdk
+```
+
 ## Contributors
 
 * **Amir Jumaniyazov:** [@amiromayer](https://github.com/amiromayer)

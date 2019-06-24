@@ -3,16 +3,16 @@
 ## Usage
 
 ```js
-import LinkdropSDK from 'linkdrop-sdk'
+import LinkdropSDK from '@linkdrop/sdk'
 ```
 
 ### Generate new link
 
  ```js
-    const HOST = 'https://binance.lindrop.io'
-    const VERIFIER_PRIVATE_KEY = ''
-    const ASSET = 'BNB'
-    const AMOUNT = 10 ** 8 // This should be in atomic value
+    const HOST = 'https://binance.lindrop.io' // Relayer service host
+    const VERIFIER_PRIVATE_KEY = '' // Verifier private key to sign links with
+    const ASSET = 'BNB' // Asset symbol
+    const AMOUNT = 10 ** 8 // Asset amount in atomic value
 
     const {
       url,
