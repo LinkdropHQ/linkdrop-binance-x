@@ -47,7 +47,8 @@ const { url, linkId } = await LinkdropSDK.binance.generateLink({
 
 console.log({ url, linkId })
 ``` 
-
+3. Add receiver addresses (on binance chain) to links: 
+const link = `${link}&receiverAddress={receiverAddress}
 
 ## Contributors
 
