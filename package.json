@@ -7,7 +7,7 @@
   "author": "Amir Jumaniyazov <amir@linkdrop.io>",
   "license": "MIT",
   "dependencies": {
-    "@binance-chain/javascript-sdk": "^2.13.8",
+    "@binance-chain/javascript-sdk": "https://github.com/Dobrokhvalov/javascript-sdk",
     "axios": "^0.19.0",
     "ethers": "^4.0.31"
   },
