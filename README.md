@@ -21,9 +21,33 @@ yarn add @linkdrop/sdk@https://github.com/LinkdropProtocol/linkdrop-sdk
 
 ## Usage 
 
+## 1. Generate Verification Key Pair and provide Verifier address to deployed server 
+
+Generate Ethereum key pair: VERIFIER_PRIVATE_KEY and corresponding VERIFIER_ADDRESS
+Linkdropper running the server should update configs on the server to use the VERIFIER_ADDRESS
+
+## 2. Generate Claim Links
+
+Use SIGNING_PRIVATE_KEY generated at step 1 to create claim links via SDK:
 ```js
+// import library
 import LinkdropSDK from '@linkdrop/sdk'
-```
+
+// generate links
+const CLAIM_HOST = 'https://phb-2df.linkdrop.io'
+const ASSET = 'PHB-2DF'
+const AMOUNT = 10**8 // in atomic values
+  
+const { url, linkId } = await LinkdropSDK.binance.generateLink({
+  host: CLAIM_HOST,
+  privateKey: VERIFIER_PRIVATE_KEY,
+  asset: ASSET,
+  amount: AMOUNT
+})
+
+console.log({ url, linkId })
+``` 
+
 
 ## Contributors
 
