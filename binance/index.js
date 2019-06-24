@@ -217,35 +217,35 @@ const checkLinkParams = async ({
 
   // Verify that sender has enough balance to linkdrop
   if (
-    !(await checkBalanceAvailable({
+    (await checkBalanceAvailable({
       asset,
       amount,
       address: senderAddress
-    }))
+    })) === false
   ) {
     throw new Error(`Insufficient ${asset} on ${senderAddress} balance`)
   }
 
   // Verify that link params are signed by `verifierAddress`
   if (
-    !(await checkVerifierSignature({
+    (await checkVerifierSignature({
       asset,
       amount,
       linkId,
       verifierAddress,
       verifierSignature
-    }))
+    })) === false
   ) {
     throw new Error(`Failed to verify verifier signature`)
   }
 
   // Verify that receiver address is signed by ephemeral key corresponding to `linkId`
   if (
-    !(await checkReceiverSignature({
+    (await checkReceiverSignature({
       linkId,
       receiverAddress,
       receiverSignature
-    }))
+    })) === false
   ) {
     throw new Error(`Failed to verify receiver signature`)
   }
