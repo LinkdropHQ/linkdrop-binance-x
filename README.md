@@ -21,7 +21,7 @@ yarn add @linkdrop/sdk@https://github.com/LinkdropProtocol/linkdrop-sdk
 
 ## Usage 
 
-## 1. Generate Verification Key Pair and provide Verifier address to deployed server 
+## 1. Generate Verification Key Pair
 
 Generate Ethereum key pair: VERIFIER_PRIVATE_KEY and corresponding VERIFIER_ADDRESS
 Linkdropper running the server should update configs on the server to use the VERIFIER_ADDRESS
