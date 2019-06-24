@@ -49,7 +49,7 @@ console.log({ url, linkId })
 ``` 
 ## 3. Add receiver addresses (on binance chain) to links: 
 ```js
-const link = `${link}&receiverAddress={receiverAddress}
+const link = `${link}&receiverAddress={receiverAddress}`
 ```
 
 ## Contributors
