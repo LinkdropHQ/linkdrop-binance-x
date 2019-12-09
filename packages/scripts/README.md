@@ -1,10 +1,5 @@
-<h1 align="center">Binance Chain Linkdrop</h1>
+<h1 align="center">Binance Chain Linkdrop Scripts</h1>
 
-## Install dependencies
-
-```sh
-yarn install
-```
 
 ## Generate links
 
