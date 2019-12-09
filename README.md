@@ -1,4 +1,4 @@
-<h1 align="center">Linkdrop SDK</h1>
+<h1 align="center">Linkdrop x Binance Fellowship</h1>
 <p>
   <img src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/LinkdropHQ/linkdrop-binance-x#readme">
