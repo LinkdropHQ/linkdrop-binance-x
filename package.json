@@ -13,6 +13,7 @@
     ]
   },
   "scripts": {
+    "generate-links": "npx babel-node packages/scripts/src/generate-links",
     "server": "npx babel-node packages/server/index"
   },
   "devDependencies": {

@@ -10,9 +10,7 @@ const axios = require('axios')
  */
 const isClaimed = async ({ host, linkId }) => {
   try {
-    const response = await axios.get(
-      `${host}/api/v1/binance/isClaimed/${linkId}`
-    )
+    const response = await axios.get(`${host}/api/v1/is-claimed/${linkId}`)
 
     if (response.status !== 200) {
       throw new Error(`Invalid response status ${response.status}`)
@@ -86,14 +84,14 @@ const constructLink = async ({ privateKey, asset, amount }) => {
 
 /**
  * Function to generate url based on passed params
- * @param {String} host Claim host
+ * @param {String} claimHost Claim host
  * @param {String} privateKey Private key to sign link params with
  * @param {String} asset Asset symbol
  * @param {Number} amount Asset amount in atomic value
  * @return {Promise<Object>} `{url, linkId, linkKey, verifierSignature}`
  */
-const generateLink = async ({ host, privateKey, asset, amount }) => {
-  if (host == null || host === '') {
+const generateLink = async ({ claimHost, privateKey, asset, amount }) => {
+  if (claimHost == null || claimHost === '') {
     throw new Error(`Please provide claim host`)
   }
 
@@ -116,7 +114,7 @@ const generateLink = async ({ host, privateKey, asset, amount }) => {
   })
 
   // Construct url
-  let url = `${host}/#/receive?asset=${asset}&amount=${amount}&linkKey=${linkKey}&verifierSignature=${verifierSignature}`
+  let url = `${claimHost}/#/receive?asset=${asset}&amount=${amount}&linkKey=${linkKey}&verifierSignature=${verifierSignature}`
 
   return { url, linkId, linkKey, verifierSignature }
 }
@@ -255,7 +253,7 @@ const checkLinkParams = async ({
 
 /**
  Function to claim link
- * @param {String} host Relayer service host, e.g. https://binance.linkdrop.io
+ * @param {String} apiHost Relayer service host, e.g. https://binance.linkdrop.io
  * @param {String} asset Asset symbol
  * @param {Number} amount Asset amount in atomic value
  * @param {String} linkId Link id
@@ -265,7 +263,7 @@ const checkLinkParams = async ({
  * @return {Promise<Object} `{success, txHash, error}`
  */
 const claim = async ({
-  host,
+  apiHost,
   asset,
   linkId,
   amount,
@@ -283,10 +281,7 @@ const claim = async ({
       receiverSignature
     }
 
-    const response = await axios.post(
-      `${host}/api/v1/binance/claim`,
-      claimParams
-    )
+    const response = await axios.post(`${apiHost}/api/v1/claim`, claimParams)
 
     if (response.status !== 200) {
       throw new Error(`Invalid response status ${response.status}`)

@@ -38,8 +38,8 @@ app.get('/', async (req, res) => {
   res.status(200).json({ message: `Server is up and running on port ${PORT}` })
 })
 
-app.post('/claim', claimController.claim)
-app.get('/isClaimed/:linkId', claimController.isClaimed)
+app.post('/api/v1/claim', claimController.claim)
+app.get('/api/v1/is-claimed/:linkId', claimController.isClaimed)
 
 app.use(async (req, res, next) => {
   next(boom.notFound('Endpoint not found'))

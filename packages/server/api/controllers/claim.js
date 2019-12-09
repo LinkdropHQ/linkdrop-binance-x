@@ -92,7 +92,7 @@ const claim = wrapAsync(async (req, res) => {
     })
   } else {
     if (
-      (await LinkdropSDK.binance.checkLinkParams({
+      (await sdk.checkLinkParams({
         asset,
         amount,
         linkId,
