@@ -1,0 +1,40 @@
+{
+  "name": "@linkdrop/binance-server",
+  "version": "1.0.0",
+  "description": "Linkdrop Binance Relay Service",
+  "main": "index.js",
+  "author": "Amir Jumaniyazov - <amir@linkdrop.io>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "npx babel-node index"
+  },
+  "dependencies": {
+    "@binance-chain/javascript-sdk": "https://github.com/Dobrokhvalov/javascript-sdk",
+    "@hapi/boom": "^7.4.2",
+    "@linkdrop/sdk": "https://github.com/LinkdropProtocol/linkdrop-sdk",
+    "axios": "^0.19.0",
+    "cli-table": "^0.3.1",
+    "cors": "^2.8.5",
+    "csvtojson": "^2.0.8",
+    "dotenv": "^8.0.0",
+    "ethers": "^4.0.31",
+    "express": "^4.17.1",
+    "fast-csv": "^3.0.1",
+    "mongoose": "^5.6.0",
+    "morgan": "^1.9.1",
+    "pm2": "^3.5.1",
+    "query-string": "^6.8.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
+    "@babel/polyfill": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/register": "^7.4.4"
+  },
+  "babel": {
+    "extends": "../../babel.config.js"
+  }
+}

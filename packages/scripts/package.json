@@ -1,0 +1,11 @@
+{
+  "name": "@linkdrop/binance-scripts",
+  "version": "1.0.0",
+  "description": "Scripts for Binance Chain Lindkrops",
+  "main": "index.js",
+  "author": "Amir Jumaniyazov - <amir@linkdrop.io>",
+  "license": "MIT",
+  "dependencies": {
+    "yargs": "^15.0.2"
+  }
+}
