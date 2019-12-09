@@ -3,11 +3,22 @@
 
 ## Generate links
 
-You can either fill in the config file or pass command line arguments to generate links
+There is two options on how to generate links via scripts:
+
+### Option 1
+
+Rename the `config.json.sample` file to `config.json` and fill it in and then just run:
 
 ```sh
 yarn generate-links
 ```
+
+This will generate the provided number of links and save them to `./output/linkdrop.csv`
+
+
+### Option 2
+
+Alternatively it's also possible to override the `config.json` parameters by passing command line arguments:
 
 Arguments:
 - claimHost - Claim page host

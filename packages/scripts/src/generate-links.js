@@ -2,7 +2,7 @@ import sdk from '@linkdrop/binance-sdk'
 import path from 'path'
 import fastcsv from 'fast-csv'
 import fs from 'fs'
-import config from './config/config.json'
+import config from '../config/config.json'
 const args = require('yargs').argv
 
 const CLAIM_HOST = args.claimHost || config.CLAIM_HOST
@@ -48,7 +48,7 @@ const main = async () => {
     }
 
     // Save links
-    const dir = path.join(__dirname, './output')
+    const dir = path.join(__dirname, '../output')
     const filename = path.join(dir, 'linkdrop.csv')
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir)
