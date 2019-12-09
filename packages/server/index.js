@@ -3,12 +3,12 @@ import express from 'express'
 import morgan from 'morgan'
 import mongoose from 'mongoose'
 import boom from '@hapi/boom'
-import claimController from './api/controllers/claim.controller'
+import claimController from './api/controllers/claim'
 
 require('dotenv').config()
 
 const app = express()
-const PORT = process.env.PORT || 5050
+const PORT = process.env.PORT || 5000
 const MONGODB_URI =
   process.env.MONGODB_URI || 'mongodb://localhost:27017/linkdrop-binance'
 
@@ -20,7 +20,7 @@ app.use(morgan('dev'))
 mongoose
   .connect(
     MONGODB_URI,
-    { useNewUrlParser: true, useFindAndModify: false }
+    { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true }
   )
   .then(() => {
     console.log('Connected to database at', MONGODB_URI)

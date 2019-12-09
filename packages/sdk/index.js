@@ -42,7 +42,7 @@ const signLinkParams = async ({ privateKey, asset, amount, linkId }) => {
   )
   let message = ethers.utils.arrayify(hash)
 
-  return await signer.signMessage(message)
+  return signer.signMessage(message)
 }
 
 /**
@@ -55,7 +55,7 @@ const signReceiverAddress = async ({ privateKey, receiverAddress }) => {
   const signer = new ethers.Wallet(privateKey)
   const hash = ethers.utils.solidityKeccak256(['string'], [receiverAddress])
   const message = ethers.utils.arrayify(hash)
-  return await signer.signMessage(message)
+  return signer.signMessage(message)
 }
 
 /**

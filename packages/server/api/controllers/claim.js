@@ -2,8 +2,7 @@ import ClaimTx from '../models/ClaimTx'
 import { wrapAsync } from '../utils'
 import sdk from '@linkdrop/binance-sdk'
 import Table from 'cli-table'
-
-const config = require('../../config/config.json')
+import config from '../../config/config.json'
 
 /**
  * Function to check whether a `linkId` has already been claimed

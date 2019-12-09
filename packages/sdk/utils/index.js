@@ -2,10 +2,10 @@ const axios = require('axios')
 const BncClient = require('@binance-chain/javascript-sdk')
 const { crypto } = BncClient
 
-const apiHost = 'https://dex.binance.org'
-const prefix = 'bnb'
-const network = 'mainnet'
-const transferFee = 37500
+const API_HOST = 'https://dex.binance.org'
+const PREFIX = 'bnb'
+const NETWORK = 'mainnet'
+const TRANSFER_FEE = 37500
 
 /**
  * @dev Function to retrieve balance of a given address
@@ -19,7 +19,7 @@ const getBalance = async ({ address, asset }) => {
       throw new Error('Please provide valid address')
     }
 
-    const result = await axios.get(`${apiHost}/api/v1/account/${address}`)
+    const result = await axios.get(`${API_HOST}/api/v1/account/${address}`)
     const balances = result.data.balances
 
     const balance = balances.find(
@@ -48,7 +48,7 @@ const getBalance = async ({ address, asset }) => {
  * @return {String} Address corresponding to `privateKey`
  */
 const getAddressFromPrivateKey = privateKey =>
-  crypto.getAddressFromPrivateKey(privateKey, prefix)
+  crypto.getAddressFromPrivateKey(privateKey, PREFIX)
 
 /**
  * @dev Returns a sequence for a given address
@@ -56,7 +56,7 @@ const getAddressFromPrivateKey = privateKey =>
  * @return {Number} Sequence
  */
 const getSequence = async address => {
-  const url = `${apiHost}/api/v1/account/${address}/sequence`
+  const url = `${API_HOST}/api/v1/account/${address}/sequence`
   const sequence = (await axios.get(url)).data.sequence || 0
   return Number(sequence)
 }
@@ -85,7 +85,7 @@ const formatUnits = value => {
  * @return {Promise<Object>} Transaction metadata
  */
 const getTransaction = async hash => {
-  const url = `${apiHost()}/api/v1/tx/${hash}?format=json`
+  const url = `${API_HOST()}/api/v1/tx/${hash}?format=json`
   return (await axios.get(url)).data
 }
 
@@ -95,8 +95,8 @@ const getTransaction = async hash => {
  * @return {Object} Binance chain client
  */
 const initBncClient = async privateKey => {
-  const bncClient = new BncClient(apiHost)
-  await bncClient.chooseNetwork(network)
+  const bncClient = new BncClient(API_HOST)
+  await bncClient.chooseNetwork(NETWORK)
   await bncClient.setPrivateKey(privateKey)
   await bncClient.initChain()
   return bncClient
@@ -118,9 +118,9 @@ module.exports = {
   parseUnits,
   getSequence,
   getAddressFromPrivateKey,
-  apiHost,
-  prefix,
-  network,
-  transferFee,
+  API_HOST,
+  PREFIX,
+  NETWORK,
+  TRANSFER_FEE,
   getPrivateKeyFromMnemonic
 }

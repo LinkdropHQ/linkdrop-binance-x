@@ -1,15 +1,19 @@
 {
-  "name": "linkdrop-sdk",
+  "name": "@linkdrop/binance",
   "version": "1.0.0",
-  "description": "Linkdrop SDK",
+  "description": "Linkdrop Binance Monorepo",
   "main": "index.js",
   "repository": "https://github.com/LinkdropProtocol/linkdrop-sdk",
   "author": "Amir Jumaniyazov <amir@linkdrop.io>",
   "license": "MIT",
-  "dependencies": {
-    "@binance-chain/javascript-sdk": "https://github.com/Dobrokhvalov/javascript-sdk",
-    "axios": "^0.19.0",
-    "ethers": "^4.0.31"
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "server": "npx babel-node packages/server/index"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
@@ -17,6 +21,7 @@
     "@babel/node": "^7.4.5",
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
-    "@babel/register": "^7.4.4"
+    "@babel/register": "^7.4.4",
+    "lerna": "^3.16.4"
   }
 }
