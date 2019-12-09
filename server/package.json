@@ -1,0 +1,9 @@
+{
+  "name": "@linkdrop/binance-server",
+  "version": "1.0.0",
+  "description": "Linkdrop Binance Relay Service",
+  "main": "index.js",
+  "author": "Amir Jumaniyazov - <amir@linkdrop.io>",
+  "license": "MIT",
+  "private": true
+}
