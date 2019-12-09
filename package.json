@@ -1,9 +1,9 @@
 {
   "name": "@linkdrop/binance",
   "version": "1.0.0",
-  "description": "Linkdrop Binance Monorepo",
+  "description": "Linkdrop Binance X Monorepo",
   "main": "index.js",
-  "repository": "https://github.com/LinkdropProtocol/linkdrop-sdk",
+  "repository": "https://github.com/LinkdropHQ/linkdrop-binance-x",
   "author": "Amir Jumaniyazov <amir@linkdrop.io>",
   "license": "MIT",
   "private": true,
