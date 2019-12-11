@@ -6,6 +6,9 @@
     "repository": "https://github.com/LinkdropProtocol/linkdrop-sdk",
     "author": "Amir Jumaniyazov <amir@linkdrop.io>",
     "license": "MIT",
+    "scripts": {
+        "test": "mocha --require @babel/polyfill --require @babel/register"
+    },
     "dependencies": {
         "@binance-chain/javascript-sdk": "https://github.com/Dobrokhvalov/javascript-sdk",
         "axios": "^0.19.0",
@@ -17,7 +20,9 @@
         "@babel/node": "^7.4.5",
         "@babel/polyfill": "^7.4.4",
         "@babel/preset-env": "^7.4.5",
-        "@babel/register": "^7.4.4"
+        "@babel/register": "^7.4.4",
+        "chai": "^4.2.0",
+        "mocha": "^6.2.2"
     },
     "babel": {
         "extends": "../../babel.config.js"

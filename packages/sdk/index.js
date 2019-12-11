@@ -4,13 +4,20 @@ const axios = require('axios')
 
 /**
  * Function to check whether a `linkId` has already been claimed
- * @param {String} host Relayer service host, e.g. https://binance.linkdrop.io
+ * @param {String} apiHost Relayer service host, e.g. https://binance.linkdrop.io
  * @param {String} linkId Link id
  * @return {Promise<Boolean>} True if link was claimed before, false otherwise
  */
-const isClaimed = async ({ host, linkId }) => {
+const isClaimed = async ({ apiHost, linkId }) => {
+  if (apiHost == null || apiHost === '' || typeof apiHost !== 'string') {
+    throw new Error('Please provide `apiHost`')
+  }
+  if (linkId == null || linkId === '' || typeof linkId !== 'string') {
+    throw new Error('Please provide `linkId`')
+  }
+
   try {
-    const response = await axios.get(`${host}/api/v1/is-claimed/${linkId}`)
+    const response = await axios.get(`${apiHost}/api/v1/is-claimed/${linkId}`)
 
     if (response.status !== 200) {
       throw new Error(`Invalid response status ${response.status}`)
@@ -32,6 +39,19 @@ const isClaimed = async ({ host, linkId }) => {
  * @return {Promise<String>} Signature
  */
 const signLinkParams = async ({ privateKey, asset, amount, linkId }) => {
+  if (privateKey == null || privateKey === '') {
+    throw new Error('Please provide `privateKey`')
+  }
+  if (asset == null || asset === '') {
+    throw new Error('Please provide `asset`')
+  }
+  if (amount == null || amount === '') {
+    throw new Error('Please provide `amount`')
+  }
+  if (linkId == null || linkId === '') {
+    throw new Error('Please provide `linkId`')
+  }
+
   const signer = new ethers.Wallet(privateKey)
 
   let hash = ethers.utils.solidityKeccak256(
@@ -45,12 +65,18 @@ const signLinkParams = async ({ privateKey, asset, amount, linkId }) => {
 
 /**
  * Function to sign receiver address
- * @param {String} privateKey Private key to sign address with
+ * @param {String} linkKey Link key to sign `receiverAddress` with
  * @param {String} receiverAddress Address of receiver
  * @return {Promise<String>} Signature
  */
-const signReceiverAddress = async ({ privateKey, receiverAddress }) => {
-  const signer = new ethers.Wallet(privateKey)
+const signReceiverAddress = async ({ linkKey, receiverAddress }) => {
+  if (linkKey == null || linkKey === '') {
+    throw new Error('Please provide `linkKey`')
+  }
+  if (receiverAddress == null || receiverAddress === '') {
+    throw new Error('Please provide `receiverAddress`')
+  }
+  const signer = new ethers.Wallet(linkKey)
   const hash = ethers.utils.solidityKeccak256(['string'], [receiverAddress])
   const message = ethers.utils.arrayify(hash)
   return signer.signMessage(message)
@@ -64,6 +90,16 @@ const signReceiverAddress = async ({ privateKey, receiverAddress }) => {
  * @return {Promise<Object>} Links params
  */
 const constructLink = async ({ privateKey, asset, amount }) => {
+  if (privateKey == null || privateKey === '') {
+    throw new Error('Please provide `privateKey`')
+  }
+  if (asset == null || asset === '') {
+    throw new Error('Please provide `asset`')
+  }
+  if (amount == null || amount === '') {
+    throw new Error('Please provide `amount`')
+  }
+
   let wallet = ethers.Wallet.createRandom()
   let linkKey = wallet.privateKey
   let linkId = wallet.address
@@ -92,19 +128,16 @@ const constructLink = async ({ privateKey, asset, amount }) => {
  */
 const generateLink = async ({ claimHost, privateKey, asset, amount }) => {
   if (claimHost == null || claimHost === '') {
-    throw new Error(`Please provide claim host`)
+    throw new Error('Please provide `claimHost`')
   }
-
   if (privateKey == null || privateKey === '') {
-    throw new Error(`Please provide a private key to sign link params with`)
+    throw new Error('Please provide `privateKey`')
   }
-
   if (asset == null || asset === '') {
-    throw new Error(`Please provide asset symbol`)
+    throw new Error('Please provide `asset`')
   }
-
   if (amount == null || amount === '') {
-    throw new Error(`Please provide asset amount`)
+    throw new Error('Please provide `amount`')
   }
 
   const { linkKey, linkId, verifierSignature } = await constructLink({
@@ -135,6 +168,22 @@ const checkVerifierSignature = async ({
   verifierAddress,
   verifierSignature
 }) => {
+  if (asset == null || asset === '') {
+    throw new Error('Please provide `asset`')
+  }
+  if (amount == null || amount === '') {
+    throw new Error('Please provide `amount`')
+  }
+  if (linkId == null || linkId === '') {
+    throw new Error('Please provide `linkId`')
+  }
+  if (verifierAddress == null || verifierAddress === '') {
+    throw new Error('Please provide `verifierAddress`')
+  }
+  if (verifierSignature == null || verifierSignature === '') {
+    throw new Error('Please provide `verifierSignature`')
+  }
+
   let hash = ethers.utils.solidityKeccak256(
     ['string', 'uint', 'address'],
     [asset, Number(amount), linkId]
@@ -159,6 +208,15 @@ const checkReceiverSignature = async ({
   receiverAddress,
   receiverSignature
 }) => {
+  if (linkId == null || linkId === '') {
+    throw new Error('Please provide `linkId`')
+  }
+  if (receiverAddress == null || receiverAddress === '') {
+    throw new Error('Please provide `receiverAddress`')
+  }
+  if (receiverSignature == null || receiverSignature === '') {
+    throw new Error('Please provide `receiverSignature`')
+  }
   let hash = ethers.utils.solidityKeccak256(['string'], [receiverAddress])
   let message = ethers.utils.arrayify(hash)
 
@@ -175,6 +233,15 @@ const checkReceiverSignature = async ({
  * @return {Promise<Boolean} True if success
  */
 const checkBalanceAvailable = async ({ asset, amount, address }) => {
+  if (asset == null || asset === '') {
+    throw new Error('Please provide `asset`')
+  }
+  if (amount == null || amount === '') {
+    throw new Error('Please provide `amount`')
+  }
+  if (address == null || address === '') {
+    throw new Error('Please provide `address`')
+  }
   try {
     const balance = await utils.getBalance({ address, asset })
     const freeBalance = utils.parseUnits(balance['free'])
@@ -206,6 +273,31 @@ const checkLinkParams = async ({
   receiverSignature,
   senderAddress
 }) => {
+  if (asset == null || asset === '') {
+    throw new Error('Please provide `asset`')
+  }
+  if (amount == null || amount === '') {
+    throw new Error('Please provide `amount`')
+  }
+  if (linkId == null || linkId === '') {
+    throw new Error('Please provide `linkId`')
+  }
+  if (verifierAddress == null || verifierAddress === '') {
+    throw new Error('Please provide `verifierAddress`')
+  }
+  if (verifierSignature == null || verifierSignature === '') {
+    throw new Error('Please provide `verifierSignature`')
+  }
+  if (receiverAddress == null || receiverAddress === '') {
+    throw new Error('Please provide `receiverAddress`')
+  }
+  if (receiverSignature == null || receiverSignature === '') {
+    throw new Error('Please provide `receiverSignature`')
+  }
+  if (senderAddress == null || senderAddress === '') {
+    throw new Error('Please provide `senderAddress`')
+  }
+
   // Verify that `linkId` has not been claimed on the server
 
   // Verify that amount is positive and less than max total supply
@@ -271,6 +363,28 @@ const claim = async ({
   verifierSignature,
   receiverSignature
 }) => {
+  if (apiHost == null || apiHost === '') {
+    throw new Error('Please provide `apiHost`')
+  }
+  if (asset == null || asset === '') {
+    throw new Error('Please provide `asset`')
+  }
+  if (amount == null || amount === '') {
+    throw new Error('Please provide `amount`')
+  }
+  if (linkId == null || linkId === '') {
+    throw new Error('Please provide `linkId`')
+  }
+  if (verifierSignature == null || verifierSignature === '') {
+    throw new Error('Please provide `verifierSignature`')
+  }
+  if (receiverAddress == null || receiverAddress === '') {
+    throw new Error('Please provide `receiverAddress`')
+  }
+  if (receiverSignature == null || receiverSignature === '') {
+    throw new Error('Please provide `receiverSignature`')
+  }
+
   try {
     const claimParams = {
       asset,
@@ -299,6 +413,7 @@ module.exports = {
   claim,
   generateLink,
   checkBalanceAvailable,
+  signLinkParams,
   signReceiverAddress,
   checkVerifierSignature,
   checkReceiverSignature,

@@ -54,7 +54,7 @@ const main = async () => {
       fs.mkdirSync(dir)
     }
     const ws = fs.createWriteStream(filename)
-    fastcsv.write(links).pipe(ws)
+    fastcsv.write(links, { headers: true }).pipe(ws)
   } catch (err) {
     throw new Error(err)
   }

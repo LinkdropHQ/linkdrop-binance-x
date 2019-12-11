@@ -34,3 +34,5 @@ Generating 20 links worth 0.0045 PHB-2DF each would be as simple as:
 ```bash
 yarn generate-links --claimHost="claim.linkdrop.io" --verifierPk="VERIFIER_PK" --asset="PHB-2DF" --amount="450000" --n=20
 ```
+
+This will generate the provided number of links and save them to `./output/linkdrop.csv`
