@@ -13,7 +13,9 @@
     ]
   },
   "scripts": {
+    "test": "cd packages/sdk && yarn test",
     "generate-links": "npx babel-node packages/scripts/src/generate-links",
+    "claim-link": "npx babel-node packages/scripts/src/claim-link",
     "server": "npx babel-node packages/server/index"
   },
   "devDependencies": {

@@ -2,7 +2,7 @@ import queryString from 'query-string'
 import sdk from '@linkdrop/binance-sdk'
 import { ethers } from 'ethers'
 import path from 'path'
-import config from './config/config.json'
+import config from '../config/config.json'
 import csvToJson from 'csvtojson'
 
 export const parseUrl = async rawUrl => {
@@ -11,7 +11,7 @@ export const parseUrl = async rawUrl => {
 }
 
 const main = async () => {
-  const csvFilePath = path.resolve(__dirname, `./output/linkdrop.csv`)
+  const csvFilePath = path.resolve(__dirname, `../output/linkdrop.csv`)
   const jsonArray = await csvToJson().fromFile(csvFilePath)
   const rawUrl = jsonArray[0].url
   const { amount, asset, linkKey, verifierSignature } = await parseUrl(rawUrl)
@@ -19,7 +19,7 @@ const main = async () => {
 
   const receiverAddress = config.RECEIVER_ADDRESS
   const receiverSignature = await sdk.signReceiverAddress({
-    privateKey: linkKey,
+    linkKey,
     receiverAddress
   })
 
