@@ -1,6 +1,5 @@
 <h1 align="center">Binance Chain Linkdrop Scripts</h1>
 
-
 ## Generate links
 
 There is two options on how to generate links via scripts:
@@ -15,12 +14,12 @@ yarn generate-links
 
 This will generate the provided number of links and save them to `./output/linkdrop.csv`
 
-
 ### Option 2
 
 Alternatively it's also possible to override the `config.json` parameters by passing command line arguments:
 
 Arguments:
+
 - `claimHost` Claim page host
 - `verifierPk` Verifier private key
 - `asset` Asset name
@@ -36,3 +35,19 @@ yarn generate-links --claimHost="claim.linkdrop.io" --verifierPk="VERIFIER_PK" -
 ```
 
 This will generate the provided number of links and save them to `./output/linkdrop.csv`
+
+## Claim links
+
+Run server from the root
+
+```bash
+yarn server
+```
+
+With the server up and running you can claim generated links from another terminal by running
+
+```
+yarn claim-link
+```
+
+This will claim link and return the transaction hash
