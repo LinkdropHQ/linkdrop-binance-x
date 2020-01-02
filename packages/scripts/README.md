@@ -43,6 +43,7 @@ Run server from the root
 ```bash
 yarn server
 ```
+❗️Don't forget to fill in the `../server/config/config.json`
 
 With the server up and running you can claim generated links from another terminal by running
 
