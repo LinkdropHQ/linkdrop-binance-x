@@ -12,6 +12,18 @@
   </a>
 </p>
 
+## Getting started
+
+Clone repo
+```bash
+git clone https://github.com/LinkdropHQ/linkdrop-binance-x.git
+```
+
+Install dependencies
+```bash
+yarn install
+```
+
 
 ## Contributors
 
