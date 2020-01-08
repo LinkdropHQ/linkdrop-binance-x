@@ -11,6 +11,7 @@ const VERIFIER_PRIVATE_KEY =
 const ASSET = args.asset || config.ASSET
 const AMOUNT = args.amount || config.AMOUNT
 const LINKS_NUMBER = args.n || config.LINKS_NUMBER
+const API_HOST = args.apiHost || config.API_HOST
 
 if (CLAIM_HOST == null || CLAIM_HOST === '') {
   throw new Error('Please provide claim host')
@@ -32,6 +33,10 @@ if (LINKS_NUMBER == null || LINKS_NUMBER === '') {
   throw new Error('Please provide number of links to generate')
 }
 
+if (API_HOST == null || API_HOST === '') {
+  throw new Error('Please provide api host')
+}
+
 const main = async () => {
   try {
     // Generate links
@@ -41,7 +46,8 @@ const main = async () => {
         claimHost: CLAIM_HOST,
         privateKey: VERIFIER_PRIVATE_KEY,
         asset: ASSET,
-        amount: AMOUNT
+        amount: AMOUNT,
+        apiHost: API_HOST
       })
 
       links.push({ url })
