@@ -177,7 +177,8 @@ describe('SDK functions tests', () => {
         claimHost: 'binance.linkdrop.io',
         privateKey: wallet.privateKey,
         asset: 'BNB',
-        amount: '1'
+        amount: '1',
+        apiHost: 'http://localhost:5000'
       })
       expect(ethers.utils.isHexString(linkKey)).to.be.true
       expect(ethers.utils.hexDataLength(linkKey)).to.equal(32)

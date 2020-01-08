@@ -124,9 +124,16 @@ const constructLink = async ({ privateKey, asset, amount }) => {
  * @param {String} privateKey Private key to sign link params with
  * @param {String} asset Asset symbol
  * @param {Number} amount Asset amount in atomic value
+ * @param {String} apiHost API host
  * @return {Promise<Object>} `{url, linkId, linkKey, verifierSignature}`
  */
-const generateLink = async ({ claimHost, privateKey, asset, amount }) => {
+const generateLink = async ({
+  claimHost,
+  privateKey,
+  asset,
+  amount,
+  apiHost
+}) => {
   if (claimHost == null || claimHost === '') {
     throw new Error('Please provide `claimHost`')
   }
@@ -139,6 +146,9 @@ const generateLink = async ({ claimHost, privateKey, asset, amount }) => {
   if (amount == null || amount === '') {
     throw new Error('Please provide `amount`')
   }
+  if (apiHost == null || apiHost === '') {
+    throw new Error('Please provide `apiHost`')
+  }
 
   const { linkKey, linkId, verifierSignature } = await constructLink({
     privateKey,
@@ -147,7 +157,7 @@ const generateLink = async ({ claimHost, privateKey, asset, amount }) => {
   })
 
   // Construct url
-  let url = `${claimHost}/#/receive?asset=${asset}&amount=${amount}&linkKey=${linkKey}&verifierSignature=${verifierSignature}`
+  let url = `${claimHost}/#/receive?asset=${asset}&amount=${amount}&linkKey=${linkKey}&verifierSignature=${verifierSignature}&apiHost=${apiHost}`
 
   return { url, linkId, linkKey, verifierSignature }
 }
