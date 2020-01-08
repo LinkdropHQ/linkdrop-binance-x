@@ -14,7 +14,9 @@ const main = async () => {
   const csvFilePath = path.resolve(__dirname, `../output/linkdrop.csv`)
   const jsonArray = await csvToJson().fromFile(csvFilePath)
   const rawUrl = jsonArray[0].url
-  const { amount, asset, linkKey, verifierSignature } = await parseUrl(rawUrl)
+  const { amount, asset, linkKey, verifierSignature, apiHost } = await parseUrl(
+    rawUrl
+  )
   const linkId = new ethers.Wallet(linkKey).address
 
   const receiverAddress = config.RECEIVER_ADDRESS
@@ -24,7 +26,7 @@ const main = async () => {
   })
 
   const claimParams = {
-    apiHost: config.API_HOST,
+    apiHost,
     asset,
     amount,
     linkId,
