@@ -9,7 +9,7 @@ build/
 .env
 config.json
 output/
-
+configs/
 *~
 .#*
 #*

@@ -1,0 +1,57 @@
+@import "variables";
+
+.container {
+  max-width: none;
+  outline: none;
+  box-shadow: none;
+  & > div {
+    border-color: $dbBlue!important;
+
+    > div {
+      &:last-child {
+        span {
+          display: none!important;
+        }
+      }
+
+      &:first-child {
+        div:first-child {
+          color: $dbBlue!important;
+        }
+      }
+    }
+  }
+
+  > div:first-child, > div:nth-child(2) {
+    height: 40px;
+  }
+
+  > * {
+    color: $dbBlue!important;
+  }
+
+  svg {
+    path {
+      fill: $dbBlue!important;
+    }
+  }
+
+  > [class*="-menu"] {
+    bottom: auto;
+    top: 100%;
+    border: 1px solid $dbBlue;
+    box-shadow: none;
+
+    > div {
+      > div {
+        background: transparent!important;
+        color: $dbBlue!important;
+
+        &:hover {
+          background: transparent!important;
+          color: $dbBlue!important;
+        }
+      }
+    }
+  }
+}
