@@ -71,7 +71,7 @@ class Step1 extends React.Component {
   }
 
   createWalletOptions () {
-    return (['trust', 'coinbase', 'opera', 'status', 'imtoken', 'gowallet', 'buntoy', 'tokenpocket', 'fortmatic', 'portis']).map(wallet => {
+    return (['trust', 'coinbase', 'opera', 'status', 'imtoken', 'gowallet', 'buntoy', 'tokenpocket']).map(wallet => {
       const label = wallets[wallet].name
       return {
         label: wallet === 'trust' ? `Default: ${label}` : label,
@@ -85,7 +85,7 @@ class Step1 extends React.Component {
     if (!proxyAddress) {
       this.actions().campaigns.createProxyAddress({ campaignId: items.length })
     }
-    this.actions().tokens.getAssets({ currentAddress })
+    this.actions().tokens.getAssets()
   }
 
   componentWillReceiveProps ({ assets }) {

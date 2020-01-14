@@ -9,19 +9,19 @@ import NetworkNotSupported from './network-not-supported'
 import { defineNetworkName } from '@linkdrop/binance-commons'
 const ls = window.localStorage
 
-@actions(({ user: { currentAddress, chainId, loading, step, web3Provider } }) => ({ loading, currentAddress, chainId, step, web3Provider }))
+@actions(({ user: { currentAddress, chainId, loading, step, wcInstance } }) => ({ loading, currentAddress, chainId, step, wcInstance }))
 @translate('pages.page')
 class Page extends React.Component {
-  componentDidMount () {
-    const { web3Provider } = this.props
-    if (web3Provider) {
-      this.actions().user.checkCurrentProvider({ provider: web3Provider })
-    }
-  }
+  // componentDidMount () {
+  //   const { wcInstance } = this.props
+  //   if (wcInstance && wcInstance.connected) {
+  //     this.actions().user.setWCInstance({ provider: web3Provider })
+  //   }
+  // }
 
   defineContent ({ currentAddress }) {
-    const { chainId, loading, web3Provider } = this.props
-    if (!web3Provider) {
+    const { chainId, loading, wcInstance } = this.props
+    if (!wcInstance) {
       return <Web3Injector />
     }
     if (currentAddress === null && loading) {

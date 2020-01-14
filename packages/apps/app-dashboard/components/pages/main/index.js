@@ -16,18 +16,10 @@ class Main extends React.Component {
   render () {
     return <div className={styles.container}>
       <ActionBlock
-        title={this.t('titles.erc20Campaign')}
+        title={this.t('titles.campaign')}
         description={this.t('texts.listOfLinks')}
-        extraContent={this.t('titles.erc20Eth', { symbol: this.defaultSymbol })}
+        extraContent={''}
         href='/#/campaigns/create'
-        buttonTitle={this.t('buttons.create')}
-      />
-
-      <ActionBlock
-        title={this.t('titles.erc721Campaign')}
-        description={this.t('texts.listOfLinks')}
-        extraContent={this.t('titles.erc721Eth', { symbol: this.defaultSymbol })}
-        href='/#/campaigns/create-erc-721'
         buttonTitle={this.t('buttons.create')}
       />
 

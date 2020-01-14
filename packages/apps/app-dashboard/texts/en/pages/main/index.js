@@ -4,12 +4,9 @@ export default {
     connectorSupports: 'MetaMask supports:',
     howToConnectWallets: 'How to connect Trezor or Ledger?',
     networkNotSupported: 'Network is not supported',
-    erc20Campaign: 'ERC20 Campaign',
-    erc721Campaign: 'ERC721 Campaign',
-    erc20Eth: 'ERC20 + {{symbol}}',
-    erc721Eth: 'ERC721 + {{symbol}}',
+    campaign: 'Campaign',
     customSolutions: 'Need other features?',
-    allAssets: 'ERC721 / ERC20 + {{symbol}}'
+    allAssets: 'Binance tokens'
   },
   texts: {
     networkNotSupported: '<div>Simply open MetaMask and switch over to:</div><div><span>Main Ethereum Network</span> or <span>Test Networks:</span></div><div><span>Ropsten, Rinkeby, Kovan, Görli</span></div>',

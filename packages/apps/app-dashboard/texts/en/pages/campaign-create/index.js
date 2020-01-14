@@ -21,7 +21,6 @@ export default {
     balance: 'Balance: ', 
     tokenAddress: 'Token Address',
     tokenAddressPlaceholder: '0x Address',
-    selectNft: 'Select tokens to distribute',
     ethInLink: '{{symbol}} in link',
 
     // step2
@@ -134,39 +133,6 @@ const {
   weiAmount: {{weiAmount}}, // Amount of wei per claim
   tokenAddress: '{{tokenAddress}}', // ERC20 token address
   tokenAmount: {{tokenAmount}}, // Amount of ERC20 tokens per claim
-  expirationTime: 12345678910, // Link expiration time
-  campaignId: {{campaignId}} // Campaign id
-})
-`,
-    codeBlockErc721: `// installation: yarn add @linkdrop/sdk
-// import library
-const LinkdropSDK = require('@linkdrop/sdk')
-
-// OR
-import LinkdropSDK from '@linkdrop/sdk'
-
-// initialization
-const linkdropSDK = LinkdropSDK({
-  linkdropMasterAddress: '{{masterAddress}}',
-  factoryAddress: '{{factoryAddress}}',
-  // optional params
-  // chain: '{{chain}}',
-  // jsonRpcUrl = <JSON_RPC_URL>, // https://{{chain}}.infura.io by default,
-  // apiHost = <API_HOST>, // https://{{chain}}.linkdrop.io by default
-  // claimHost = <CLAIM_HOST>, // 'https://claim.linkdrop.io' by default
-})
-
-// generate links for ERC721
-const {
-  url,
-  linkId,
-  linkKey,
-  linkdropSignerSignature
-} = await linkdropSDK.generateLinkERC721({
-  signingKeyOrWallet: '{{linkdropSigner}}', // Signing private key or ethers.js Wallet instance
-  weiAmount: {{weiAmount}}, // Amount of wei per claim
-  nftAddress: '{{tokenAddress}}', // ERC721 token address
-  tokenId: <TOKEN_ID>, // ID of individual ERC721 token
   expirationTime: 12345678910, // Link expiration time
   campaignId: {{campaignId}} // Campaign id
 })

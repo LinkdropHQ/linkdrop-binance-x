@@ -3,50 +3,41 @@ import TokenMock from 'contracts/TokenMock.json'
 import { ethers } from 'ethers'
 import { infuraPk, jsonRpcUrlXdai } from 'app.config.js'
 import { defineJsonRpcUrl } from '@linkdrop/binance-commons'
-import getCurrentTokenBalance from './get-current-token-balance'
-
-const defineSymbol = function * ({ tokenContract, tokenAddress }) {
-  try {
-    const symbol = yield tokenContract.symbol()
-    return symbol
-  } catch (e) {
-    if (tokenAddress === '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359') {
-      return 'DAI'
-    }
-    return 'ERC20'
-  }
-}
+import getCurrentBalance from './get-current-balance'
 
 const generator = function * ({ payload }) {
   try {
     yield put({ type: 'USER.SET_LOADING', payload: { loading: true } })
-    const { tokenAddress, chainId } = payload
+    const { tokenSymbol,  } = payload
     const currentAddress = yield select(generator.selectors.currentAddress)
     // 0x85d1f0d5ea43e6f31d4f6d1f302405373e095722
-    yield put({ type: 'TOKENS.SET_TOKEN_ADDRESS', payload: { address: tokenAddress } })
-    yield put({ type: 'TOKENS.SET_TOKEN_TYPE', payload: { tokenType: 'erc20' } })
+    const assets = yield select(generator.selectors.assets)
+    const chainId = yield select(generator.selectors.chainId)
+    const { symbol, decimals, address } = assets.find(asset => asset.symbol === tokenSymbol)
+
     const actualJsonRpcUrl = defineJsonRpcUrl({ chainId, infuraPk, jsonRpcUrlXdai })
     const provider = yield new ethers.providers.JsonRpcProvider(actualJsonRpcUrl)
-    const tokenContract = yield new ethers.Contract(tokenAddress, TokenMock.abi, provider)
-    const decimals = yield tokenContract.decimals()
-    const { tokenBalance, tokenBalanceFormatted } = yield getCurrentTokenBalance({ payload: { decimals, contract: tokenContract, account: currentAddress } })
+    const tokenContract = yield new ethers.Contract(address, TokenMock.abi, provider)
+    const { tokenBalance, tokenBalanceFormatted } = yield getCurrentBalance({ payload: { decimals, contract: tokenContract, account: currentAddress } })
     yield put({
       type: 'TOKENS.SET_CURRENT_TOKEN_BALANCE',
       payload: {
         currentTokenBalance: Math.round(tokenBalanceFormatted * 100) / 100
       }
     })
-    const symbol = yield defineSymbol({ tokenAddress, tokenContract })
+    yield put({ type: 'TOKENS.SET_TOKEN_ADDRESS', payload: { address } })
+    yield put({ type: 'TOKENS.SET_TOKEN_TYPE', payload: { tokenType: 'erc20' } })
     yield put({ type: 'TOKENS.SET_TOKEN_DECIMALS', payload: { decimals } })
     yield put({ type: 'TOKENS.SET_TOKEN_SYMBOL', payload: { symbol } })
     yield put({ type: 'USER.SET_LOADING', payload: { loading: false } })
   } catch (e) {
     console.error(e)
-    yield put({ type: 'USER.SET_LOADING', payload: { loading: false } })
   }
 }
 
 export default generator
 generator.selectors = {
+  assets: ({ tokens: { assets } }) => assets,
+  chainId: ({ user: { chainId } }) => chainId,
   currentAddress: ({ user: { currentAddress } }) => currentAddress
 }

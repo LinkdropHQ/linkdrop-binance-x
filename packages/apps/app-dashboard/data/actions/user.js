@@ -15,8 +15,9 @@ class User {
     this.actions.dispatch({ type: 'USER.SET_CURRENT_ADDRESS', payload: { currentAddress } })
   }
 
-  checkCurrentProvider ({ provider, name }) {
-    this.actions.dispatch({ type: '*USER.CHECK_CURRENT_PROVIDER', payload: { provider, name } })
+  setWCInstance ({ wc }) {
+    console.log({ wc })
+    this.actions.dispatch({ type: '*USER.SET_WC_INSTANCE', payload: { wc } })
   }
 
   prepareVersionVar ({ chainId, currentAddress }) {

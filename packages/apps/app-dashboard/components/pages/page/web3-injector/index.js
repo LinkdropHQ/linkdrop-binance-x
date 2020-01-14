@@ -3,14 +3,10 @@ import React from 'react'
 import { actions, translate } from 'decorators'
 import { Button } from 'components/common'
 import styles from './styles.module'
-import Web3Connect from 'web3connect'
-import Web3 from 'web3'
-import WalletConnectProvider from "@walletconnect/web3-provider";
-import Portis from "@portis/web3";
-import Fortmatic from "fortmatic";
 import { getHashVariables, defineNetworkName } from '@linkdrop/binance-commons'
 import { infuraPk, portisDappId, formaticApiKeyTestnet, formaticApiKeyMainnet } from 'app.config.js'
-
+import WalletConnect from "@trustwallet/walletconnect"
+import WalletConnectQRCodeModal from "@walletconnect/qrcode-modal"
 
 @actions(({ campaigns: { items } }) => ({ items }))
 @translate('pages.main')
@@ -19,44 +15,68 @@ class Web3Injector extends React.Component {
     super(props)
     const { chainId = '1' } = getHashVariables()
     const networkName = defineNetworkName({ chainId })
-    this.web3Connect = new Web3Connect.Core({
-      network: networkName,
-      providerOptions: {
-        walletconnect: {
-          package: WalletConnectProvider,
-          options: {
-            infuraId: infuraPk,
-            network: networkName
-          }
-        },
-        portis: {
-          package: Portis,
-          options: {
-            id: portisDappId,
-            network: networkName
-          }
-        },
-        fortmatic: {
-          package: Fortmatic,
-          options: {
-            key: Number(chainId) === 1 ? formaticApiKeyMainnet : formaticApiKeyTestnet,
-            network: networkName
-          }
-        },
+    this.wc = new WalletConnect({
+      bridge: "https://bridge.walletconnect.org"
+    })
+    this.wc.getAccounts()
+      .then(result => {
+        // Returns the accounts
+        console.log({result})
+      })
+      .catch(error => {
+        // Error returned when rejected
+        console.error(error)
+      })
+
+    if (this.wc.connected) {
+      console.log('here initial connect1')
+      this.applyWalletConnect(this.wc)
+        
+    }
+
+    this.wc.on("session_update", (error, payload) => {
+      console.log({ payload })
+      if (error) {
+        throw error;
       }
+      console.log('here session update')
+      this.applyWalletConnect(null)
     })
 
-    this.web3Connect.on('connect', provider => {      
-      this.applyProvider(provider)
+    this.wc.on("connect", (error, payload) => {
+      console.log({ payload })
+      if (error) {
+        throw error
+      }
+
+      console.log('here connect')
+      WalletConnectQRCodeModal.close()
+      this.applyWalletConnect(this.wc)
+    })
+
+    this.wc.on("disconnect", (error, payload) => {
+      if (error) {
+        throw error
+      }
+      console.log('here disconnect')
+
+      WalletConnectQRCodeModal.close()
+      this.applyWalletConnect(null)
     })
   }
 
-  async applyProvider (provider) {
-    const { name } = Web3Connect.getProviderInfo(provider)
-    const web3Provider = new Web3(provider)
-    if (web3Provider) {
-      this.actions().user.checkCurrentProvider({ provider: web3Provider, name })
-    }
+  applyWalletConnect (wc) {
+    this.actions().user.setWCInstance({ wc })
+  }
+
+  openModal () {
+    this.wc.createSession().then(() => {
+      const uri = this.wc.uri
+      console.log({ uri })
+      WalletConnectQRCodeModal.open(uri, () => {
+        console.log("QR Code Modal closed")
+      })
+    })
   }
 
   render () {
@@ -66,7 +86,7 @@ class Web3Injector extends React.Component {
       <Button
         disabled={disabled}
         className={styles.button}
-        onClick={_ => this.web3Connect.toggleModal()}
+        onClick={_ => this.openModal()}
       >
         {this.t('buttons.signIn')}
       </Button>

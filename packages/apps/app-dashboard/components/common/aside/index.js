@@ -11,7 +11,7 @@ import { withRouter } from 'react-router'
   user: {
     currentAddress,
     chainId,
-    web3ProviderName
+    connectorName
   },
   campaigns: {
     items
@@ -20,12 +20,12 @@ import { withRouter } from 'react-router'
   currentAddress,
   items,
   chainId,
-  web3ProviderName
+  connectorName
 }))
 @translate('common.aside')
 class Aside extends React.Component {
   render () {
-    const { currentAddress, items, chainId, web3ProviderName } = this.props
+    const { currentAddress, items, chainId, connectorName } = this.props
     return <aside className={styles.container}>
       <div className={styles.mainBlock}>
         <div className={styles.logo}>
@@ -40,7 +40,7 @@ class Aside extends React.Component {
         {this.renderCreateButton({ currentAddress })}
       </div>
       <div className={styles.footer}>
-        {this.renderConnectorData({ web3ProviderName, currentAddress })}
+        {this.renderConnectorData({ connectorName, currentAddress })}
         <div className={styles.footerMenu}>
           <a target='_blank' href='https://www.notion.so/Terms-and-Privacy-dfa7d9b85698491d9926cbfe3c9a0a58' className={styles.link}>{this.t('legal')}</a>
           <a target='_blank' href='https://linkdrop.io/contact' className={styles.link}>{this.t('contactUs')}</a>
@@ -52,7 +52,7 @@ class Aside extends React.Component {
     </aside>
   }
 
-  renderConnectorData ({ web3ProviderName, currentAddress }) {
+  renderConnectorData ({ connectorName, currentAddress }) {
     if (!currentAddress) {
       return <div className={styles.connectorData}>
         <div className={styles.indicator}/>
@@ -65,7 +65,7 @@ class Aside extends React.Component {
         [styles.active]: currentAddress.length > 0
       })}
       />
-      <span>{web3ProviderName}</span> connected
+      <span>{connectorName}</span> connected
       <div>{currentAddressFormatted}</div>
       <div className={styles.logout} onClick={_ => window.location.reload()}>
         <span>

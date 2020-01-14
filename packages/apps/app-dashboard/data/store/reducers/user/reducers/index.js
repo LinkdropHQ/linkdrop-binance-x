@@ -6,8 +6,8 @@ import setPrivateKey from './set-private-key'
 import setTxHash from './set-tx-hash'
 import setVersionVar from './set-version-var'
 import setSdk from './set-sdk'
-import setWeb3Provider from './set-web3-provider'
-import setWeb3ProviderName from './set-web3-provider-name'
+import setWCInstance from './set-wc-instance'
+import setConnectorName from './set-connector-name'
 
 export default {
   setLoading,
@@ -18,6 +18,6 @@ export default {
   setTxHash,
   setVersionVar,
   setSdk,
-  setWeb3Provider,
-  setWeb3ProviderName
+  setWCInstance,
+  setConnectorName
 }
