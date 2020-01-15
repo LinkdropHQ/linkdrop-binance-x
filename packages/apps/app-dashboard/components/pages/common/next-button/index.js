@@ -7,24 +7,20 @@ import { Button } from 'components/common'
 @translate('pages.campaignCreate')
 class NextButton extends React.Component {
   render () {
-    const { ethAmount = 0, wallet = 'trust', tokenIds, tokenSymbol, tokenAmount = 0, linksAmount = 0, tokenType } = this.props
-    let action
-    if (tokenType === 'eth') {
-      action = _ => this.actions().campaigns.prepareNewEthData({ ethAmount, wallet, linksAmount, tokenSymbol, tokenType })
-    } else if (tokenType === 'erc20') {
-      action = _ => this.actions().campaigns.prepareNewERC20Data({ tokenAmount, wallet, ethAmount, linksAmount, tokenSymbol, tokenType })
-    } else {
-      action = _ => this.actions().campaigns.prepareNewERC721Data({ tokenAmount, wallet, tokenIds, ethAmount, tokenSymbol, tokenType })
-    }
+    const { wallet = 'trust', tokenSymbol, tokenAmount = 0, linksAmount = 0 } = this.props
     return <div className={styles.controls}>
-      <Button className={styles.button} disabled={this.defineIfButtonDisabled({ tokenType, ethAmount, tokenAmount, linksAmount })} onClick={action}>{this.t('buttons.next')}</Button>
+      <Button
+        className={styles.button}
+        disabled={this.defineIfButtonDisabled({ tokenAmount, linksAmount })}
+        onClick={_ => this.actions().campaigns.prepareNewData({ tokenAmount, wallet, linksAmount, tokenSymbol })}
+      >
+        {this.t('buttons.next')}
+      </Button>
     </div>
   }
 
-  defineIfButtonDisabled ({ tokenType, ethAmount, tokenAmount, linksAmount }) {
-    if (!Number(linksAmount)) { return true }
-    if (tokenType === 'erc20') { return !Number(tokenAmount) }
-    if (tokenType === 'eth') { return !Number(ethAmount) }
+  defineIfButtonDisabled ({ tokenAmount, linksAmount }) {
+    return !Number(tokenAmount)
   }
 }
 

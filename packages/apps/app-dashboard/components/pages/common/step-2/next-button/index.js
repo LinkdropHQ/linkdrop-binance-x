@@ -8,26 +8,17 @@ import styles from './styles.module'
 @translate('pages.campaignCreate')
 class NextButton extends React.Component {
   render () {
-    const { tokenType, chainId, tokenAmount, currentAddress, linksAmount, ethAmount, serviceFee } = this.props
-    const ethAmountFinal = multiply(add(bignumber(ethAmount), bignumber(serviceFee)), linksAmount)
+    const { chainId, tokenAmount, currentAddress, linksAmount, serviceFee } = this.props
     return <Button
       className={styles.button} onClick={_ => {
-        if (tokenType === 'eth') {
-          this.actions().connector.sendEth({
-            ethAmount: ethAmountFinal,
-            account: currentAddress,
-            chainId
-          })
-        } else {
-          this.actions().connector.sendErc20({
-            tokenAmount: multiply(bignumber(tokenAmount), bignumber(linksAmount)),
-            account: currentAddress,
-            chainId
-          })
-        }
+        this.actions().connector.send({
+          tokenAmount: multiply(bignumber(tokenAmount), bignumber(linksAmount)),
+          account: currentAddress,
+          chainId
+        })
       }}
     >
-      {this.t(`buttons.${tokenType === 'eth' ? 'sendAndContinue' : 'approve'}`)}
+      {this.t('buttons.approve')}
     </Button>
   }
 }

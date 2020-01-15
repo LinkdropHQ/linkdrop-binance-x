@@ -1,7 +1,7 @@
 import React from 'react'
 import { actions, translate } from 'decorators'
 import styles from './styles.module'
-import { MetamaskPopup } from 'components/common'
+import { TransactionPopup } from 'components/common'
 import { convertFromExponents } from '@linkdrop/binance-commons'
 import { multiply, bignumber, add } from 'mathjs'
 import config from 'config-dashboard'
@@ -10,10 +10,10 @@ import config from 'config-dashboard'
 @translate('common.instruction')
 class Instruction extends React.Component {
   render () {
-    const { ethAmount, tokenAmount, tokenSymbol, linksAmount } = this.props
+    const { tokenAmount, tokenSymbol, linksAmount } = this.props
     return <div className={styles.container}>
       <p className={styles.text} dangerouslySetInnerHTML={{ __html: this.t('texts._3') }} />
-      <MetamaskPopup amount={tokenAmount ? 0 : convertFromExponents(multiply(add(bignumber(ethAmount), config.linkPrice), bignumber(linksAmount)))} />
+      <TransactionPopup amount={0} />
       <p className={styles.textExtra} dangerouslySetInnerHTML={{ __html: this.t('texts._2') }} />
     </div>
   }

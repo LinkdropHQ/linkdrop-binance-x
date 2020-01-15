@@ -7,7 +7,7 @@ import Input from './input'
 import Select from './select'
 import ProgressBar from './progress-bar'
 import PageHeader from './page-header'
-import MetamaskPopup from './metamask-popup'
+import TransactionPopup from './transaction-popup'
 import PageLoader from './page-loader'
 import Instruction from './instruction'
 import NFTToken from './nft-token'
@@ -22,7 +22,7 @@ export {
   Select,
   ProgressBar,
   PageHeader,
-  MetamaskPopup,
+  TransactionPopup,
   PageLoader,
   Instruction,
   NFTToken

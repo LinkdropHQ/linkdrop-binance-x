@@ -12,6 +12,8 @@ import Cross from './cross'
 import Copy from './copy'
 import Qr from './qr'
 import Close from './close'
+import Ethereum from './ethereum'
+import Cursor from './cursor'
 
 export default {
   LinkdropLogo,
@@ -27,5 +29,7 @@ export default {
   Cross,
   Copy,
   Qr,
-  Close
+  Close,
+  Ethereum,
+  Cursor
 }

@@ -1,9 +1,5 @@
-import getItems from './get-items.js'
-import getERC721Items from './get-erc721-items.js'
-import getERC721TokenData from './get-erc721-token-data'
+import getAssets from './get-assets.js'
 
 export {
-  getItems,
-  getERC721Items,
-  getERC721TokenData
+  getAssets
 }

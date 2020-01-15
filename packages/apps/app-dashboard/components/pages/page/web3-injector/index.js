@@ -18,20 +18,10 @@ class Web3Injector extends React.Component {
     this.wc = new WalletConnect({
       bridge: "https://bridge.walletconnect.org"
     })
-    this.wc.getAccounts()
-      .then(result => {
-        // Returns the accounts
-        console.log({result})
-      })
-      .catch(error => {
-        // Error returned when rejected
-        console.error(error)
-      })
 
     if (this.wc.connected) {
-      console.log('here initial connect1')
+      console.log('here initial connect')
       this.applyWalletConnect(this.wc)
-        
     }
 
     this.wc.on("session_update", (error, payload) => {

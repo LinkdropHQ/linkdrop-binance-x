@@ -2,7 +2,6 @@ import React from 'react'
 import { actions, translate } from 'decorators'
 import styles from './styles.module'
 import { PageHeader, PageLoader, Instruction } from 'components/common'
-import EthAmountData from './eth-amount-data'
 import LinkContents from './link-contents'
 import ApproveSummary from './approve-summary'
 import NextButton from './next-button'
@@ -18,24 +17,19 @@ import { linksLimit } from 'app.config.js'
     chainId
   },
   tokens: {
-    ethBalanceFormatted,
-    erc20BalanceFormatted,
-    address,
-    erc721IsApproved
+    balanceFormatted,
+    address
   },
   connector: {
-    status: metamaskStatus
+    status: connectorStatus
   },
   campaigns: {
-    ethAmount,
     tokenAmount,
     linksAmount,
     proxyAddress,
-    tokenType,
     tokenSymbol
   }
 }) => ({
-  ethAmount,
   tokenAmount,
   linksAmount,
   address,
@@ -43,13 +37,10 @@ import { linksLimit } from 'app.config.js'
   tokenSymbol,
   loading,
   currentAddress,
-  metamaskStatus,
+  connectorStatus,
   chainId,
-  ethBalanceFormatted,
-  proxyAddress,
-  tokenType,
-  erc20BalanceFormatted,
-  erc721IsApproved
+  balanceFormatted,
+  proxyAddress
 }))
 @translate('pages.campaignCreate')
 class Step2 extends React.Component {
@@ -62,31 +53,27 @@ class Step2 extends React.Component {
     }
   }
 
-  componentWillReceiveProps ({ linksAmount, erc721IsApproved, metamaskStatus, errors, ethBalanceFormatted, erc20BalanceFormatted }) {
+  componentWillReceiveProps ({ linksAmount, connectorStatus, errors, balanceFormatted }) {
     const {
-      metamaskStatus: prevMetamaskStatus,
+      connectorStatus: prevConnectorStatus,
       errors: prevErrors,
-      erc20BalanceFormatted: prevErc20BalanceFormatted,
+      balanceFormatted: prevBalanceFormatted,
       proxyAddress,
       chainId,
       address: tokenAddress,
-      currentAddress,
-      tokenType,
-      erc721IsApproved: prevErc721IsApproved,
-      ethBalanceFormatted: prevEthBalanceFormatted
+      currentAddress
     } = this.props
 
-    if (metamaskStatus && metamaskStatus === 'finished' && metamaskStatus !== prevMetamaskStatus) {
+    if (connectorStatus && connectorStatus === 'finished' && connectorStatus !== prevConnectorStatus) {
       this.setState({
         loading: true
       }, _ => {
-        if (tokenType === 'eth') {
-          this.intervalCheck = window.setInterval(_ => this.actions().tokens.getEthBalance({ account: proxyAddress, chainId }), config.balanceCheckInterval)
-        } else if (tokenType === 'erc20') {
-          this.intervalCheck = window.setInterval(_ => this.actions().tokens.getERC20Balance({ chainId, tokenAddress, account: proxyAddress, currentAddress }), config.balanceCheckInterval)
-        } else {
-          this.intervalCheck = window.setInterval(_ => this.actions().tokens.getERC721Approved({ chainId, tokenAddress, account: proxyAddress, currentAddress }), config.balanceCheckInterval)
-        }
+        this.intervalCheck = window.setInterval(_ => this.actions().tokens.getBalance({
+          chainId,
+          tokenAddress,
+          account: proxyAddress,
+          currentAddress
+        }), config.balanceCheckInterval)
       })
     }
 
@@ -99,42 +86,18 @@ class Step2 extends React.Component {
       })
     }
 
-    if (tokenType === 'eth') {
-      if (ethBalanceFormatted && Number(ethBalanceFormatted) > 0 && ethBalanceFormatted !== prevEthBalanceFormatted) {
-        this.setState({
-          loading: false
-        }, _ => {
-          this.intervalCheck && window.clearInterval(this.intervalCheck)
-          // if links amount > 1000 -> go to script page
-          if (linksAmount >= linksLimit) {
-            return window.setTimeout(_ => this.actions().campaigns.save({ links: [] }), config.nextStepTimeout)
-          }
-          window.setTimeout(_ => this.actions().user.setStep({ step: 4 }), config.nextStepTimeout)
-        })
-      }
-    } else if (tokenType === 'erc20') {
-      if (erc20BalanceFormatted && Number(erc20BalanceFormatted) > 0 && erc20BalanceFormatted !== prevErc20BalanceFormatted) {
-        this.setState({
-          loading: false
-        }, _ => {
-          this.intervalCheck && window.clearInterval(this.intervalCheck)
-          window.setTimeout(_ => this.actions().user.setStep({ step: 3 }), config.nextStepTimeout)
-        })
-      }
-    } else {
-      if (erc721IsApproved && !prevErc721IsApproved) {
-        this.setState({
-          loading: false
-        }, _ => {
-          this.intervalCheck && window.clearInterval(this.intervalCheck)
-          window.setTimeout(_ => this.actions().user.setStep({ step: 3 }), config.nextStepTimeout)
-        })
-      }
+    if (balanceFormatted && Number(balanceFormatted) > 0 && balanceFormatted !== prevBalanceFormatted) {
+      this.setState({
+        loading: false
+      }, _ => {
+        this.intervalCheck && window.clearInterval(this.intervalCheck)
+        window.setTimeout(_ => this.actions().user.setStep({ step: 3 }), config.nextStepTimeout)
+      })
     }
   }
 
   render () {
-    const { ethAmount, tokenType, tokenAmount, linksAmount, tokenSymbol, loading, currentAddress } = this.props
+    const { tokenAmount, linksAmount, tokenSymbol, loading, currentAddress } = this.props
     const { loading: stateLoading } = this.state
     return <div className={styles.container}>
       {(stateLoading || loading) && <PageLoader transaction={stateLoading} />}
@@ -174,24 +137,28 @@ class Step2 extends React.Component {
                 <div className={styles.dataContent}>
                   <LinkContents />
                 </div>
-
               </div>
-              <EthAmountData />
             </div>
           </div>
           <div className={styles.serviceFee}>{this.t('texts._18')}</div>
-          <ApproveSummary tokenType={tokenType} linksAmount={linksAmount} serviceFee={config.linkPrice} ethAmount={ethAmount} tokenAmount={tokenAmount} tokenSymbol={tokenSymbol} />
+          <ApproveSummary
+            linksAmount={linksAmount}
+            serviceFee={config.linkPrice}
+            tokenAmount={tokenAmount}
+            tokenSymbol={tokenSymbol}
+          />
           <NextButton
-            tokenType={tokenType}
             tokenAmount={tokenAmount}
             currentAddress={currentAddress}
             linksAmount={linksAmount}
-            ethAmount={ethAmount}
             serviceFee={config.linkPrice}
           />
         </div>
         <div className={styles.description}>
-          <Instruction linksAmount={linksAmount} ethAmount={ethAmount} tokenAmount={tokenAmount} tokenType={tokenType} />
+          <Instruction
+            linksAmount={linksAmount}
+            tokenAmount={tokenAmount}
+          />
         </div>
       </div>
     </div>

@@ -3,14 +3,12 @@ class Campaign {
     this.actions = actions
   }
 
-  prepareNewData ({ tokenAmount, wallet, ethAmount, linksAmount, tokenSymbol, tokenType }) {
+  prepareNewData ({ tokenAmount, wallet, linksAmount, tokenSymbol }) {
     this.actions.dispatch({
-      type: '*CAMPAIGNS.PREPARE_DATA',
+      type: '*CAMPAIGNS.PREPARE_NEW_DATA',
       payload: {
         tokenAmount,
         wallet,
-        tokenType,
-        ethAmount,
         linksAmount,
         tokenSymbol
       }
@@ -18,7 +16,12 @@ class Campaign {
   }
 
   createProxyAddress ({ campaignId }) {
-    this.actions.dispatch({ type: '*CAMPAIGNS.CREATE_PROXY_ADDRESS', payload: { campaignId } })
+    this.actions.dispatch({
+      type: '*CAMPAIGNS.CREATE_PROXY_ADDRESS',
+      payload: {
+        campaignId
+      }
+    })
   }
 
   proceedPayment ({ cardNumber }) {

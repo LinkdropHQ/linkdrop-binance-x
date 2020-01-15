@@ -27,9 +27,10 @@ class Page extends React.Component {
     if (currentAddress === null && loading) {
       return <Loading />
     }
-    if (!defineNetworkName({ chainId })) {
-      return <NetworkNotSupported />
-    }
+    // commented out because we need to define valid network ids
+    // if (!defineNetworkName({ chainId })) {
+    //   return <NetworkNotSupported />
+    // }
     return this.props.children
   }
 

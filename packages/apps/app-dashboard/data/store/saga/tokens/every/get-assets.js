@@ -1,5 +1,5 @@
 import { put, call, select } from 'redux-saga/effects'
-import { getItems } from 'data/api/tokens'
+import { getAssets } from 'data/api/tokens'
 import { defineNetworkName } from '@linkdrop/binance-commons'
 
 const generator = function * () {
@@ -16,17 +16,15 @@ const generator = function * () {
     //   }
     // })
 
-    const { status = 0, result = [], message } = yield call(getItems, { address: currentAddress, networkName })
-    if (status && status === '1' && message === 'OK') {
-      const erc20Assets = result.filter(asset => asset.type === 'ERC-20').map(item => {
+    const { balances, address } = yield call(getAssets, { address: currentAddress, networkName })
+    if (balances && balances.length > 0) {
+      const assets = balances.map(item => {
         return {
           ...item,
-          symbol: defineSymbol({ item, chainId }),
-          decimals: defineDecimals({ decimals: item.decimals }),
-          address: item.contractAddress
+          amount: item.free
         }
       })
-      yield put({ type: 'TOKENS.SET_ASSETS', payload: { assets: erc20Assets } })
+      yield put({ type: 'TOKENS.SET_ASSETS', payload: { assets } })
     }
   } catch (e) {
     console.error(e)
