@@ -1,4 +1,4 @@
 {
-    "SENDER_PRIVATE_KEY": "", // Private key of the account holding tokens to be distributed
-    "VERIFIER_ADDRESS": "" // Address corresponding to `VERIFIER_PRIVATE_KEY` that signed links
+    "SENDER_PRIVATE_KEY": "",
+    "VERIFIER_ADDRESS": "" 
 }
