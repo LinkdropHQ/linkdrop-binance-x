@@ -12,25 +12,27 @@
   </a>
 </p>
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/LinkdropHQ/linkdrop-binance-x/tree/dev)
+
 ## Getting started
 
 Clone repo
+
 ```bash
 git clone https://github.com/LinkdropHQ/linkdrop-binance-x.git
 ```
 
 Install dependencies
+
 ```bash
 yarn install
 ```
 
-
 ## Contributors
 
-* **Amir Jumaniyazov:** [@amiromayer](https://github.com/amiromayer)
+- **Amir Jumaniyazov:** [@amiromayer](https://github.com/amiromayer)
 
-* **Mikhail Dobrokhvalov:** [@dobrokhvalov](https://github.com/dobrokhvalov)
-
+- **Mikhail Dobrokhvalov:** [@dobrokhvalov](https://github.com/dobrokhvalov)
 
 ## Contributing
 
