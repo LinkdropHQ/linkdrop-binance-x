@@ -2,7 +2,7 @@ import ClaimTx from '../models/ClaimTx'
 import { wrapAsync } from '../utils'
 import sdk from '@linkdrop/binance-sdk'
 import Table from 'cli-table'
-import config from '../../config/config.json'
+import config from '../../config'
 
 /**
  * Function to check whether a `linkId` has already been claimed
@@ -138,11 +138,11 @@ const claim = wrapAsync(async (req, res) => {
           console.log(table.toString(), '\n')
 
           asset,
-          amount,
-          linkId,
-          verifierSignature,
-          receiverAddress,
-          receiverSignature
+            amount,
+            linkId,
+            verifierSignature,
+            receiverAddress,
+            receiverSignature
         }
 
         res.json({

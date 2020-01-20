@@ -1,0 +1,1 @@
+web: npx pm2-runtime start --name relayer npm -- run server

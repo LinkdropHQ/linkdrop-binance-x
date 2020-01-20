@@ -23,10 +23,8 @@
     "fast-csv": "^3.0.1",
     "mongoose": "^5.6.0",
     "morgan": "^1.9.1",
-    "pm2": "^3.5.1",
-    "query-string": "^6.8.1"
-  },
-  "devDependencies": {
+    "pm2": "^4.2.2",
+    "query-string": "^6.8.1",
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
     "@babel/node": "^7.4.5",
