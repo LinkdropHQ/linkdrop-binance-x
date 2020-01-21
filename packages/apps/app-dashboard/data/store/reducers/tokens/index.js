@@ -3,16 +3,9 @@ import reducers from './reducers'
 const initialState = {
   assets: [],
   symbol: null,
-  decimals: null,
   loading: false,
-  tokenType: null,
-  address: null,
-  ethBalanceFormatted: null,
-  erc20Balance: null,
-  ethBalance: null,
-  erc20BalanceFormatted: null,
-  currentEthBalance: null,
-  currentTokenBalance: null
+  balance: null,
+  currentBalance: null
 }
 
 export default (state = initialState, action = {}) => {
@@ -25,13 +18,8 @@ export default (state = initialState, action = {}) => {
 
 const ACTIONS = {
   'TOKENS.SET_ASSETS': reducers.setAssets,
-  'TOKENS.SET_TOKEN_SYMBOL': reducers.setTokenSymbol,
-  'TOKENS.SET_TOKEN_ADDRESS': reducers.setTokenAddress,
-  'TOKENS.SET_TOKEN_TYPE': reducers.setTokenType,
-  'TOKENS.SET_TOKEN_DECIMALS': reducers.setTokenDecimals,
-  'TOKENS.SET_ETH_BALANCE': reducers.setEthBalance,
-  'TOKENS.SET_ERC20_BALANCE': reducers.setERC20Balance,
+  'TOKENS.SET_SYMBOL': reducers.setSymbol,
+  'TOKENS.SET_BALANCE': reducers.setBalance,
   'TOKENS.SET_LOADING': reducers.setLoading,
-  'TOKENS.SET_CURRENT_ETH_BALANCE': reducers.setCurrentEthBalance,
-  'TOKENS.SET_CURRENT_TOKEN_BALANCE': reducers.setCurrentTokenBalance
+  'TOKENS.SET_CURRENT_BALANCE': reducers.setCurrentBalance
 }

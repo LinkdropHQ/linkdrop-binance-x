@@ -1,11 +1,11 @@
 import React from 'react'
 import { actions, translate } from 'decorators'
 import styles from './styles.module'
-import classNames from 'classnames'
-import { Button, PageHeader, PageLoader, Instruction } from 'components/common'
+import { PageHeader, PageLoader, Instruction } from 'components/common'
+import LinkContents from './link-contents'
+import ApproveSummary from './approve-summary'
+import NextButton from './next-button'
 import config from 'config-dashboard'
-import { multiply, add, bignumber, subtract } from 'mathjs'
-import EthSummaryBlock from './eth-summary-block'
 import { defineDefaultSymbol } from 'helpers'
 import { linksLimit } from 'app.config.js'
 
@@ -17,38 +17,31 @@ import { linksLimit } from 'app.config.js'
     chainId
   },
   tokens: {
-    ethBalanceFormatted,
-    erc20BalanceFormatted,
+    balanceFormatted,
     address
   },
   connector: {
-    status: metamaskStatus
+    status: connectorStatus
   },
   campaigns: {
-    ethAmount,
     tokenAmount,
-    proxyAddress,
     linksAmount,
-    tokenType,
+    proxyAddress,
     tokenSymbol
   }
 }) => ({
-  ethAmount,
   tokenAmount,
-  metamaskStatus,
   linksAmount,
+  address,
   errors,
   tokenSymbol,
   loading,
   currentAddress,
+  connectorStatus,
   chainId,
-  address,
-  proxyAddress,
-  tokenType,
-  ethBalanceFormatted,
-  erc20BalanceFormatted
-})
-)
+  balanceFormatted,
+  proxyAddress
+}))
 @translate('pages.campaignCreate')
 class Step3 extends React.Component {
   constructor (props) {
@@ -60,72 +53,117 @@ class Step3 extends React.Component {
     }
   }
 
-  componentWillReceiveProps ({ linksAmount, metamaskStatus, errors, ethBalanceFormatted, erc20BalanceFormatted }) {
+  componentWillReceiveProps ({ linksAmount, connectorStatus, errors, balanceFormatted }) {
     const {
-      metamaskStatus: prevMetamaskStatus,
+      connectorStatus: prevConnectorStatus,
       errors: prevErrors,
+      balanceFormatted: prevBalanceFormatted,
       proxyAddress,
-      ethBalanceFormatted: prevEthBalanceFormatted,
-      chainId
+      chainId,
+      address: tokenAddress,
+      currentAddress
     } = this.props
 
-    if (metamaskStatus && metamaskStatus === 'finished' && metamaskStatus !== prevMetamaskStatus) {
-      return this.setState({
+    if (connectorStatus && connectorStatus === 'finished' && connectorStatus !== prevConnectorStatus) {
+      this.setState({
         loading: true
       }, _ => {
-        this.intervalEthCheck = window.setInterval(_ => this.actions().tokens.getEthBalance({ account: proxyAddress, chainId }), config.balanceCheckInterval)
-      })
-    }
-    if (errors && errors[0] && prevErrors.length === 0 && errors[0] !== prevErrors[0]) {
-      window.alert(this.t(`errors.${errors[0]}`))
-      this.setState({
-        loading: false
-      }, _ => {
-        this.intervalEthCheck && window.clearInterval(this.intervalEthCheck)
+        this.intervalCheck = window.setInterval(_ => this.actions().tokens.getBalance({
+          chainId,
+          tokenAddress,
+          account: proxyAddress,
+          currentAddress
+        }), config.balanceCheckInterval)
       })
     }
 
-    if (ethBalanceFormatted && Number(ethBalanceFormatted) > 0 && ethBalanceFormatted !== prevEthBalanceFormatted) {
+    if (errors && errors[0] && prevErrors.length === 0 && errors[0] !== prevErrors[0]) {
       this.setState({
         loading: false
       }, _ => {
-        this.intervalEthCheck && window.clearInterval(this.intervalEthCheck)
-        // if links amount >= 1000 -> go to script page
-        if (linksAmount >= linksLimit) {
-          return window.setTimeout(_ => this.actions().campaigns.save({ links: [] }), config.nextStepTimeout)
-        }
-        window.setTimeout(_ => this.actions().user.setStep({ step: 4 }), config.nextStepTimeout)
+        window.alert(this.t(`errors.${errors[0]}`))
+        this.intervalCheck && window.clearInterval(this.intervalCheck)
+      })
+    }
+
+    if (balanceFormatted && Number(balanceFormatted) > 0 && balanceFormatted !== prevBalanceFormatted) {
+      this.setState({
+        loading: false
+      }, _ => {
+        this.intervalCheck && window.clearInterval(this.intervalCheck)
+        window.setTimeout(_ => this.actions().user.setStep({ step: 3 }), config.nextStepTimeout)
       })
     }
   }
 
   render () {
+    const { tokenAmount, linksAmount, tokenSymbol, loading, currentAddress } = this.props
     const { loading: stateLoading } = this.state
-    const { linksAmount, ethAmount, chainId, currentAddress, loading } = this.props
-    const ethAmountFinal = multiply(add(bignumber(ethAmount), bignumber(config.linkPrice)), linksAmount)
-    const serviceFee = multiply(bignumber(config.linkPrice), bignumber(linksAmount))
     return <div className={styles.container}>
-      {(loading || stateLoading) && <PageLoader transaction={stateLoading} />}
-      <PageHeader title={this.t('titles.sendEth', { symbol: this.defaultSymbol, ethAmount: ethAmountFinal })} />
+      {(stateLoading || loading) && <PageLoader transaction={stateLoading} />}
+      <PageHeader title={this.t('titles.summaryPay')} />
       <div className={styles.main}>
+        <div className={styles.summary}>
+          <div className={styles.summaryBox}>
+            <div>
+              <div className={styles.data}>
+                <h3 className={styles.dataTitle}>
+                  {this.t('titles.linksToGenerate')}
+                </h3>
+
+                <div className={styles.dataContent}>
+                  {linksAmount}
+                </div>
+              </div>
+              <div className={styles.data}>
+                <h3 className={styles.dataTitle}>
+                  {this.t('titles.serviceFeeTitle')}
+                </h3>
+                <div className={styles.dataContent}>
+                  {`${linksAmount * config.linkPrice} ${this.defaultSymbol}`}
+                </div>
+                <div className={styles.extraDataContent}>
+                  {this.t('titles.ethPerLink', { symbol: this.defaultSymbol, eth: config.linkPrice })}
+                </div>
+
+              </div>
+            </div>
+
+            <div>
+              <div className={styles.data}>
+                <h3 className={styles.dataTitle}>
+                  {this.t('titles.oneLinkContainsTitle')}
+                </h3>
+                <div className={styles.dataContent}>
+                  <LinkContents />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className={styles.serviceFee}
+          >
+            {this.t('texts._18')}
+          </div>
+          <ApproveSummary
+            linksAmount={linksAmount}
+            serviceFee={config.linkPrice}
+            tokenAmount={tokenAmount}
+            tokenSymbol={tokenSymbol}
+          />
+          <NextButton
+            tokenAmount={tokenAmount}
+            currentAddress={currentAddress}
+            linksAmount={linksAmount}
+            serviceFee={config.linkPrice}
+          />
+        </div>
         <div className={styles.description}>
-          <p className={styles.text} dangerouslySetInnerHTML={{ __html: this.t('texts._10') }} />
+          <Instruction
+            linksAmount={linksAmount}
+            tokenAmount={tokenAmount}
+          />
         </div>
-        <div className={styles.scheme}>
-          <Instruction linksAmount={linksAmount} ethAmount={ethAmount} />
-        </div>
-      </div>
-      <EthSummaryBlock symbol={this.defaultSymbol} ethTotal={ethAmountFinal} ethToDistribute={subtract(bignumber(ethAmountFinal), bignumber(serviceFee))} serviceFee={serviceFee} text={this.t} />
-      <div className={styles.controls}>
-        <Button
-          disabled={loading || stateLoading}
-          className={styles.button}
-          onClick={_ => {
-            this.actions().metamask.sendEth({ ethAmount: ethAmountFinal, account: currentAddress, chainId })
-          }}
-        >
-          {this.t('buttons.send')}
-        </Button>
       </div>
     </div>
   }

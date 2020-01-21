@@ -35,6 +35,7 @@ const generator = function * ({ payload }) {
       return yield put({ type: 'USER.SET_LOADING', payload: { loading: false } })
     }
     window.addressChangeInterval && window.clearInterval(window.addressChangeInterval)
+    yield put({ type: '*USER.CREATE_KEYS' })
     yield put({ type: 'USER.SET_CURRENT_ADDRESS', payload: { currentAddress: binanceAddress.address } })
     yield put({ type: 'USER.SET_CHAIN_ID', payload: { chainId: NETWORK } })
     yield put({ type: 'USER.SET_LOADING', payload: { loading: false } })

@@ -5,10 +5,10 @@ class User {
 
   setStep ({ step }) {
     this.actions.dispatch({ type: 'USER.SET_STEP', payload: { step } })
-  }
+  } 
 
-  createSigningKey ({ chainId, account }) {
-    this.actions.dispatch({ type: '*USER.CREATE_SIGNING_KEY', payload: { chainId, account } })
+  createKeys () {
+    this.actions.dispatch({ type: '*USER.CREATE_KEYS' })
   }
 
   setCurrentAddress ({ currentAddress }) {
@@ -18,10 +18,6 @@ class User {
   setWCInstance ({ wc }) {
     console.log({ wc })
     this.actions.dispatch({ type: '*USER.SET_WC_INSTANCE', payload: { wc } })
-  }
-
-  prepareVersionVar ({ chainId, currentAddress }) {
-    this.actions.dispatch({ type: '*USER.PREPARE_VERSION_VAR', payload: { chainId, currentAddress } })
   }
 
   setChainId ({ chainId }) {

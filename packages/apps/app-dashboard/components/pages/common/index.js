@@ -6,8 +6,6 @@ import Step6 from './step-6'
 import TokenAddressInput from './token-address-input'
 import LinksContent from './links-content'
 import NextButton from './next-button'
-import AddEthField from './add-eth-field'
-import EthTexts from './eth-texts'
 
 export {
   Step2,
@@ -17,7 +15,5 @@ export {
   TokenAddressInput,
   LinksContent,
   NextButton,
-  AddEthField,
-  EthTexts,
   Step6
 }

@@ -1,23 +1,13 @@
 import setAssets from './set-assets'
-import setTokenSymbol from './set-token-symbol'
-import setTokenDecimals from './set-token-decimals'
-import setTokenType from './set-token-type'
-import setTokenAddress from './set-token-address'
-import setEthBalance from './set-eth-balance'
-import setERC20Balance from './set-erc20-balance'
+import setSymbol from './set-symbol'
+import setBalance from './set-balance'
 import setLoading from './set-loading'
-import setCurrentEthBalance from './set-current-eth-balance'
-import setCurrentTokenBalance from './set-current-token-balance'
+import setCurrentBalance from './set-current-balance'
 
 export default {
   setAssets,
-  setTokenSymbol,
-  setTokenDecimals,
-  setTokenAddress,
-  setTokenType,
-  setEthBalance,
+  setSymbol,
   setLoading,
-  setERC20Balance,
-  setCurrentEthBalance,
-  setCurrentTokenBalance
+  setBalance,
+  setCurrentBalance
 }

@@ -7,17 +7,9 @@ import { convertFromExponents } from '@linkdrop/binance-commons'
 const generator = function * ({ payload }) {
   try {
     yield put({ type: 'USER.SET_LOADING', payload: { loading: true } })
-    const erc20Balance = yield select(generator.selectors.tokenAmount)
-    const ethBalance = yield select(generator.selectors.ethAmount)
-    const weiAmount = utils.parseEther(convertFromExponents(ethBalance || 0))
-    const decimals = yield select(generator.selectors.decimals)
+    const tokenAmount = yield select(generator.selectors.tokenAmount)
     const defaultWallet = yield select(generator.selectors.defaultWallet)
-    const sdk = yield select(generator.selectors.sdk)
     const campaignId = yield select(generator.selectors.campaignId)
-    const erc20BalanceFormatted = utils.parseUnits(
-      String(erc20Balance),
-      decimals
-    )
     const privateKey = yield select(generator.selectors.privateKey)
     const tokenAddress = yield select(generator.selectors.tokenAddress)
     const link = yield sdk.generateLink({

@@ -6,7 +6,6 @@ const generator = function * () {
   try {
     const chainId = yield select(generator.selectors.chainId)
     const currentAddress = yield select(generator.selectors.currentAddress)
-    console.log({ currentAddress })
     const networkName = defineNetworkName({ chainId })
     // const { ethBalanceFormatted } = yield getCurrentEthBalance({ payload: { account: currentAddress, chainId } })
     // yield put({
@@ -16,7 +15,7 @@ const generator = function * () {
     //   }
     // })
 
-    const { balances, address } = yield call(getAssets, { address: currentAddress, networkName })
+    const { balances, address, account_number: accountNumber, sequence } = yield call(getAssets, { address: currentAddress, networkName })
     if (balances && balances.length > 0) {
       const assets = balances.map(item => {
         return {
@@ -26,6 +25,8 @@ const generator = function * () {
       })
       yield put({ type: 'TOKENS.SET_ASSETS', payload: { assets } })
     }
+    yield put({ type: 'USER.SET_ACCOUNT_NUMBER', payload: { accountNumber } })
+    yield put({ type: 'USER.SET_SEQUENCE', payload: { sequence } })
   } catch (e) {
     console.error(e)
   }

@@ -10,7 +10,8 @@ class NextButton extends React.Component {
   render () {
     const { chainId, tokenAmount, currentAddress, linksAmount, serviceFee } = this.props
     return <Button
-      className={styles.button} onClick={_ => {
+      className={styles.button}
+      onClick={_ => {
         this.actions().connector.send({
           tokenAmount: multiply(bignumber(tokenAmount), bignumber(linksAmount)),
           account: currentAddress,

@@ -1,6 +1,5 @@
 import { takeEvery } from 'redux-saga/effects'
 
-import createProxyAddress from './every/create-proxy-address'
 import prepareNewData from './every/prepare-new-data'
 import proceedPayment from './every/proceed-payment'
 import resetData from './every/reset-data'
@@ -10,7 +9,6 @@ import changeStatus from './every/change-status'
 import checkStatusTxHash from './every/check-status-tx-hash'
 
 export default function * () {
-  yield takeEvery('*CAMPAIGNS.CREATE_PROXY_ADDRESS', createProxyAddress)
   yield takeEvery('*CAMPAIGNS.PREPARE_NEW_DATA', prepareNewData)
   yield takeEvery('*CAMPAIGNS.PROCEED_PAYMENT', proceedPayment)
   yield takeEvery('*CAMPAIGNS.SAVE', save)

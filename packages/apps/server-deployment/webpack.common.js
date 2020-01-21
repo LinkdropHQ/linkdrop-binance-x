@@ -1,5 +1,5 @@
-const path = require('path')
 const webpack = require('webpack')
+const path = require('path')
 const autoprefixer = require('autoprefixer')
 
 const CSSModuleLoader = {
@@ -36,10 +36,15 @@ const postCSSLoader = {
 
 module.exports = {
   entry: [
+    'webpack/hot/dev-server',
     '@babel/polyfill',
-    './index.js',
-    'webpack/hot/dev-server'
+    './index.js'
   ],
+  node: {
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty'
+  },
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'assets/scripts')
@@ -55,8 +60,6 @@ module.exports = {
     alias: {
       wallets: path.resolve(__dirname, '../../../configs/wallets.config'),
       config: path.resolve(__dirname, '../../../configs/app.config'),
-      'config-dashboard': path.resolve(__dirname, '../../../configs/dashboard.config.json'),
-      contracts: path.resolve(__dirname, '../../contracts/build'),
       variables: path.resolve(__dirname, '../linkdrop-commons/variables/index.module.scss')
     }
   },
@@ -65,7 +68,7 @@ module.exports = {
       enforce: 'pre',
       test: /\.(js|jsx)$/,
       loader: 'standard-loader',
-      exclude: /(node_modules|bower_components|linkdrop-ui-kit)/,
+      exclude: /(node_modules|bower_components)/,
       options: {
         parser: 'babel-eslint'
       }
@@ -100,12 +103,7 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      MASTER_COPY: JSON.stringify(process.env.MASTER_COPY),
-      FACTORY: JSON.stringify(process.env.FACTORY),
-      JSON_RPC_URL_XDAI: JSON.stringify(process.env.JSON_RPC_URL_XDAI),
-      INFURA_PK: JSON.stringify(process.env.INFURA_PK),
-      CLAIM_HOST: JSON.stringify(process.env.CLAIM_HOST),
-      DEPLOYMENT_URL: JSON.stringify(process.env.DEPLOYMENT_URL),
+      API_HOST: JSON.stringify(process.env.API_HOST),
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
       }

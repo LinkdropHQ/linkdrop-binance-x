@@ -9,39 +9,40 @@ const generator = function * ({ payload }) {
     yield put({ type: 'USER.SET_STEP', payload: { step: links.length === 0 ? 6 : 5 } })
     const chainId = yield select(generator.selectors.chainId)
     const currentAddress = yield select(generator.selectors.currentAddress)
-    const privateKey = yield select(generator.selectors.privateKey)
+    // keys
+    const senderPrivateKey = yield select(generator.selectors.senderPrivateKey)
+    const verifierPrivateKey = yield select(generator.selectors.verifierPrivateKey)
+    const senderAddress = yield select(generator.selectors.senderAddress)
+    const verifierAddress = yield select(generator.selectors.verifierAddress)
+
+    // campaign data
     const tokenAddress = yield select(generator.selectors.tokenAddress)
     const tokenDecimals = yield select(generator.selectors.tokenDecimals)
     const {
-      tokenAmount,
-      tokenSymbol,
-      ethAmount,
+      amount,
+      symbol,
       id,
       linksAmount,
-      tokenType,
       date,
-      proxyAddress,
       defaultWallet
     } = yield select(generator.selectors.campaignData)
 
     const newCampaign = {
-      tokenAmount,
-      tokenSymbol,
-      ethAmount,
+      amount,
+      symbol,
       defaultWallet,
       status: 'active',
       linksAmount,
-      tokenType,
       created: date,
       links,
       chainId,
       id: proxyAddress,
       campaignId: id,
-      proxyAddress,
       currentAddress,
-      privateKey,
-      tokenAddress,
-      tokenDecimals
+      senderPrivateKey,
+      verifierPrivateKey,
+      senderAddress,
+      verifierAddress
     }
     const campaigns = yield select(generator.selectors.campaigns)
     const campaignsUpdated = campaigns.concat(newCampaign)
@@ -59,32 +60,27 @@ const generator = function * ({ payload }) {
 export default generator
 generator.selectors = {
   currentAddress: ({ user: { currentAddress } }) => currentAddress,
-  privateKey: ({ user: { privateKey } }) => privateKey,
+  senderPrivateKey: ({ user: { senderPrivateKey } }) => senderPrivateKey,
+  verifierPrivateKey: ({ user: { verifierPrivateKey } }) => verifierPrivateKey,
+  senderAddress: ({ user: { senderAddress } }) => senderAddress,
+  verifierAddress: ({ user: { verifierAddress } }) => verifierAddress,
   campaigns: ({ campaigns: { items: campaigns } }) => campaigns,
   chainId: ({ user: { chainId } }) => chainId,
-  tokenAddress: ({ tokens: { address } }) => address,
-  tokenDecimals: ({ tokens: { decimals } }) => decimals,
   campaignData: ({
     campaigns: {
-      tokenAmount,
-      tokenSymbol,
-      ethAmount,
+      amount,
+      symbol,
       linksAmount,
-      tokenType,
       date,
       id,
-      defaultWallet = 'trust',
-      proxyAddress
+      defaultWallet = 'trust'
     }
   }) => ({
-    tokenAmount,
-    tokenSymbol,
-    ethAmount,
+    amount,
+    symbol,
     linksAmount,
-    tokenType,
     defaultWallet,
     date,
-    id,
-    proxyAddress
+    id
   })
 }
