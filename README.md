@@ -31,6 +31,8 @@ yarn install
 
 * **Mikhail Dobrokhvalov:** [@dobrokhvalov](https://github.com/dobrokhvalov)
 
+* **Haz Baikulov:** [@spacehaz](https://github.com/spacehaz)
+
 
 ## Contributing
 
