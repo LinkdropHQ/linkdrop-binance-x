@@ -14,6 +14,7 @@ import Qr from './qr'
 import Close from './close'
 import Ethereum from './ethereum'
 import Cursor from './cursor'
+import ExternalLink from './external-link'
 
 export default {
   LinkdropLogo,
@@ -31,5 +32,6 @@ export default {
   Qr,
   Close,
   Ethereum,
-  Cursor
+  Cursor,
+  ExternalLink
 }

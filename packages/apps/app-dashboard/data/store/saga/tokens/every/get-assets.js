@@ -20,6 +20,7 @@ const generator = function * () {
           amount: item.free
         }
       })
+      console.log({ assets })
       yield put({ type: 'TOKENS.SET_ASSETS', payload: { assets } })
     }
     yield put({ type: 'USER.SET_ACCOUNT_NUMBER', payload: { accountNumber } })

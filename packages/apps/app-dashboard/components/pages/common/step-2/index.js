@@ -24,10 +24,6 @@ class Step2 extends React.Component {
 		}
 	}
 
-	componentDidMount () {
-		this.actions().user.createKeys()
-	}
-
   render () {
   	const { senderPrivateKey, verifierAddress } = this.props
   	const { apiHost } = this.state

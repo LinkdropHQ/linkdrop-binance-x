@@ -15,8 +15,9 @@ const generator = function * () {
     const bnbClient = new BnbApiClient(api)
     yield bnbClient.chooseNetwork('mainnet')
     const { privateKey: senderPrivateKey, address: senderAddress } = yield bnbClient.createAccount()
-    console.log({ privateKey: senderPrivateKey, address: senderAddress })
+    console.log({ senderPrivateKey, senderAddress })
     const { address: verifierAddress, privateKey: verifierPrivateKey } = newWallet
+    console.log({ verifierAddress, verifierPrivateKey })
     yield put({ type: 'USER.SET_VERIFIER_PRIVATE_KEY', payload: { verifierPrivateKey } })
     yield put({ type: 'USER.SET_VERIFIER_ADDRESS', payload: { verifierAddress } })
     yield put({ type: 'USER.SET_SENDER_PRIVATE_KEY', payload: { senderPrivateKey } })

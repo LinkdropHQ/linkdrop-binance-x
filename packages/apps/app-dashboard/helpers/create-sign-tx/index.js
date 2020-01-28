@@ -5,7 +5,9 @@ export default ({
   sequence,
   toAddress,
   fromAddress,
-  amount
+  amount,
+  feeSymbol,
+  feeAmount
 }) => {
   return {
     accountNumber: String(accountNumber),
@@ -13,23 +15,13 @@ export default ({
     fee: {
       amounts: [
         {
-          denom: symbol,
-          amount: String(amount / 100)
+          denom: feeSymbol,
+          amount: String(feeAmount / 100)
         }
       ],
-      gas: "200000"
+      gas: "37500"
     },
     sequence: String(sequence),
-    send_coins_message: {
-      fromAddress,
-      toAddress,
-      amounts: [
-        {
-          denom: symbol,
-          amount: String(amount)
-        }
-      ]
-    },
     sendCoinsMessage: {
       fromAddress,
       toAddress,

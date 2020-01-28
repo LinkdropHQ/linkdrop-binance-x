@@ -1,7 +1,6 @@
 import React from 'react'
 import { actions, translate } from 'decorators'
 import styles from './styles.module'
-import { defineDefaultSymbol } from 'helpers'
 import { ethers } from 'ethers'
 import classNames from 'classnames'
 import { Select, Input, PageHeader, PageLoader } from 'components/common'
@@ -12,40 +11,27 @@ import { TokenAddressInput, LinksContent, NextButton } from 'components/pages/co
 
 @actions(({
   user: {
-    chainId,
-    currentAddress,
-    loading,
-    privateKey
+    loading
   },
   campaigns: {
-    items,
-    proxyAddress,
-    links
+    items
   },
   tokens: {
-    assets,
-    currentTokenBalance
+    assets
   }
 }) => ({
   assets,
-  privateKey,
-  chainId,
   loading,
-  proxyAddress,
-  currentAddress,
-  items,
-  links,
-  currentTokenBalance
+  items
 }))
 @translate('pages.campaignCreate')
 class Step1 extends React.Component {
   constructor (props) {
     super(props)
-    const { assets, chainId } = this.props
-    this.defaultSymbol = defineDefaultSymbol({ chainId })
+    const { assets } = this.props
     this.TOKENS = []
     this.WALLETS = this.createWalletOptions()
-    const assetsPrepared = this.prepareAssets({ assets, chainId })
+    const assetsPrepared = this.prepareAssets({ assets })
     this.state = {
       options: assetsPrepared,
       tokenSymbol: (assetsPrepared[0] || {}).value,
@@ -67,10 +53,7 @@ class Step1 extends React.Component {
   }
 
   componentDidMount () {
-    const { currentAddress, chainId, proxyAddress, items } = this.props
-    // if (!proxyAddress) {
-    //   this.actions().campaigns.createProxyAddress({ campaignId: items.length })
-    // }
+    const { items } = this.props
     this.actions().tokens.getAssets()
   }
 
@@ -87,7 +70,7 @@ class Step1 extends React.Component {
 
   render () {
     const { tokenSymbol, linksAmount, tokenAmount, wallet, tokenAddress, options } = this.state
-    const { loading, currentTokenBalance, chainId, privateKey, proxyAddress } = this.props
+    const { loading } = this.props
     const tokenType = this.defineTokenType({ tokenSymbol })
     return <div className={styles.container}>
       {loading && <PageLoader />}
@@ -101,6 +84,9 @@ class Step1 extends React.Component {
               value={tokenSymbol}
               onChange={({ value }) => this.setField({ field: 'tokenSymbol', value })}
             />
+            <div className={styles.currentBalance}>
+              {this.t('titles.balance')} {this.renderAmount({ tokenSymbol, options })}
+            </div>
           </div>
           {this.renderTokenInputs({ tokenType, tokenAddress, tokenSymbol, tokenAmount })}
           <div className={styles.linksAmount}>
@@ -149,6 +135,14 @@ class Step1 extends React.Component {
     </div>
   }
 
+  renderAmount ({ tokenSymbol, options }) {
+    if (!options) { return null }
+    if (options.length === 0) { return null }
+    const currentAsset = options.find(asset => tokenSymbol === asset.value)
+    if (!currentAsset) { return null }
+    return <div>{currentAsset.amount}</div>
+  }
+
   renderTokenInputs ({ tokenType, tokenAddress, tokenSymbol, tokenAmount }) {
     return <div className={styles.tokensAmount}>
       <h3 className={styles.subtitle}>{this.t('titles.amountPerLink')}</h3>
@@ -165,14 +159,15 @@ class Step1 extends React.Component {
     </div>
   }
 
-  prepareAssets ({ assets, chainId }) {
-    return assets.map(({ symbol }) => ({
+  prepareAssets ({ assets }) {
+    return assets.map(({ symbol, amount }) => ({
       label: symbol,
-      value: symbol
+      value: symbol,
+      amount
     }))
   }
 
-  defineTokenType ({ tokenSymbol, chainId }) {
+  defineTokenType ({ tokenSymbol }) {
     return 'erc20'
   }
 
@@ -183,14 +178,11 @@ class Step1 extends React.Component {
     return <div>
       <p className={classNames(styles.text, styles.textMargin15)}>{tokenAmount * linksAmount} {tokenSymbol}</p>
       <LinksContent tokenAmount={tokenAmount} tokenSymbol={tokenSymbol} tokenType={tokenType} />
-      <p className={styles.text} dangerouslySetInnerHTML={{ __html: this.t('titles.serviceFee', { symbol: this.defaultSymbol, price: config.linkPrice * linksAmount }) }} />
-      <p className={classNames(styles.text, styles.textGrey)} dangerouslySetInnerHTML={{ __html: this.t('titles.serviceFeePerLink', { symbol: this.defaultSymbol, price: config.linkPrice }) }} />
     </div>
   }
 
   setField ({ value, field }) {
     const { tokenSymbol } = this.state
-    const { chainId } = this.props
     if (field === 'tokenAmount') {
       return this.setState({
         [field]: value

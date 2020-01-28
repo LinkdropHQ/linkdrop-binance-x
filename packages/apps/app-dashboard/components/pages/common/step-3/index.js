@@ -11,7 +11,6 @@ import { linksLimit } from 'app.config.js'
 @actions(({
   user: {
     loading,
-    currentAddress,
     errors,
     chainId
   },
@@ -23,18 +22,13 @@ import { linksLimit } from 'app.config.js'
     status: connectorStatus
   },
   campaigns: {
-    amount,
-    linksAmount,
-    symbol
+    linksAmount
   }
 }) => ({
-  amount,
   linksAmount,
   address,
   errors,
-  symbol,
   loading,
-  currentAddress,
   connectorStatus,
   chainId,
   balance
@@ -47,10 +41,6 @@ class Step3 extends React.Component {
     this.state = {
       loading: false
     }
-  }
-
-  componentDidMount () {
-    this.intervalCheck = window.setInterval(_ => this.actions().tokens.getBalance(), config.balanceCheckInterval)
   }
 
   componentWillReceiveProps ({ linksAmount, connectorStatus, errors, balance }) {
@@ -92,8 +82,7 @@ class Step3 extends React.Component {
   }
 
   render () {
-    const { amount, linksAmount, symbol, loading, currentAddress } = this.props
-    console.log({ amount, linksAmount, symbol, loading, currentAddress })
+    const { linksAmount, loading } = this.props
     const { loading: stateLoading } = this.state
     return <div className={styles.container}>
       <PageHeader title={this.t('titles.summaryPay')} />

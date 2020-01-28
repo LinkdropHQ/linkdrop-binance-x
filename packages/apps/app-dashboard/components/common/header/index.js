@@ -22,7 +22,7 @@ class Header extends React.Component {
       </div>
       <div className={styles.helpDesk}>
         <a target='_blank' href='https://www.notion.so/Help-Center-9cf549af5f614e1caee6a660a93c489b'>
-          {this.t('help')}HERE SHOULD BE AN ICON
+          {this.t('help')}<Icons.ExternalLink />
         </a>
       </div>
     </header>

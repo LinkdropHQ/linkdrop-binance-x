@@ -15,7 +15,6 @@ const generator = function * ({ payload }) {
     const apiHost = yield select(generator.selectors.apiHost)
     const links = yield select(generator.selectors.links)
 
-
     const link = yield sdk.generateLink({
       claimHost: 'http://localhost:9002',
       privateKey: verifierPrivateKey,
