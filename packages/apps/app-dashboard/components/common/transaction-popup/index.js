@@ -6,32 +6,15 @@ import { getImages } from 'helpers'
 
 @actions(({ user: { chainId } }) => ({ chainId }))
 @translate('common.pageHeader')
-class MetamaskPopup extends React.Component {
+class TransactionPopup extends React.Component {
   render () {
-    const { amount } = this.props
-    const popup = this.definePopup({ amount })
+    const popup = this.definePopup()
     return <div className={styles.container}>
       {popup}
     </div>
   }
 
-  definePopup ({ amount }) {
-    if (amount != null) {
-      return <div className={styles.content}>
-        <div className={styles.amount}>
-          <Icons.Ethereum />{Number(amount)}
-        </div>
-        <RetinaImage
-          className={styles.img}
-          width={245}
-          {...getImages({ src: 'popup' })}
-        />
-        <div className={styles.arrow}>
-          <Icons.Cursor />
-        </div>
-      </div>
-    }
-
+  definePopup () {
     return <div className={styles.content}>
       <RetinaImage
         className={styles.img}
@@ -45,4 +28,4 @@ class MetamaskPopup extends React.Component {
   }
 }
 
-export default MetamaskPopup
+export default TransactionPopup

@@ -6,7 +6,6 @@ const generator = function * ({ payload }) {
   try {
     yield put({ type: 'USER.SET_LOADING', payload: { loading: true } })
     const { wc } = payload
-    console.log('generator: ', wc)
     if (!wc) {
       yield delay(2000)
       yield put({ type: 'USER.SET_CURRENT_ADDRESS', payload: { currentAddress: null } })

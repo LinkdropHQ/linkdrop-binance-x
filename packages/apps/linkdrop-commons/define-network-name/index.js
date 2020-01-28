@@ -1,7 +1,6 @@
-export default ({ chainId }) => NETWORK_IDS[`_${chainId}`]
+export default ({ chainId }) => CHAIN_IDS[`_${chainId}`]
 
-const NETWORK_IDS = {
-  _1: 'mainnet',
-  _3: 'ropsten',
-  _4: 'rinkeby'
+const CHAIN_IDS = {
+  // _714: 'slip44'
+  _714: 'Binance-Chain-Tigris'
 }

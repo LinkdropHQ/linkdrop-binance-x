@@ -12,13 +12,13 @@ class Tokens {
   }
 
 
-  getBalance ({ chainId, tokenAddress, account, currentAddress }) {
-    this.actions.dispatch({ type: '*TOKENS.GET_BALANCE', payload: { chainId, tokenAddress, account, currentAddress } })
+  getBalance () {
+    this.actions.dispatch({ type: '*TOKENS.GET_BALANCE' })
   }
 
 
-  generateLink ({ chainId, currentAddress }) {
-    this.actions.dispatch({ type: '*TOKENS.GENERATE_LINK', payload: { chainId, currentAddress } })
+  generateLink () {
+    this.actions.dispatch({ type: '*TOKENS.GENERATE_LINK' })
   }
 
 

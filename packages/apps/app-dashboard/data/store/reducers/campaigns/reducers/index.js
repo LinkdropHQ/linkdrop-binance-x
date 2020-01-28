@@ -7,6 +7,7 @@ import setItems from './set-items'
 import setCurrent from './set-current'
 import setId from './set-id'
 import setDefaultWallet from './set-default-wallet'
+import setApiHost from './set-api-host'
 
 export default {
   setAmount,
@@ -17,5 +18,6 @@ export default {
   setItems,
   setCurrent,
   setId,
-  setDefaultWallet
+  setDefaultWallet,
+  setApiHost
 }

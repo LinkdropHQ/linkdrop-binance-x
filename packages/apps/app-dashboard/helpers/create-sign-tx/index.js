@@ -1,27 +1,42 @@
 export default ({
   accountNumber,
   chainId,
-  denom, sequence, toAddress, fromAddress, toAddress }) => {
+  symbol,
+  sequence,
+  toAddress,
+  fromAddress,
+  amount
+}) => {
   return {
-    accountNumber,
+    accountNumber: String(accountNumber),
     chainId,
     fee: {
       amounts: [
         {
-          denom: "uatom",
-          amount: "5000"
+          denom: symbol,
+          amount: String(amount / 100)
         }
       ],
       gas: "200000"
     },
-    sequence,
+    sequence: String(sequence),
+    send_coins_message: {
+      fromAddress,
+      toAddress,
+      amounts: [
+        {
+          denom: symbol,
+          amount: String(amount)
+        }
+      ]
+    },
     sendCoinsMessage: {
       fromAddress,
       toAddress,
       amounts: [
         {
-          denom: "uatom",
-          amount: "100000"
+          denom: symbol,
+          amount: String(amount)
         }
       ]
     }

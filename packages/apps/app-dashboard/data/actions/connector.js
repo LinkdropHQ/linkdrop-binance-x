@@ -3,8 +3,8 @@ class Connector {
     this.actions = actions
   }
 
-  send ({ tokenAmount, account, chainId }) {
-    this.actions.dispatch({ type: '*CONNECTOR.SEND', payload: { chainId, account, tokenAmount } })
+  send () {
+    this.actions.dispatch({ type: '*CONNECTOR.SEND' })
   }
 }
 

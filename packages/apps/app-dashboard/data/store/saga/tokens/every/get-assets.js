@@ -1,12 +1,9 @@
 import { put, call, select } from 'redux-saga/effects'
 import { getAssets } from 'data/api/tokens'
-import { defineNetworkName } from '@linkdrop/binance-commons'
 
 const generator = function * () {
   try {
-    const chainId = yield select(generator.selectors.chainId)
     const currentAddress = yield select(generator.selectors.currentAddress)
-    const networkName = defineNetworkName({ chainId })
     // const { ethBalanceFormatted } = yield getCurrentEthBalance({ payload: { account: currentAddress, chainId } })
     // yield put({
     //   type: 'TOKENS.SET_CURRENT_ETH_BALANCE',
@@ -15,7 +12,7 @@ const generator = function * () {
     //   }
     // })
 
-    const { balances, address, account_number: accountNumber, sequence } = yield call(getAssets, { address: currentAddress, networkName })
+    const { balances, address, account_number: accountNumber, sequence } = yield call(getAssets, { address: currentAddress })
     if (balances && balances.length > 0) {
       const assets = balances.map(item => {
         return {

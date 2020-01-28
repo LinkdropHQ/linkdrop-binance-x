@@ -24,6 +24,11 @@ export default {
     ethInLink: '{{symbol}} in link',
 
     // step2
+    deployServer: 'Deploy server',
+    pasteApiHost: 'Paste host of deployed server',
+    copyApiHost: 'Wait while server is deploying, copy host of server and return to that screen',
+
+    // step3
     summaryPay: 'Summary',
     linksToGenerate: 'Links to generate',
     oneLinkContainsTitle: 'Each link contains',
@@ -35,11 +40,6 @@ export default {
     sendEthToGenerate: 'You will send <span>{{ethAmount}} {{symbol}}</span> to start generate links',
     etherToDistribute: '<span>{{ethAmount}} {{symbol}}</span> — to distribute',
     serviceFeeToDistribute: '<span>{{ethAmount}} {{symbol}}</span> — service fee',
-
-    // step3
-    sendEth: 'Secure {{ethAmount}} {{symbol}} into Linkdrop Contract',
-    serviceFee: '<span>{{price}} {{symbol}}</span> in service fees',
-    serviceFeePerLink: '<span>{{price}} {{symbol}}</span> per link, for covering gas fees and our service costs',
 
     // step4
     generatingLinks: 'Generating links…',

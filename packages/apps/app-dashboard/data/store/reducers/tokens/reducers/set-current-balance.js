@@ -1,1 +1,1 @@
-export default (state, { payload: { currentTokenBalance } }) => ({ ...state, currentTokenBalance })
+export default (state, { payload: { currentBalance } }) => ({ ...state, currentBalance })

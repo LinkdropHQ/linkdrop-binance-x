@@ -5,21 +5,21 @@ import { convertFromExponents } from '@linkdrop/binance-commons'
 
 @actions(({
   campaigns: {
-    tokenAmount,
-    tokenSymbol
+    amount,
+    symbol
   }
 }) => ({
-  tokenAmount,
-  tokenSymbol
+  amount,
+  symbol
 }))
 @translate('pages.campaignCreate')
 class LinkContents extends React.Component {
   render () {
-    const { tokenAmount, tokenSymbol } = this.props
+    const { amount, symbol } = this.props
     return <p className={styles.dataContent}>
       {this.t('titles.oneLinkContents', {
-        tokenAmount: convertFromExponents(tokenAmount),
-        tokenSymbol
+        tokenAmount: amount,
+        tokenSymbol: symbol
       })}
     </p>
   }

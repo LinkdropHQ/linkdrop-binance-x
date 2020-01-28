@@ -15,6 +15,13 @@ class Campaign {
     })
   }
 
+  saveApiHost ({ apiHost }) {
+    this.actions.dispatch({
+      type: '*CAMPAIGNS.SET_API_HOST',
+      payload: { apiHost }
+    })
+  }
+
   createProxyAddress ({ campaignId }) {
     this.actions.dispatch({
       type: '*CAMPAIGNS.CREATE_PROXY_ADDRESS',

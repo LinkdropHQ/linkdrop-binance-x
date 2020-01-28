@@ -6,7 +6,6 @@ import LinkContents from './link-contents'
 import ApproveSummary from './approve-summary'
 import NextButton from './next-button'
 import config from 'config-dashboard'
-import { defineDefaultSymbol } from 'helpers'
 import { linksLimit } from 'app.config.js'
 
 @actions(({
@@ -17,47 +16,48 @@ import { linksLimit } from 'app.config.js'
     chainId
   },
   tokens: {
-    balanceFormatted,
+    balance,
     address
   },
   connector: {
     status: connectorStatus
   },
   campaigns: {
-    tokenAmount,
+    amount,
     linksAmount,
-    proxyAddress,
-    tokenSymbol
+    symbol
   }
 }) => ({
-  tokenAmount,
+  amount,
   linksAmount,
   address,
   errors,
-  tokenSymbol,
+  symbol,
   loading,
   currentAddress,
   connectorStatus,
   chainId,
-  balanceFormatted,
-  proxyAddress
+  balance
 }))
 @translate('pages.campaignCreate')
 class Step3 extends React.Component {
   constructor (props) {
     super(props)
     const { chainId } = props
-    this.defaultSymbol = defineDefaultSymbol({ chainId })
     this.state = {
       loading: false
     }
   }
 
-  componentWillReceiveProps ({ linksAmount, connectorStatus, errors, balanceFormatted }) {
+  componentDidMount () {
+    this.intervalCheck = window.setInterval(_ => this.actions().tokens.getBalance(), config.balanceCheckInterval)
+  }
+
+  componentWillReceiveProps ({ linksAmount, connectorStatus, errors, balance }) {
     const {
       connectorStatus: prevConnectorStatus,
       errors: prevErrors,
-      balanceFormatted: prevBalanceFormatted,
+      balance: prevBalance,
       proxyAddress,
       chainId,
       address: tokenAddress,
@@ -68,12 +68,7 @@ class Step3 extends React.Component {
       this.setState({
         loading: true
       }, _ => {
-        this.intervalCheck = window.setInterval(_ => this.actions().tokens.getBalance({
-          chainId,
-          tokenAddress,
-          account: proxyAddress,
-          currentAddress
-        }), config.balanceCheckInterval)
+        this.intervalCheck = window.setInterval(_ => this.actions().tokens.getBalance(), config.balanceCheckInterval)
       })
     }
 
@@ -86,7 +81,7 @@ class Step3 extends React.Component {
       })
     }
 
-    if (balanceFormatted && Number(balanceFormatted) > 0 && balanceFormatted !== prevBalanceFormatted) {
+    if (balance && Number(balance) > 0 && balance !== prevBalance) {
       this.setState({
         loading: false
       }, _ => {
@@ -97,10 +92,10 @@ class Step3 extends React.Component {
   }
 
   render () {
-    const { tokenAmount, linksAmount, tokenSymbol, loading, currentAddress } = this.props
+    const { amount, linksAmount, symbol, loading, currentAddress } = this.props
+    console.log({ amount, linksAmount, symbol, loading, currentAddress })
     const { loading: stateLoading } = this.state
     return <div className={styles.container}>
-      {(stateLoading || loading) && <PageLoader transaction={stateLoading} />}
       <PageHeader title={this.t('titles.summaryPay')} />
       <div className={styles.main}>
         <div className={styles.summary}>
@@ -119,13 +114,6 @@ class Step3 extends React.Component {
                 <h3 className={styles.dataTitle}>
                   {this.t('titles.serviceFeeTitle')}
                 </h3>
-                <div className={styles.dataContent}>
-                  {`${linksAmount * config.linkPrice} ${this.defaultSymbol}`}
-                </div>
-                <div className={styles.extraDataContent}>
-                  {this.t('titles.ethPerLink', { symbol: this.defaultSymbol, eth: config.linkPrice })}
-                </div>
-
               </div>
             </div>
 
@@ -145,24 +133,11 @@ class Step3 extends React.Component {
           >
             {this.t('texts._18')}
           </div>
-          <ApproveSummary
-            linksAmount={linksAmount}
-            serviceFee={config.linkPrice}
-            tokenAmount={tokenAmount}
-            tokenSymbol={tokenSymbol}
-          />
-          <NextButton
-            tokenAmount={tokenAmount}
-            currentAddress={currentAddress}
-            linksAmount={linksAmount}
-            serviceFee={config.linkPrice}
-          />
+          <ApproveSummary />
+          <NextButton />
         </div>
         <div className={styles.description}>
-          <Instruction
-            linksAmount={linksAmount}
-            tokenAmount={tokenAmount}
-          />
+          <Instruction />
         </div>
       </div>
     </div>

@@ -7,6 +7,7 @@ import save from './every/save'
 import getCSV from './every/get-csv'
 import changeStatus from './every/change-status'
 import checkStatusTxHash from './every/check-status-tx-hash'
+import setApiHost from './every/set-api-host'
 
 export default function * () {
   yield takeEvery('*CAMPAIGNS.PREPARE_NEW_DATA', prepareNewData)
@@ -16,4 +17,5 @@ export default function * () {
   yield takeEvery('*CAMPAIGNS.GET_CSV', getCSV)
   yield takeEvery('*CAMPAIGNS.CHANGE_STATUS', changeStatus)
   yield takeEvery('*CAMPAIGNS.CHECK_STATUS_TX_HASH', checkStatusTxHash)
+  yield takeEvery('*CAMPAIGNS.SET_API_HOST', setApiHost)
 }

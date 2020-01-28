@@ -11,7 +11,8 @@ const initialState = {
   items: campaignsDecoded,
   current: null,
   id: null,
-  defaultWallet: null
+  defaultWallet: null,
+  apiHost: null
 }
 
 export default (state = initialState, action = {}) => {
@@ -31,5 +32,6 @@ const ACTIONS = {
   'CAMPAIGNS.SET_ITEMS': reducers.setItems,
   'CAMPAIGNS.SET_CURRENT': reducers.setCurrent,
   'CAMPAIGNS.SET_ID': reducers.setId,
-  'CAMPAIGNS.SET_DEFAULT_WALLET': reducers.setDefaultWallet
+  'CAMPAIGNS.SET_DEFAULT_WALLET': reducers.setDefaultWallet,
+  'CAMPAIGNS.SET_API_HOST': reducers.setApiHost
 }

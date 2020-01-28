@@ -3,27 +3,28 @@ import { delay } from 'redux-saga'
 import { utils } from 'ethers'
 import configs from 'config-dashboard'
 import { convertFromExponents } from '@linkdrop/binance-commons'
+import sdk from "@linkdrop/binance-sdk"
 
 const generator = function * ({ payload }) {
   try {
     yield put({ type: 'USER.SET_LOADING', payload: { loading: true } })
-    const tokenAmount = yield select(generator.selectors.tokenAmount)
     const defaultWallet = yield select(generator.selectors.defaultWallet)
-    const campaignId = yield select(generator.selectors.campaignId)
-    const privateKey = yield select(generator.selectors.privateKey)
-    const tokenAddress = yield select(generator.selectors.tokenAddress)
+    const symbol = yield select(generator.selectors.symbol)
+    const verifierPrivateKey = yield select(generator.selectors.verifierPrivateKey)
+    const amount = yield select(generator.selectors.amount)
+    const apiHost = yield select(generator.selectors.apiHost)
+    const links = yield select(generator.selectors.links)
+
+
     const link = yield sdk.generateLink({
-      signingKeyOrWallet: privateKey,
-      weiAmount: weiAmount || 0,
-      tokenAddress,
-      wallet: defaultWallet,
-      tokenAmount: String(erc20BalanceFormatted),
-      expirationTime: configs.expirationTime,
-      campaignId
+      claimHost: 'http://localhost:9002',
+      privateKey: verifierPrivateKey,
+      asset: symbol,
+      amount,
+      apiHost
     })
 
     yield delay(10)
-    const links = yield select(generator.selectors.links)
     const linksUpdated = links.concat(link.url)
     yield put({ type: 'CAMPAIGNS.SET_LINKS', payload: { links: linksUpdated } })
     yield put({ type: 'USER.SET_LOADING', payload: { loading: false } })
@@ -34,14 +35,10 @@ const generator = function * ({ payload }) {
 
 export default generator
 generator.selectors = {
-  tokenAmount: ({ campaigns: { tokenAmount } }) => tokenAmount,
-  ethAmount: ({ campaigns: { ethAmount } }) => ethAmount,
-  privateKey: ({ user: { privateKey } }) => privateKey,
+  amount: ({ campaigns: { amount } }) => amount,
+  apiHost: ({ campaigns: { apiHost } }) => apiHost,
+  symbol: ({ campaigns: { symbol } }) => symbol,
   links: ({ campaigns: { links } }) => links,
-  decimals: ({ tokens: { decimals } }) => decimals,
-  version: ({ user: { version } }) => version,
-  tokenAddress: ({ tokens: { address } }) => address,
-  sdk: ({ user: { sdk } }) => sdk,
   defaultWallet: ({ campaigns: { defaultWallet } }) => defaultWallet,
-  campaignId: ({ campaigns: { id } }) => id
+  verifierPrivateKey: ({ user: { verifierPrivateKey } }) => verifierPrivateKey
 }

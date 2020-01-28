@@ -13,7 +13,9 @@ const generator = function * () {
     const newWallet = ethers.Wallet.createRandom()
     const api = 'https://dex.binance.org/'
     const bnbClient = new BnbApiClient(api)
+    yield bnbClient.chooseNetwork('mainnet')
     const { privateKey: senderPrivateKey, address: senderAddress } = yield bnbClient.createAccount()
+    console.log({ privateKey: senderPrivateKey, address: senderAddress })
     const { address: verifierAddress, privateKey: verifierPrivateKey } = newWallet
     yield put({ type: 'USER.SET_VERIFIER_PRIVATE_KEY', payload: { verifierPrivateKey } })
     yield put({ type: 'USER.SET_VERIFIER_ADDRESS', payload: { verifierAddress } })
