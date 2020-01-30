@@ -1,6 +1,19 @@
 import { put, select } from 'redux-saga/effects'
-import { createSignTx } from 'helpers'
+import { createSignTx, byteArrayToBase64, stringToByteArray } from 'helpers'
 import { delay } from 'redux-saga'
+import base58check from 'base58check'
+import hex from 'string-hex'
+import toBytes from 'to-byte-array'
+
+console.log({ base58check })
+
+const encodeAddress = function ({ address }) {
+  const hexAddress = hex(address)
+  const addressBase58Check = base58check.encode(hexAddress)
+  const addressBase58CheckByteArray = new Uint8Array(toBytes(addressBase58Check))
+  console.log({ address, hexAddress, addressBase58Check, addressBase58CheckByteArray })
+  return byteArrayToBase64({ byteArray: addressBase58CheckByteArray })
+}
 
 const signTransaction = function ({ chainId, signTx, wcInstance }) {
   return new Promise((resolve, reject) => {
@@ -31,21 +44,25 @@ const generator = function * ({ payload }) {
     const linksAmount = yield select(generator.selectors.linksAmount)
     const sequence = yield select(generator.selectors.sequence)
     const accountNumber = yield select(generator.selectors.accountNumber)
-    const assets = yield select(generator.selectors.assets)
-    const bnbAssets = assets.find(asset => asset.symbol === 'BNB')
-
+    const toAddressEncoded = encodeAddress({ address: toAddress })
+    const fromAddressEncoded = encodeAddress({ address: fromAddress })
+    
+    console.log({
+      toAddressEncoded,
+      fromAddressEncoded
+    })
 
     const signTx = createSignTx({
       chainId: 'Binance-Chain-Tigris',
-      toAddress,
-      fromAddress,
+      toAddress: toAddressEncoded,
+      fromAddress: fromAddressEncoded,
       amount: amount * linksAmount,
       symbol,
       sequence,
-      accountNumber,
-      feeSymbol: 'BNB',
-      feeAmount: Number(bnbAssets.free) / 100
+      accountNumber
     })
+
+    console.log({ signTx })
     
     const transaction = yield signTransaction({ chainId, signTx, wcInstance })
     console.log({ transaction })
@@ -68,6 +85,5 @@ generator.selectors = {
   wcInstance: ({ user: { wcInstance }}) => wcInstance,
   chainId: ({ user: { chainId }}) => chainId,
   sequence: ({ user: { sequence }}) => sequence,
-  assets: ({ tokens: { assets }}) => assets,
   accountNumber: ({ user: { accountNumber }}) => accountNumber
 }

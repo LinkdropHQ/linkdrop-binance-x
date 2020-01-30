@@ -1,3 +1,4 @@
+
 export default ({
   accountNumber,
   chainId,
@@ -5,30 +6,35 @@ export default ({
   sequence,
   toAddress,
   fromAddress,
-  amount,
-  feeSymbol,
-  feeAmount
+  amount
 }) => {
   return {
-    accountNumber: String(accountNumber),
-    chainId,
-    fee: {
-      amounts: [
+    chain_id: chainId,
+    account_number: String(accountNumber),
+    sequence,
+    source: 0,
+    memo: '',
+    sendCoins: {
+      inputs: [
         {
-          denom: feeSymbol,
-          amount: String(feeAmount / 100)
+          address: fromAddress,
+          coins: [
+            { 
+              denom: symbol,
+              amount
+            }
+          ]
         }
       ],
-      gas: "37500"
-    },
-    sequence: String(sequence),
-    sendCoinsMessage: {
-      fromAddress,
-      toAddress,
-      amounts: [
+      ouputs: [
         {
-          denom: symbol,
-          amount: String(amount)
+          address: toAddress,
+          coins: [
+            { 
+              denom: symbol,
+              amount
+            }
+          ]
         }
       ]
     }
