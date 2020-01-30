@@ -1,6 +1,7 @@
 import { put } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import { defaultChainId } from 'app.config.js'
+console.log({ defaultChainId })
 
 const generator = function * ({ payload }) {
   try {
@@ -28,14 +29,14 @@ const generator = function * ({ payload }) {
         })
     })
     const addresses = yield getAccountsPromise
-    const binanceAddress = addresses.find(address => address.network === defaultChainId)
+    const binanceAddress = addresses.find(address => address.network === Number(defaultChainId))
     if (!binanceAddress) {
       return yield put({ type: 'USER.SET_LOADING', payload: { loading: false } })
     }
     window.addressChangeInterval && window.clearInterval(window.addressChangeInterval)
     yield put({ type: '*USER.CREATE_KEYS' })
     yield put({ type: 'USER.SET_CURRENT_ADDRESS', payload: { currentAddress: binanceAddress.address } })
-    yield put({ type: 'USER.SET_CHAIN_ID', payload: { chainId: defaultChainId } })
+    yield put({ type: 'USER.SET_CHAIN_ID', payload: { chainId: Number(defaultChainId) } })
     yield put({ type: 'USER.SET_LOADING', payload: { loading: false } })
     // window.addressChangeInterval = window.setInterval(async () => {
     //   const currentMetamaskAddress = await provider.eth.getAccounts()
