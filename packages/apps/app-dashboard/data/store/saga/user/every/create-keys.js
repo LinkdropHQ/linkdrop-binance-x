@@ -1,10 +1,6 @@
 /* global web3 */
 import { put, select } from 'redux-saga/effects'
 import { ethers } from 'ethers'
-import { factory, jsonRpcUrlXdai, infuraPk } from 'app.config.js'
-import LinkdropFactory from 'contracts/LinkdropFactory.json'
-import LinkdropMastercopy from 'contracts/LinkdropMastercopy.json'
-import { defineJsonRpcUrl } from '@linkdrop/binance-commons'
 const BnbApiClient = require('@binance-chain/javascript-sdk')
 
 const generator = function * () {

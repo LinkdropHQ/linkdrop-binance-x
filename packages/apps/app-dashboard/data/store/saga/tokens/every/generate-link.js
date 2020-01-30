@@ -1,7 +1,6 @@
 import { put, select } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import { utils } from 'ethers'
-import configs from 'config-dashboard'
 import { convertFromExponents } from '@linkdrop/binance-commons'
 import sdk from "@linkdrop/binance-sdk"
 

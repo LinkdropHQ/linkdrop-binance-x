@@ -1,0 +1,6 @@
+{
+  "binanceExplorer": "https://explorer.binance.org/tx/",
+  "openseaMainnet": "https://api.opensea.io",
+  "openseaRinkeby": "https://rinkeby-api.opensea.io",
+  "trustWallet": "https://api.trustwalletapp.com"
+}

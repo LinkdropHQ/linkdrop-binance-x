@@ -1,7 +1,6 @@
 import { ethers, utils } from 'ethers'
 import { infuraPk, jsonRpcUrlXdai } from 'app.config.js'
 import { defineJsonRpcUrl } from '@linkdrop/binance-commons'
-import TokenMock from 'contracts/TokenMock.json'
 
 const generator = function * ({ payload }) {
   try {
