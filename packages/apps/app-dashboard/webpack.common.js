@@ -93,6 +93,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       INFURA_PK: JSON.stringify(process.env.INFURA_PK),
+      LINKS_LIMIT: JSON.stringify(process.env.LINKS_LIMIT),
       CLAIM_HOST: JSON.stringify(process.env.CLAIM_HOST),
       DEFAULT_CHAIN_ID: JSON.stringify(process.env.DEFAULT_CHAIN_ID),
       'process.env': {
