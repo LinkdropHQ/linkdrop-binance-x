@@ -36,7 +36,7 @@ const generator = function * ({ payload }) {
       created: date,
       links,
       chainId,
-      id: proxyAddress,
+      id,
       campaignId: id,
       currentAddress,
       senderPrivateKey,

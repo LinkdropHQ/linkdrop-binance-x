@@ -54,9 +54,8 @@ export default {
     contactUs: ' Contact us for more details.',
     codeDetails: 'See the code and details',
     contractParams: 'Linkdrop Contract parameters',
-    masterAddress: 'Master Address: <span>{{address}}</span>',
-    factoryAddress: 'Factory Address: <span>{{address}}</span>',
-    signingKey: 'Signing Key: <span>{{signingKey}}</span>',
+    senderAddress: 'Sender Address: <span>{{address}}</span>',
+    verifierAddress: 'Verifier Address: <span>{{address}}</span>',
     downloadFile: 'Download CSV file',
     manual: 'Manual distribution',
     howToClaimPreview: 'How claim page will look like<br>for receivers — <a target="_blank" href={{href}}>Preview<a/>',
@@ -105,7 +104,7 @@ export default {
   "FACTORY_ADDRESS": "{{factory}}"
 }
 `,
-    codeBlockErc20: `// installation: yarn add @linkdrop/sdk
+    codeBlock: `// installation: yarn add @linkdrop/sdk
 // import library
 const LinkdropSDK = require('@linkdrop/sdk')
 

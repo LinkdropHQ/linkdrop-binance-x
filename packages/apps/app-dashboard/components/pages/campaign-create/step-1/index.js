@@ -54,6 +54,7 @@ class Step1 extends React.Component {
   componentDidMount () {
     const { items } = this.props
     this.actions().tokens.getAssets()
+    this.actions().user.createKeys()
   }
 
   componentWillReceiveProps ({ assets }) {

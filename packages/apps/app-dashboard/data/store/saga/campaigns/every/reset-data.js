@@ -9,13 +9,10 @@ const generator = function * ({ payload }) {
     yield put({ type: 'CAMPAIGNS.SET_LINKS_AMOUNT', payload: { linksAmount: null } })
     yield put({ type: 'CAMPAIGNS.SET_DEFAULT_WALLET', payload: { defaultWallet: null } })
     yield put({ type: 'CAMPAIGNS.SET_ID', payload: { id: null } })
-
     yield put({ type: 'USER.SET_SENDER_PRIVATE_KEY', payload: { senderPrivateKey: null } })
     yield put({ type: 'USER.SET_SENDER_ADDRESS', payload: { senderAddress: null } })
     yield put({ type: 'USER.SET_VERIFIER_PRIVATE_KEY', payload: { verifierPrivateKey: null } })
     yield put({ type: 'USER.SET_VERIFIER_ADDRESS', payload: { verifierAddress: null } })
-
-    // возможно надо добавить еще сохранение текущего
     yield put({ type: 'TOKENS.SET_BALANCE', payload: { balance: null } })
   } catch (e) {
     console.error(e)

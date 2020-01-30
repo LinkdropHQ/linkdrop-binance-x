@@ -15,6 +15,7 @@ import Close from './close'
 import Ethereum from './ethereum'
 import Cursor from './cursor'
 import ExternalLink from './external-link'
+import Done from './done'
 
 export default {
   LinkdropLogo,
@@ -33,5 +34,6 @@ export default {
   Close,
   Ethereum,
   Cursor,
-  ExternalLink
+  ExternalLink,
+  Done
 }
