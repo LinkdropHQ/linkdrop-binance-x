@@ -14,12 +14,19 @@ const generator = function * ({ payload }) {
     const amount = yield select(generator.selectors.amount)
     const apiHost = yield select(generator.selectors.apiHost)
     const links = yield select(generator.selectors.links)
+    console.log({
+      claimHost: 'http://localhost:9002',
+      privateKey: verifierPrivateKey,
+      asset: symbol,
+      amount,
+      apiHost
+    })
 
     const link = yield sdk.generateLink({
       claimHost: 'http://localhost:9002',
       privateKey: verifierPrivateKey,
       asset: symbol,
-      amount,
+      amount: String(amount),
       apiHost
     })
 

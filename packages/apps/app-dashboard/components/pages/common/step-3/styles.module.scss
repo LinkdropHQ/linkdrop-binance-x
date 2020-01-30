@@ -27,6 +27,12 @@
   border-right: 1px solid $greyStrokeColor;
 }
 
+.instruction {
+  span {
+    font-family: 'Inter-Bold';
+  }
+}
+
 .description {
   padding-left: 50px;
   width: 100%;

@@ -92,12 +92,9 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      MASTER_COPY: JSON.stringify(process.env.MASTER_COPY),
-      FACTORY: JSON.stringify(process.env.FACTORY),
-      JSON_RPC_URL_XDAI: JSON.stringify(process.env.JSON_RPC_URL_XDAI),
       INFURA_PK: JSON.stringify(process.env.INFURA_PK),
       CLAIM_HOST: JSON.stringify(process.env.CLAIM_HOST),
-      DEPLOYMENT_URL: JSON.stringify(process.env.DEPLOYMENT_URL),
+      DEFAULT_CHAIN_ID: JSON.stringify(process.env.DEFAULT_CHAIN_ID),
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
       }

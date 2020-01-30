@@ -44,15 +44,15 @@ class Web3Injector extends React.Component {
       this.applyWalletConnect(this.wc)
     })
 
-    this.wc.on("disconnect", (error, payload) => {
-      if (error) {
-        throw error
-      }
-      console.log('here disconnect')
+    // this.wc.on("disconnect", (error, payload) => {
+    //   if (error) {
+    //     throw error
+    //   }
+    //   console.log('here disconnect')
 
-      WalletConnectQRCodeModal.close()
-      this.applyWalletConnect(null)
-    })
+    //   WalletConnectQRCodeModal.close()
+    //   this.applyWalletConnect(null)
+    // })
   }
 
   applyWalletConnect (wc) {

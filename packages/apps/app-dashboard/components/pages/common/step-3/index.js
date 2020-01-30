@@ -4,7 +4,7 @@ import styles from './styles.module'
 import { PageHeader, PageLoader, Instruction } from 'components/common'
 import LinkContents from './link-contents'
 import ApproveSummary from './approve-summary'
-import NextButton from './next-button'
+import CheckButton from './check-button'
 import config from 'config-dashboard'
 import { linksLimit } from 'app.config.js'
 
@@ -12,7 +12,8 @@ import { linksLimit } from 'app.config.js'
   user: {
     loading,
     errors,
-    chainId
+    chainId,
+    senderAddress
   },
   tokens: {
     balance,
@@ -22,7 +23,9 @@ import { linksLimit } from 'app.config.js'
     status: connectorStatus
   },
   campaigns: {
-    linksAmount
+    linksAmount,
+    amount,
+    symbol
   }
 }) => ({
   linksAmount,
@@ -31,7 +34,10 @@ import { linksLimit } from 'app.config.js'
   loading,
   connectorStatus,
   chainId,
-  balance
+  balance,
+  amount,
+  symbol,
+  senderAddress
 }))
 @translate('pages.campaignCreate')
 class Step3 extends React.Component {
@@ -76,16 +82,17 @@ class Step3 extends React.Component {
         loading: false
       }, _ => {
         this.intervalCheck && window.clearInterval(this.intervalCheck)
-        window.setTimeout(_ => this.actions().user.setStep({ step: 3 }), config.nextStepTimeout)
+        window.setTimeout(_ => this.actions().user.setStep({ step: 4 }), config.nextStepTimeout)
       })
     }
   }
 
   render () {
-    const { linksAmount, loading } = this.props
+    const { linksAmount, loading, amount, symbol, senderAddress } = this.props
     const { loading: stateLoading } = this.state
     return <div className={styles.container}>
       <PageHeader title={this.t('titles.summaryPay')} />
+      {(stateLoading || loading) && <PageLoader />}
       <div className={styles.main}>
         <div className={styles.summary}>
           <div className={styles.summaryBox}>
@@ -123,10 +130,11 @@ class Step3 extends React.Component {
             {this.t('texts._18')}
           </div>
           <ApproveSummary />
-          <NextButton />
+          <CheckButton />
         </div>
         <div className={styles.description}>
-          <Instruction />
+          <div className={styles.title}>{this.t('titles.instruction')}</div>
+          <div className={styles.instruction} dangerouslySetInnerHTML={{__html: this.t('texts.sendInstruction', { amount: amount * linksAmount, symbol, senderAddress})}} />
         </div>
       </div>
     </div>

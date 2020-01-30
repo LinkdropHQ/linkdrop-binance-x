@@ -10,7 +10,7 @@ const generator = function * ({ payload }) {
     console.log({ balances, address, account_number: accountNumber, sequence })
 
     if (balances && balances.length > 0 && Number(balances[0].free) > 0) {
-      yield put({ type: 'TOKENS.SET_BALANCE', payload: { erc20BalanceFormatted, erc20Balance } })
+      yield put({ type: 'TOKENS.SET_BALANCE', payload: { balance: Number(balances[0].free) } })
     }
 
     yield put({ type: 'USER.SET_LOADING', payload: { loading: false } })

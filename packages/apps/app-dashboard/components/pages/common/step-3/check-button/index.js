@@ -6,7 +6,7 @@ import styles from './styles.module'
 
 @actions(({}) => ({}))
 @translate('pages.campaignCreate')
-class NextButton extends React.Component {
+class CheckButton extends React.Component {
   render () {
     return <Button
       className={styles.button}
@@ -14,9 +14,9 @@ class NextButton extends React.Component {
         this.actions().connector.send()
       }}
     >
-      {this.t('buttons.approve')}
+      {this.t('buttons.check')}
     </Button>
   }
 }
 
-export default NextButton
+export default CheckButton
