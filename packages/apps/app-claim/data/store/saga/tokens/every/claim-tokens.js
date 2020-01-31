@@ -10,13 +10,21 @@ const generator = function * ({ payload }) {
     if (!receiverAddress) {
       receiverAddress = yield defineTrustReceiverAddress()
     }
-    const receiverSignature = yield sdk.binance.signReceiverAddress({
-      privateKey: linkKey,
+    const receiverSignature = yield sdk.signReceiverAddress({
+      linkKey,
       receiverAddress
     })
-    const linkId = new ethers.Wallet(linkKey).address
 
-    const { success, txHash } = yield sdk.binance.claim({ receiverSignature, host, linkId, asset, amount, receiverAddress, verifierSignature })
+    const linkId = new ethers.Wallet(linkKey).address
+    const { success, txHash } = yield sdk.claim({
+      receiverSignature,
+      apiHost: host,
+      linkId,
+      asset,
+      amount,
+      receiverAddress,
+      verifierSignature
+    })
 
     if (success) {
       yield put({ type: 'TOKENS.SET_TRANSACTION_ID', payload: { transactionId: txHash } })

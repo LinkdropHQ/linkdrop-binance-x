@@ -4,13 +4,16 @@ import { ethers } from 'ethers'
 const generator = function * () {
   try {
     if (!window.trustProvider) { throw new Error('No window.trustProvider detected') }
-    const promise = new Promise((resolve, reject) => {
-      window.trustProvider
-        .getAccounts()
-        .then(result => resolve({ result }))
-        .catch(err => reject({ err }))
-    })
-    const { result, err } = yield promise
+    const promise = function() {
+      return new Promise((resolve, reject) => {
+        window.trustProvider
+          .getAccounts()
+          .then(result => resolve({ result }))
+          .catch(err => reject({ err }))
+      })
+    }
+    const { result } = yield promise()
+
     const binanceChainAddressObj = result.find(item => Number(item.network) === 714)
     if (binanceChainAddressObj) {
       return binanceChainAddressObj.address
