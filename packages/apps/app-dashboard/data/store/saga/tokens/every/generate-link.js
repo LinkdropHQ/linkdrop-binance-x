@@ -4,7 +4,7 @@ import { utils } from 'ethers'
 import { removeLastSlash } from 'helpers'
 import { convertFromExponents } from '@linkdrop/binance-commons'
 import sdk from "@linkdrop/binance-sdk"
-import { claimHost } from './app.config.js'
+import { claimHost } from 'app.config.js'
 import { multiply, bignumber, add } from 'mathjs'
 
 const generator = function * ({ payload }) {
