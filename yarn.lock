@@ -13812,7 +13812,7 @@ math-expression-evaluator@^1.2.14:
   resolved "https://registry.yarnpkg.com/math-expression-evaluator/-/math-expression-evaluator-1.2.22.tgz#c14dcb3d8b4d150e5dcea9c68c8dad80309b0d5e"
   integrity sha512-L0j0tFVZBQQLeEjmWOvDLoRciIY8gQGWahvkztXUal8jH8R5Rlqo9GCvgqvXcy9LQhEWdQCVvzqAbxgYNt4blQ==
 
-mathjs@^6.0.3:
+mathjs@^6.5.0:
   version "6.5.0"
   resolved "https://registry.yarnpkg.com/mathjs/-/mathjs-6.5.0.tgz#f5c7cfdedb7110c113e316606924591d9b694088"
   integrity sha512-QhOJiswL8W7UBS2tYm9i1BQLK6EQWdCI38/m65fttNDfT+RZV5iw8s/sm+i1HmA4P+NFzg7DoyMGfaQmwYRPpA==

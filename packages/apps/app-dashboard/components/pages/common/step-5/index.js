@@ -51,7 +51,6 @@ class Step5 extends React.Component {
             <span>{this.t('buttons.useLinkdropSdk')}</span><Icons.ExternalLink fill='#FFF' />
           </Button>
           <p className={classNames(styles.text, styles.textMargin80)}>{this.t('titles.nodeJsSupport')}</p>
-          <p className={classNames(styles.text, styles.textMargin20)}>{this.t('titles.codeDetails')}</p>
           {false && <xmp className={styles.codeBlock}>
             {this.t('texts.codeBlock')}
           </xmp>}
@@ -77,12 +76,12 @@ class Step5 extends React.Component {
         </div>
       </div>
 
-      {false && <div>
+      <div>
         <p className={classNames(styles.text, styles.textMargin20)}>{this.t('titles.contractParams')}</p>
         <p className={classNames(styles.text, styles.textMargin10, styles.ellipsis)} dangerouslySetInnerHTML={{ __html: this.t('titles.senderAddress', { address: senderAddress }) }} />
         <p className={classNames(styles.text, styles.textMargin10, styles.ellipsis)} dangerouslySetInnerHTML={{ __html: this.t('titles.verifierAddress', { address: verifierAddress }) }} />
         <p className={classNames(styles.text, styles.ellipsis)} dangerouslySetInnerHTML={{ __html: this.t('titles.campaignId', { campaignId }) }} />
-      </div>}
+      </div>
     </div>
   }
 }

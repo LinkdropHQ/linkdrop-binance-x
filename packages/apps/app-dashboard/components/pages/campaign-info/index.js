@@ -9,7 +9,7 @@ class CampaignInfo extends React.Component {
   componentDidMount () {
     const campaignToCheck = ((this.props.match || {}).params || {}).id
     const { items } = this.props
-    const itemFind = items.find(item => Number(item.id) === Number(campaignToCheck))
+    const itemFind = items.find(item => item.id === campaignToCheck)
 
     if (!items || !itemFind) {
       window.location.href = '/#/campaigns'
@@ -20,7 +20,8 @@ class CampaignInfo extends React.Component {
     const { items, match = {} } = this.props
     const params = match.params || {}
     const { id } = params
-    const currentItem = items.find(item => Number(item.id) === Number(id))
+    console.log({ items })
+    const currentItem = items.find(item => item.id === id)
     const { links, linksAmount } = currentItem
     return <div className={styles.container}>
       {this.renderContent({ id, links, linksAmount })}

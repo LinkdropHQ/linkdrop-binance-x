@@ -8,7 +8,6 @@ import ClaimingProcessPage from './claiming-process-page'
 import ErrorPage from './error-page'
 import ClaimingFinishedPage from './claiming-finished-page'
 import { getHashVariables } from '@linkdrop/binance-commons'
-import { apiHost } from 'app.config.js'
 
 @actions(({ user: { errors, step, loading: userLoading, readyToClaim, alreadyClaimed }, tokens: { transactionId }, contract: { loading, decimals, amount, symbol, icon } }) => ({
   userLoading,
@@ -28,7 +27,8 @@ import { apiHost } from 'app.config.js'
 class Claim extends React.Component {
   componentDidMount () {
     const {
-      linkKey
+      linkKey,
+      apiHost
     } = getHashVariables()
     this.actions().tokens.checkIfClaimed({ linkKey, host: apiHost })
   }

@@ -6,7 +6,6 @@ import commonStyles from '../styles.module'
 import { getHashVariables } from '@linkdrop/binance-commons'
 import config from 'config-claim'
 import classNames from 'classnames'
-import { apiHost } from 'app.config.js'
 
 @actions(({ tokens: { transactionId, transactionStatus } }) => ({ transactionId, transactionStatus }))
 @translate('pages.main')
@@ -17,7 +16,8 @@ class ClaimingProcessPage extends React.Component {
       amount,
       linkKey,
       verifierSignature,
-      receiverAddress
+      receiverAddress,
+      apiHost
     } = getHashVariables()
 
     this.actions().tokens.claimTokens({ asset, host: apiHost, amount, linkKey, verifierSignature, receiverAddress })

@@ -2,6 +2,7 @@
 import { put, select } from 'redux-saga/effects'
 import { ethers } from 'ethers'
 const BnbApiClient = require('@binance-chain/javascript-sdk')
+import sdk from "@linkdrop/binance-sdk"
 
 const generator = function * () {
   try {
@@ -18,6 +19,7 @@ const generator = function * () {
     yield put({ type: 'USER.SET_VERIFIER_ADDRESS', payload: { verifierAddress } })
     yield put({ type: 'USER.SET_SENDER_PRIVATE_KEY', payload: { senderPrivateKey } })
     yield put({ type: 'USER.SET_SENDER_ADDRESS', payload: { senderAddress } })
+    yield put({ type: 'USER.SET_LOADING', payload: { loading: false } })
   } catch (e) {
     console.error(e)
   }

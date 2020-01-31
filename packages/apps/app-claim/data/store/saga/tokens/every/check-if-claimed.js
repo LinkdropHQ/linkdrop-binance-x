@@ -5,9 +5,9 @@ import { ethers } from 'ethers'
 const generator = function * ({ payload }) {
   try {
     yield put({ type: 'USER.SET_LOADING', payload: { loading: true } })
-    const { host, linkKey } = payload
+    const { linkKey, host } = payload
     const linkId = new ethers.Wallet(linkKey).address
-    const { isClaimed, txHash } = yield sdk.binance.isClaimed({ host, linkId })
+    const { isClaimed, txHash } = yield sdk.isClaimed({ apiHost: host, linkId })
     yield put({ type: 'USER.SET_ALREADY_CLAIMED', payload: { alreadyClaimed: isClaimed } })
     yield put({ type: 'USER.SET_READY_TO_CLAIM', payload: { readyToClaim: true } })
     if (isClaimed) {

@@ -9,7 +9,7 @@ import { Step2, Step3, Step4, Step5, Step6 } from 'components/pages/common'
 class CampaignCreate extends React.Component {
   componentDidMount () {
     // this.actions().user.setStep({ step: 1 })
-    this.actions().user.setStep({ step: 5 })
+    this.actions().user.setStep({ step: 1 })
   }
 
   componentWillUnmount () {

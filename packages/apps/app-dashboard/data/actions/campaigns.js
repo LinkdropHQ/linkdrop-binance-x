@@ -40,13 +40,8 @@ class Campaign {
     })
   }
 
-  save ({ links }) {
-    this.actions.dispatch({
-      type: '*CAMPAIGNS.SAVE',
-      payload: {
-        links
-      }
-    })
+  save () {
+    this.actions.dispatch({ type: '*CAMPAIGNS.SAVE' })
   }
 
   getCSV ({ links, id }) {

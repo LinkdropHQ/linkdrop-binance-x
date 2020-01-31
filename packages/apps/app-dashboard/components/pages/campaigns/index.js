@@ -22,14 +22,6 @@ class Campaigns extends React.Component {
         {...linkdrop}
         chainId={chainId}
       />)}
-      <ActionBlock
-        transparent
-        title={this.t('createCampaign')}
-        description={this.t('createCampaignDescription')}
-        extraContent={this.t('ercAndEth', { symbol: this.defaultSymbol })}
-        href='/#/'
-        buttonTitle={this.t('create')}
-      />
     </div>
   }
 }

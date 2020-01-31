@@ -3,6 +3,7 @@ import { delay } from 'redux-saga'
 import { utils } from 'ethers'
 import { convertFromExponents } from '@linkdrop/binance-commons'
 import sdk from "@linkdrop/binance-sdk"
+import { multiply, bignumber, add } from 'mathjs'
 
 const generator = function * ({ payload }) {
   try {
@@ -13,19 +14,12 @@ const generator = function * ({ payload }) {
     const amount = yield select(generator.selectors.amount)
     const apiHost = yield select(generator.selectors.apiHost)
     const links = yield select(generator.selectors.links)
-    console.log({
-      claimHost: 'http://localhost:9002',
-      privateKey: verifierPrivateKey,
-      asset: symbol,
-      amount,
-      apiHost
-    })
 
     const link = yield sdk.generateLink({
       claimHost: 'http://localhost:9002',
       privateKey: verifierPrivateKey,
       asset: symbol,
-      amount: String(amount),
+      amount: String(multiply(bignumber(amount), bignumber(100000000))),
       apiHost
     })
 

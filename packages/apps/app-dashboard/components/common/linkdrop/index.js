@@ -47,101 +47,83 @@ class Linkdrop extends React.Component {
 
   render () {
     const {
-      tokenAmount,
+      amount,
       currentAddress,
-      tokenSymbol,
-      ethAmount,
+      symbol,
       created,
       status,
       loading,
       chainId,
       linksAmount,
-      tokenType,
       id
     } = this.props
 
-    const checkAddressUrl = `${Number(chainId) === 1 ? config.etherscanMainnet : config.etherscanRinkeby}/${id}`
     return <div className={classNames(styles.container, { [styles.containerDisabled]: status === 'canceled' })}>
       {loading && <Loading withOverlay />}
-      {this.renderTokenTypeLabel({ tokenType })}
-      {this.renderTitle({ tokenAmount, tokenSymbol, ethAmount, chainId, tokenType, linksAmount })}
-      {this.renderStatus({ status, id, chainId, currentAddress })}
+      {this.renderTitle({ amount, symbol, linksAmount })}
+      {this.renderStatus({ status, id, chainId })}
       {this.renderDate({ created })}
-      {this.renderLinksData({ chainId, linksAmount, tokenAmount, tokenSymbol, ethAmount, tokenType })}
+      {this.renderLinksData({ linksAmount, amount, symbol })}
       <div className={styles.buttons}>
         <Button disabled={status === 'canceled'} href={status !== 'canceled' && `/#/campaigns/${id}`} transparent className={styles.button}>{this.t('links')}</Button>
-        <Button href={checkAddressUrl} target='_blank' transparent className={classNames(styles.button, styles.buttonWithIcon)}>{this.t('viewContract')}<Icons.ExternalLink fill={variables.dbBlue} /></Button>
       </div>
     </div>
   }
 
-  renderTitle ({ tokenAmount, chainId, tokenSymbol, ethAmount, tokenType, linksAmount }) {
-    if (tokenType === 'erc20' && !ethAmount) {
-      return <div className={styles.title}>{convertFromExponents(multiply(bignumber(tokenAmount), bignumber(linksAmount)))} {tokenSymbol}</div>
-    }
-    if (tokenType === 'erc20' && ethAmount) {
-      return <div className={styles.title}>{convertFromExponents(multiply(bignumber(tokenAmount), bignumber(linksAmount)))} {tokenSymbol} + {this.defaultSymbol}</div>
-    }
-
-    if (tokenType === 'erc721' && !ethAmount) {
-      return <div className={styles.title}>{linksAmount} {tokenSymbol}</div>
-    }
-
-    if (tokenType === 'erc721' && ethAmount) {
-      return <div className={styles.title}>{linksAmount} {tokenSymbol} + {this.defaultSymbol}</div>
-    }
-
-    if (tokenType === 'eth' && ethAmount) {
-      return <div className={styles.title}>{convertFromExponents(multiply(bignumber(ethAmount), bignumber(linksAmount)))} {this.defaultSymbol}</div>
-    }
-    return null
+  renderTitle ({ amount, symbol, linksAmount }) {
+    return <div className={styles.title}>{convertFromExponents(multiply(bignumber(amount), bignumber(linksAmount)))} {symbol}</div>
   }
 
-  renderStatus ({ status, id, chainId, account, currentAddress }) {
-    let value = <span />
-    switch (status) {
-      case 'active':
-        value = <span>
-          <span
-            className={classNames(styles.statusActive, styles.status)}
-          >
-            {this.t('statusType.active')}
-          </span> / <span
-            className={styles.status}
-            onClick={_ => this.actions().campaigns.changeStatus({ action: 'pause', id, chainId, account: currentAddress })}
-          >
-            {this.t('statusType.pause')}
-          </span>
-        </span>
-        break
-      case 'paused':
-        value = <span>
-          <span
-            className={classNames(styles.statusPaused, styles.status)}
-          >
-            {this.t('statusType.paused')}
-          </span> / <span
-            className={styles.status}
-            onClick={_ => this.actions().campaigns.changeStatus({ action: 'unpause', id, chainId, account: currentAddress })}
-          >
-            {this.t('statusType.activate')}
-          </span> / <span
-                      className={styles.status}
-                      onClick={_ => this.actions().campaigns.changeStatus({ action: 'withdraw', id, chainId, account: currentAddress })}
-                              >
-                      {this.t('statusType.withdraw')}
-          </span>
-        </span>
-        break
-      case 'canceled':
-        value = <span>
-          <span
-            className={classNames(styles.statusCanceled, styles.status)}
-          >
-            {this.t('statusType.canceled')}
-          </span>
-        </span>
-    }
+  renderStatus ({ status, id, chainId, account }) {
+    const value = <span>
+      <span className={classNames(styles.statusActive, styles.status)}>
+        {this.t('statusType.active')}
+      </span>
+    </span>
+    // let value = <span />
+    // switch (status) {
+    //   case 'active':
+    //     value = <span>
+    //       <span
+    //         className={classNames(styles.statusActive, styles.status)}
+    //       >
+    //         {this.t('statusType.active')}
+    //       </span> / <span
+    //         className={styles.status}
+    //         onClick={_ => this.actions().campaigns.changeStatus({ action: 'pause', id, chainId, account: currentAddress })}
+    //       >
+    //         {this.t('statusType.pause')}
+    //       </span>
+    //     </span>
+    //     break
+    //   case 'paused':
+    //     value = <span>
+    //       <span
+    //         className={classNames(styles.statusPaused, styles.status)}
+    //       >
+    //         {this.t('statusType.paused')}
+    //       </span> / <span
+    //         className={styles.status}
+    //         onClick={_ => this.actions().campaigns.changeStatus({ action: 'unpause', id, chainId, account: currentAddress })}
+    //       >
+    //         {this.t('statusType.activate')}
+    //       </span> / <span
+    //                   className={styles.status}
+    //                   onClick={_ => this.actions().campaigns.changeStatus({ action: 'withdraw', id, chainId, account: currentAddress })}
+    //                           >
+    //                   {this.t('statusType.withdraw')}
+    //       </span>
+    //     </span>
+    //     break
+    //   case 'canceled':
+    //     value = <span>
+    //       <span
+    //         className={classNames(styles.statusCanceled, styles.status)}
+    //       >
+    //         {this.t('statusType.canceled')}
+    //       </span>
+    //     </span>
+    // }
 
     return <div
       className={styles.statusField}
@@ -157,27 +139,10 @@ class Linkdrop extends React.Component {
     </div>
   }
 
-  renderTokenTypeLabel ({ tokenType }) {
-    return <div className={styles.tokenLabel}>
-      {tokenType !== 'eth' ? tokenType : this.defaultSymbol}
-    </div>
-  }
-
-  renderLinksData ({ linksAmount, tokenAmount, tokenSymbol, ethAmount, tokenType, chainId }) {
+  renderLinksData ({ linksAmount, amount, symbol }) {
     const linksTitle = linksAmount > 1 ? this.t('linksCount') : this.t('link')
-    if (tokenType === 'eth' && ethAmount) {
-      return <div className={styles.links}>
-        {linksAmount} {linksTitle} / {convertFromExponents(ethAmount)} {this.defaultSymbol}
-      </div>
-    }
-    if (tokenType === 'erc20' && linksAmount && tokenAmount && tokenSymbol && ethAmount) {
-      return <div className={styles.links}>
-        {linksAmount} {linksTitle} / {convertFromExponents(tokenAmount)} {tokenSymbol} + {ethAmount} {this.defaultSymbol}
-      </div>
-    }
-
     return <div className={styles.links}>
-      {linksAmount} {linksTitle} / {convertFromExponents(tokenAmount)} {tokenSymbol}
+      {linksAmount} {linksTitle} / {convertFromExponents(amount)} {symbol}
     </div>
   }
 }

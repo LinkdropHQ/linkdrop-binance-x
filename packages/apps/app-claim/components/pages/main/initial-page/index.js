@@ -12,7 +12,7 @@ import commonStyles from '../styles.module'
 class InitialPage extends React.Component {
   render () {
     const { onClick, amount, symbol, loading, wallet } = this.props
-    const amountFormatted = sdk.binance.utils.formatUnits(amount || 0)
+    const amountFormatted = sdk.utils.formatUnits(amount || 0)
     const finalIcon = <img className={styles.icon} src={icon} />
     return <div className={commonStyles.container}>
       <Alert className={styles.tokenIcon} icon={finalIcon} />
