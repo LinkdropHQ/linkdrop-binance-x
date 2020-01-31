@@ -18,7 +18,7 @@ const generator = function * ({ payload }) {
     const links = yield select(generator.selectors.links)
 
     const link = yield sdk.generateLink({
-      claimHost: 'http://localhost:9002',
+      claimHost,
       privateKey: verifierPrivateKey,
       asset: symbol,
       amount: String(multiply(bignumber(amount), bignumber(100000000))),

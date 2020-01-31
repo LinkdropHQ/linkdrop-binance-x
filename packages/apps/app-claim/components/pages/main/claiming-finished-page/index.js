@@ -12,7 +12,7 @@ import sdk from '@linkdrop/binance-sdk'
 class ClaimingFinishedPage extends React.Component {
   render () {
     const { transactionId, amount, symbol } = this.props
-    const amountFormatted = sdk.binance.utils.formatUnits(amount || 0)
+    const amountFormatted = sdk.utils.formatUnits(amount || 0)
     return <div className={commonStyles.container}>
       <Alert icon={<Icons.Check />} className={styles.alert} />
       <div className={styles.title} dangerouslySetInnerHTML={{ __html: this.t('titles.tokensClaimed', { tokens: `${amountFormatted || ''} ${symbol || ''}` }) }} />

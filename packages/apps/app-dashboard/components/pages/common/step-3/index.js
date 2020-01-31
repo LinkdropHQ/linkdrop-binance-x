@@ -106,11 +106,6 @@ class Step3 extends React.Component {
                   {linksAmount}
                 </div>
               </div>
-              <div className={styles.data}>
-                <h3 className={styles.dataTitle}>
-                  {this.t('titles.serviceFeeTitle')}
-                </h3>
-              </div>
             </div>
 
             <div>
@@ -124,17 +119,12 @@ class Step3 extends React.Component {
               </div>
             </div>
           </div>
-          <div
-            className={styles.serviceFee}
-          >
-            {this.t('texts._18')}
+          <div className={styles.serviceFee}>
+            <div className={styles.title}>{this.t('titles.instruction')}</div>
+            <div className={styles.instruction} dangerouslySetInnerHTML={{__html: this.t('texts.sendInstruction', { amount: amount * linksAmount, symbol, senderAddress})}} />
           </div>
           <ApproveSummary />
           <CheckButton />
-        </div>
-        <div className={styles.description}>
-          <div className={styles.title}>{this.t('titles.instruction')}</div>
-          <div className={styles.instruction} dangerouslySetInnerHTML={{__html: this.t('texts.sendInstruction', { amount: amount * linksAmount, symbol, senderAddress})}} />
         </div>
       </div>
     </div>

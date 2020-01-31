@@ -21,12 +21,6 @@
   margin-bottom: 20px;
 }
 
-.summary {
-  flex: 1 0 550px;
-  padding-right: 50px;
-  border-right: 1px solid $greyStrokeColor;
-}
-
 .instruction {
   span {
     font-family: 'Inter-Bold';
@@ -37,8 +31,6 @@
   padding-left: 50px;
   width: 100%;
 }
-
-.serviceFee {}
 
 .summaryBox {
   display: flex;
