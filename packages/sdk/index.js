@@ -396,6 +396,7 @@ const claim = async ({
   }
 
   try {
+    alert('sdk 1')
     const claimParams = {
       asset,
       linkId,
@@ -405,8 +406,10 @@ const claim = async ({
       receiverSignature
     }
 
-    const response = await axios.post(`${apiHost}/api/v1/claim`, claimParams)
+    alert('sdk 2')
 
+    const response = await axios.post(`${apiHost}/api/v1/claim`, claimParams)
+    alert('sdk 3')
     if (response.status !== 200) {
       throw new Error(`Invalid response status ${response.status}`)
     } else {
@@ -414,6 +417,7 @@ const claim = async ({
       return { success, txHash, error }
     }
   } catch (err) {
+    alert(err)
     throw new Error(err)
   }
 }

@@ -1,0 +1,20 @@
+{
+  "name": "Linkdrop x Binance Chain Server",
+  "description": "Relay service to distribute BEP2 tokens",
+  "repository": "https://github.com/LinkdropHQ/linkdrop-binance-x/tree/dev",
+  "env": {
+    "VERIFIER_ADDRESS": {
+      "description": "Public Ethereum address corresponding to private key the links have been signed with",
+      "value": "0xbF0e4036BF968dD007F9B4A1BFdA4e54C042F612"
+    },
+    "SENDER_PRIVATE_KEY": {
+      "description": "Binance chain private key that holds BEP2 tokens to be distributed",
+      "value": ""
+    }
+  },
+  "keywords": ["node", "express"],
+  "addons": ["mongolab"],
+  "scripts": {
+    "postdeploy": "yarn global add pm2"
+  }
+}

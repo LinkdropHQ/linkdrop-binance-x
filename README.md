@@ -15,24 +15,22 @@
 ## Getting started
 
 Clone repo
+
 ```bash
 git clone https://github.com/LinkdropHQ/linkdrop-binance-x.git
 ```
 
 Install dependencies
+
 ```bash
 yarn install
 ```
 
-
 ## Contributors
 
-* **Amir Jumaniyazov:** [@amiromayer](https://github.com/amiromayer)
-
-* **Mikhail Dobrokhvalov:** [@dobrokhvalov](https://github.com/dobrokhvalov)
-
-* **Haz Baikulov:** [@spacehaz](https://github.com/spacehaz)
-
+- **Amir Jumaniyazov:** [@amiromayer](https://github.com/amiromayer)
+- **Haz Baikulov:** [@spacehaz](https://github.com/spacehaz)
+- **Mikhail Dobrokhvalov:** [@dobrokhvalov](https://github.com/dobrokhvalov)
 
 ## Contributing
 

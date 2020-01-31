@@ -121,7 +121,16 @@ class Step3 extends React.Component {
           </div>
           <div className={styles.serviceFee}>
             <div className={styles.title}>{this.t('titles.instruction')}</div>
-            <div className={styles.instruction} dangerouslySetInnerHTML={{__html: this.t('texts.sendInstruction', { amount: amount * linksAmount, symbol, senderAddress})}} />
+            <div
+              className={styles.instruction}
+              dangerouslySetInnerHTML={{
+                __html: this.t('texts.sendInstruction', {
+                  amount: amount * linksAmount,
+                  symbol,
+                  senderAddress
+                }
+              )}}
+            />
           </div>
           <ApproveSummary />
           <CheckButton />

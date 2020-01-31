@@ -12,7 +12,8 @@
     "test": "cd packages/sdk && yarn test",
     "generate-links": "npx babel-node packages/scripts/src/generate-links",
     "claim-link": "npx babel-node packages/scripts/src/claim-link",
-    "server": "npx babel-node packages/server/index"
+    "server": "npx babel-node packages/server/index",
+    "start": "npx pm2-runtime start --name relayer npm -- run server"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
@@ -22,5 +23,8 @@
     "@babel/preset-env": "^7.4.5",
     "@babel/register": "^7.4.4",
     "lerna": "^3.16.4"
+  },
+  "engines": {
+    "node": "10.16.0"
   }
 }
