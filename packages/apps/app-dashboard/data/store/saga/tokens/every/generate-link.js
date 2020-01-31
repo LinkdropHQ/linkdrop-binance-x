@@ -1,8 +1,10 @@
 import { put, select } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import { utils } from 'ethers'
+import { removeLastSlash } from 'helpers'
 import { convertFromExponents } from '@linkdrop/binance-commons'
 import sdk from "@linkdrop/binance-sdk"
+import { claimHost } from './app.config.js'
 import { multiply, bignumber, add } from 'mathjs'
 
 const generator = function * ({ payload }) {
@@ -20,7 +22,7 @@ const generator = function * ({ payload }) {
       privateKey: verifierPrivateKey,
       asset: symbol,
       amount: String(multiply(bignumber(amount), bignumber(100000000))),
-      apiHost
+      apiHost: removeLastSlash({ string: apiHost })
     })
 
     yield delay(10)

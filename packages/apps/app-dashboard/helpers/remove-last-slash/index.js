@@ -1,0 +1,1 @@
+export default ({ string }) => str.endsWith('/') ? str.slice(0, -1) : str
