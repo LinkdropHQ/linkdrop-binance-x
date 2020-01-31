@@ -7,6 +7,7 @@ import ApproveSummary from './approve-summary'
 import CheckButton from './check-button'
 import config from 'config-dashboard'
 import { linksLimit } from 'app.config.js'
+import { multiply, bignumber } from 'mathjs'
 
 @actions(({
   user: {
@@ -125,14 +126,14 @@ class Step3 extends React.Component {
               className={styles.instruction}
               dangerouslySetInnerHTML={{
                 __html: this.t('texts.sendInstruction', {
-                  amount: amount * linksAmount,
+                  amount: String(multiply(bignumber(amount), bignumber(linksAmount))),
                   symbol,
+                  fee: String(multiply(bignumber(0.000375), bignumber(linksAmount))),
                   senderAddress
                 }
               )}}
             />
           </div>
-          <ApproveSummary />
           <CheckButton />
         </div>
       </div>

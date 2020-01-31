@@ -90,7 +90,7 @@ export default {
     scriptInstruction: 'To generate more than {{linksLimit}} links at a time',
     scriptDescription: 'This script will deploy the linkdrop proxy contract for your campaign and top it up with the required ETH amount for covering fee costs as well as approve your ERC20 tokens.',
     sendViaIntercom: 'Have a question — send us a message via <span>Intercom</span>',
-    sendInstruction: 'Send <span>{{amount}} {{symbol}}</span> and <span>0.000375 BNB to <span>{{senderAddress}}</span> and press "Check" button. Do not close the page after you pressed the button.',
+    sendInstruction: 'Send <span>{{amount}} {{symbol}}</span> and <span>{{fee}} BNB</span> to <span>{{senderAddress}}</span> and press "Check" button. Do not close the page after you pressed the button.',
     codeBlockScript: `{
   "LINKDROP_MASTER_ADDRESS": "{{masterAddress}}",
   "SIGNING_KEY": "{{signingKey}}",
