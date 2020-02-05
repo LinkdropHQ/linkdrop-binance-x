@@ -13,6 +13,7 @@
     "generate-links": "npx babel-node packages/scripts/src/generate-links",
     "claim-link": "npx babel-node packages/scripts/src/claim-link",
     "server": "npx babel-node packages/server/index",
+    "server:dashboard": "npx babel-node packages/dashboard-server/index",
     "start": "npx pm2-runtime start --name relayer npm -- run server"
   },
   "devDependencies": {

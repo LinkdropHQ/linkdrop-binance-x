@@ -6,7 +6,7 @@ import LinkContents from './link-contents'
 import ApproveSummary from './approve-summary'
 import CheckButton from './check-button'
 import config from 'config-dashboard'
-import { linksLimit } from 'app.config.js'
+import { linksLimit, fee } from 'app.config.js'
 import { multiply, bignumber } from 'mathjs'
 
 @actions(({
@@ -17,7 +17,7 @@ import { multiply, bignumber } from 'mathjs'
     senderAddress
   },
   tokens: {
-    balance,
+    approved,
     address
   },
   connector: {
@@ -26,7 +26,8 @@ import { multiply, bignumber } from 'mathjs'
   campaigns: {
     linksAmount,
     amount,
-    symbol
+    symbol,
+    fee
   }
 }) => ({
   linksAmount,
@@ -35,8 +36,9 @@ import { multiply, bignumber } from 'mathjs'
   loading,
   connectorStatus,
   chainId,
-  balance,
+  approved,
   amount,
+  fee,
   symbol,
   senderAddress
 }))
@@ -50,11 +52,11 @@ class Step3 extends React.Component {
     }
   }
 
-  componentWillReceiveProps ({ linksAmount, connectorStatus, errors, balance }) {
+  componentWillReceiveProps ({ linksAmount, connectorStatus, errors, approved }) {
     const {
       connectorStatus: prevConnectorStatus,
       errors: prevErrors,
-      balance: prevBalance,
+      approved: prevApproved,
       proxyAddress,
       chainId,
       address: tokenAddress,
@@ -78,7 +80,7 @@ class Step3 extends React.Component {
       })
     }
 
-    if (balance && Number(balance) > 0 && balance !== prevBalance) {
+    if (approved && !prevApproved) {
       this.setState({
         loading: false
       }, _ => {
@@ -89,7 +91,7 @@ class Step3 extends React.Component {
   }
 
   render () {
-    const { linksAmount, loading, amount, symbol, senderAddress } = this.props
+    const { linksAmount, fee, loading, amount, symbol, senderAddress } = this.props
     const { loading: stateLoading } = this.state
     return <div className={styles.container}>
       <PageHeader title={this.t('titles.summaryPay')} />
@@ -128,7 +130,7 @@ class Step3 extends React.Component {
                 __html: this.t('texts.sendInstruction', {
                   amount: String(multiply(bignumber(amount), bignumber(linksAmount))),
                   symbol,
-                  fee: String(multiply(bignumber(0.000375), bignumber(linksAmount))),
+                  fee,
                   senderAddress
                 }
               )}}

@@ -5,6 +5,8 @@ const initialState = {
   symbol: null,
   loading: false,
   balance: null,
+  bnbBalance: null,
+  approved: false,
   currentBalance: null
 }
 

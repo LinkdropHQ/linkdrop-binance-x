@@ -9,11 +9,13 @@ const generator = function * ({ payload }) {
     yield put({ type: 'CAMPAIGNS.SET_LINKS_AMOUNT', payload: { linksAmount: null } })
     yield put({ type: 'CAMPAIGNS.SET_DEFAULT_WALLET', payload: { defaultWallet: null } })
     yield put({ type: 'CAMPAIGNS.SET_ID', payload: { id: null } })
+    yield put({ type: 'CAMPAIGNS.SET_COMMON_AMOUNT', payload: { commonAmount: null } })
+    yield put({ type: 'CAMPAIGNS.SET_FEE', payload: { fee: null } })
     yield put({ type: 'USER.SET_SENDER_PRIVATE_KEY', payload: { senderPrivateKey: null } })
     yield put({ type: 'USER.SET_SENDER_ADDRESS', payload: { senderAddress: null } })
     yield put({ type: 'USER.SET_VERIFIER_PRIVATE_KEY', payload: { verifierPrivateKey: null } })
     yield put({ type: 'USER.SET_VERIFIER_ADDRESS', payload: { verifierAddress: null } })
-    yield put({ type: 'TOKENS.SET_BALANCE', payload: { balance: null } })
+    yield put({ type: 'TOKENS.SET_BALANCE', payload: { balance: null, bnbBalance: null, approved: false } })
   } catch (e) {
     console.error(e)
   }

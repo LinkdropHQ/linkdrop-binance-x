@@ -1,1 +1,1 @@
-export default (state, { payload: { balance } }) => ({ ...state, balance })
+export default (state, { payload: { balance, bnbBalance, approved } }) => ({ ...state, balance, bnbBalance, approved })

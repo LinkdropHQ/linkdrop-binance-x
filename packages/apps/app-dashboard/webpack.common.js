@@ -96,6 +96,7 @@ module.exports = {
       LINKS_LIMIT: JSON.stringify(process.env.LINKS_LIMIT),
       CLAIM_HOST: JSON.stringify(process.env.CLAIM_HOST),
       DEFAULT_CHAIN_ID: JSON.stringify(process.env.DEFAULT_CHAIN_ID),
+      FEE: JSON.stringify(process.env.FEE),
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
       }

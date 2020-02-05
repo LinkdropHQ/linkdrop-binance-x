@@ -1,0 +1,23 @@
+{
+  "name": "dashboard-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
+    "@babel/polyfill": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/register": "^7.4.4",
+    "@hapi/boom": "^9.0.0",
+    "axios": "^0.19.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.8.11",
+    "morgan": "^1.9.1"
+  },
+  "babel": {
+    "extends": "../../babel.config.js"
+  }
+}

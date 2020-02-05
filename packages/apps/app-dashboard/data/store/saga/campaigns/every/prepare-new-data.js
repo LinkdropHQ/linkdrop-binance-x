@@ -1,4 +1,6 @@
 import { put, select } from 'redux-saga/effects'
+import { fee } from 'app.config.js'
+import { multiply, bignumber } from 'mathjs'
 
 const generator = function * ({ payload }) {
   try {
@@ -6,6 +8,8 @@ const generator = function * ({ payload }) {
     const id = yield select(generator.selectors.senderAddress)
     yield put({ type: 'USER.SET_LOADING', payload: { loading: true } })
     yield put({ type: 'CAMPAIGNS.SET_AMOUNT', payload: { amount: tokenAmount } })
+    yield put({ type: 'CAMPAIGNS.SET_COMMON_AMOUNT', payload: { commonAmount: String(multiply(bignumber(tokenAmount), bignumber(linksAmount))) } })
+    yield put({ type: 'CAMPAIGNS.SET_FEE', payload: { fee: String(multiply(bignumber(fee), bignumber(linksAmount))) } })
     yield put({ type: 'CAMPAIGNS.SET_DEFAULT_WALLET', payload: { defaultWallet: wallet } })
     yield put({ type: 'CAMPAIGNS.SET_SYMBOL', payload: { symbol: tokenSymbol } })
     yield put({ type: 'CAMPAIGNS.SET_ID', payload: { id } })

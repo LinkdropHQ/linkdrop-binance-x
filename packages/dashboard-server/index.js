@@ -3,14 +3,15 @@ import express from 'express'
 import morgan from 'morgan'
 import mongoose from 'mongoose'
 import boom from '@hapi/boom'
-import claimController from './api/controllers/claim'
+import usersController from './controllers/users'
 
 require('dotenv').config()
 
 const app = express()
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 6002
 const MONGODB_URI =
-  process.env.MONGODB_URI || 'mongodb://localhost:27017/linkdrop-binance'
+  process.env.MONGODB_URI ||
+  'mongodb://localhost:27017/linkdrop-binance-dashboard'
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
@@ -39,8 +40,8 @@ app.get('/', async (req, res) => {
   res.status(200).json({ message: `Server is up and running on port ${PORT}` })
 })
 
-app.post('/api/v1/claim', claimController.claim)
-app.get('/api/v1/is-claimed/:linkId', claimController.isClaimed)
+app.post('/users', usersController.create)
+app.get('/users/:address', usersController.getUserData)
 
 app.use(async (req, res, next) => {
   next(boom.notFound('Endpoint not found'))
