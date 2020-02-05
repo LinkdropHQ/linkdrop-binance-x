@@ -4,7 +4,7 @@ import { wrapAsync } from '../utils'
 /**
  * Function to get meta data for specific user
  */
-const getUserData = wrapAsync(async (req, res) => {
+const getUser = wrapAsync(async (req, res) => {
   const address = req.params.address
 
   const user = await User.findOne({
@@ -12,6 +12,23 @@ const getUserData = wrapAsync(async (req, res) => {
   })
 
   if (user && user.apiHost && user.topupAddress) {
+    return res.json({
+      success: true,
+      address,
+      apiHost: user.apiHost,
+      topupAddress: user.topupAddress
+    })
+  } else return res.json({ success: false })
+})
+
+const getUserByApiHost = wrapAsync(async (req, res) => {
+  const apiHost = req.params.address
+
+  const user = await User.findOne({
+    apiHost
+  })
+
+  if (user && user.apiHost) {
     return res.json({
       success: true,
       address,
@@ -44,4 +61,4 @@ const create = wrapAsync(async (req, res) => {
   }
 })
 
-export default { getUserData, create }
+export default { getUser, getUserByApiHost, create }

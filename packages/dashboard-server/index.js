@@ -41,7 +41,8 @@ app.get('/', async (req, res) => {
 })
 
 app.post('/users', usersController.create)
-app.get('/users/:address', usersController.getUserData)
+app.get('/users/:address', usersController.getUser)
+app.get('/users/get-by-api-host/:apiHost', usersController.getUserByApiHost)
 
 app.use(async (req, res, next) => {
   next(boom.notFound('Endpoint not found'))
