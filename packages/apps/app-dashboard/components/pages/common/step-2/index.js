@@ -10,10 +10,14 @@ import NextButton from './next-button'
 	user: {
 		senderPrivateKey,
 		verifierAddress
+	},
+	campaigns: {
+		error
 	}
 }) => ({
 	senderPrivateKey,
-	verifierAddress
+	verifierAddress,
+	error
 }))
 @translate('pages.campaignCreate')
 class Step2 extends React.Component {
@@ -25,7 +29,7 @@ class Step2 extends React.Component {
 	}
 
   render () {
-  	const { senderPrivateKey, verifierAddress } = this.props
+  	const { senderPrivateKey, error, verifierAddress } = this.props
   	const { apiHost } = this.state
   	if (!senderPrivateKey || !verifierAddress) { return <Loading /> }
     return <div className={styles.container}>
@@ -40,6 +44,7 @@ class Step2 extends React.Component {
         value={apiHost}
         onChange={({ value }) => this.setState({ apiHost: value })}
       />
+      {error && <div className={styles.error}>{this.t(`errors.${error}`)}</div>}
       <NextButton apiHost={apiHost} />      	
     </div>
   }

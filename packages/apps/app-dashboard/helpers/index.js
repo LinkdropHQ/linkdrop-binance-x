@@ -4,6 +4,7 @@ import createSignTx from './create-sign-tx'
 import byteArrayToBase64 from './byte-array-to-base64'
 import stringToByteArray from './string-to-byte-array'
 import removeLastSlash from './remove-last-slash'
+import removeProtocol from './remove-protocol'
 
 export {
   getImages,
@@ -11,5 +12,6 @@ export {
   createSignTx,
   byteArrayToBase64,
   stringToByteArray,
-  removeLastSlash
+  removeLastSlash,
+  removeProtocol
 }

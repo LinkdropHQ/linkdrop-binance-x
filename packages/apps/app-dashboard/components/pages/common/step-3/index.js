@@ -4,7 +4,6 @@ import styles from './styles.module'
 import { PageHeader, PageLoader, Instruction } from 'components/common'
 import LinkContents from './link-contents'
 import ApproveSummary from './approve-summary'
-import CheckButton from './check-button'
 import config from 'config-dashboard'
 import { linksLimit, fee } from 'app.config.js'
 import { multiply, bignumber } from 'mathjs'
@@ -50,6 +49,10 @@ class Step3 extends React.Component {
     this.state = {
       loading: false
     }
+  }
+
+  componentDidMount () {
+    this.actions().connector.send()
   }
 
   componentWillReceiveProps ({ linksAmount, connectorStatus, errors, approved }) {
@@ -136,7 +139,6 @@ class Step3 extends React.Component {
               )}}
             />
           </div>
-          <CheckButton />
         </div>
       </div>
     </div>

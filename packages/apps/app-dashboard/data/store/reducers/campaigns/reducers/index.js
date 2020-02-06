@@ -10,6 +10,7 @@ import setDefaultWallet from './set-default-wallet'
 import setApiHost from './set-api-host'
 import setFee from './set-fee'
 import setCommonAmount from './set-common-amount'
+import setError from './set-error'
 
 export default {
   setAmount,
@@ -23,5 +24,6 @@ export default {
   setDefaultWallet,
   setApiHost,
   setFee,
-  setCommonAmount
+  setCommonAmount,
+  setError
 }

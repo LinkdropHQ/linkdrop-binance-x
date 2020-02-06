@@ -14,7 +14,8 @@ const initialState = {
   defaultWallet: null,
   apiHost: null,
   fee: null,
-  commonAmount: null
+  commonAmount: null,
+  error: null
 }
 
 export default (state = initialState, action = {}) => {
@@ -37,5 +38,6 @@ const ACTIONS = {
   'CAMPAIGNS.SET_FEE': reducers.setFee,
   'CAMPAIGNS.SET_DEFAULT_WALLET': reducers.setDefaultWallet,
   'CAMPAIGNS.SET_API_HOST': reducers.setApiHost,
-  'CAMPAIGNS.SET_COMMON_AMOUNT': reducers.setCommonAmount
+  'CAMPAIGNS.SET_COMMON_AMOUNT': reducers.setCommonAmount,
+  'CAMPAIGNS.SET_ERROR': reducers.setError
 }

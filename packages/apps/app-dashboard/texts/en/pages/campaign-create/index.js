@@ -1,4 +1,8 @@
 export default {
+  errors: {
+    API_HOST_EXISTS: 'Api host exists. Create a new one to continue',
+    ERROR_OCCURED: 'Some error occured'
+  },
   titles: {
     createLinkKey: 'Create Link Key',
     setupCampaign: 'Setup',
