@@ -1,6 +1,6 @@
 export default {
   errors: {
-    API_HOST_EXISTS: 'Api host exists. Create a new one to continue',
+    API_HOST_EXISTS: 'Api host exists and was used previously for another campaign. Create a new one to continue',
     ERROR_OCCURED: 'Some error occured'
   },
   titles: {

@@ -6,7 +6,6 @@ const generator = function * ({ payload }) {
   try {
     yield put({ type: 'USER.SET_ERRORS', payload: { errors: [] } })
     const toAddress = yield select(generator.selectors.toAddress)
-    yield put({ type: 'USER.SET_LOADING', payload: { loading: true } })
     const { balances } = yield call(getAssets, { address: toAddress })
     const fee = yield select(generator.selectors.fee)
     const symbol = yield select(generator.selectors.symbol)
@@ -33,7 +32,6 @@ const generator = function * ({ payload }) {
       })
     }
 
-    yield put({ type: 'USER.SET_LOADING', payload: { loading: false } })
   } catch (e) {
     console.error(e)
   }

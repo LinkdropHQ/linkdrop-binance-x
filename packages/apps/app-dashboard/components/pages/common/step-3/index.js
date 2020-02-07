@@ -3,10 +3,8 @@ import { actions, translate } from 'decorators'
 import styles from './styles.module'
 import { PageHeader, PageLoader, Instruction } from 'components/common'
 import LinkContents from './link-contents'
-import ApproveSummary from './approve-summary'
 import config from 'config-dashboard'
-import { linksLimit, fee } from 'app.config.js'
-import { multiply, bignumber } from 'mathjs'
+import { multiply, bignumber, add } from 'mathjs'
 
 @actions(({
   user: {
@@ -17,6 +15,8 @@ import { multiply, bignumber } from 'mathjs'
   },
   tokens: {
     approved,
+    balance,
+    bnbBalance,
     address
   },
   connector: {
@@ -25,19 +25,23 @@ import { multiply, bignumber } from 'mathjs'
   campaigns: {
     linksAmount,
     amount,
+    commonAmount,
     symbol,
-    fee
+    fee:  campaignFee
   }
 }) => ({
   linksAmount,
   address,
   errors,
+  commonAmount,
   loading,
   connectorStatus,
   chainId,
+  balance,
+  bnbBalance,
   approved,
   amount,
-  fee,
+  campaignFee,
   symbol,
   senderAddress
 }))
@@ -94,11 +98,9 @@ class Step3 extends React.Component {
   }
 
   render () {
-    const { linksAmount, fee, loading, amount, symbol, senderAddress } = this.props
-    const { loading: stateLoading } = this.state
+    const { linksAmount, campaignFee, amount, symbol, senderAddress, commonAmount, balance, bnbBalance } = this.props
     return <div className={styles.container}>
       <PageHeader title={this.t('titles.summaryPay')} />
-      {(stateLoading || loading) && <PageLoader />}
       <div className={styles.main}>
         <div className={styles.summary}>
           <div className={styles.summaryBox}>
@@ -133,13 +135,32 @@ class Step3 extends React.Component {
                 __html: this.t('texts.sendInstruction', {
                   amount: String(multiply(bignumber(amount), bignumber(linksAmount))),
                   symbol,
-                  fee,
+                  fee: campaignFee,
                   senderAddress
                 }
               )}}
             />
           </div>
+          {this.renderAssets({ commonAmount, symbol, balance, bnbBalance, fee: campaignFee })}
         </div>
+      </div>
+    </div>
+  }
+
+  renderAssets ({ commonAmount, symbol, balance, bnbBalance, fee }) {
+    if (symbol === 'BNB') {
+      return <div className={styles.assets}>
+        <div className={styles.assetsItem}>
+          BNB: <span>{bnbBalance}</span> / {add(bignumber(commonAmount), bignumber(fee))}
+        </div>
+      </div>
+    }
+    return <div className={styles.assets}>
+      <div className={styles.assetsItem}>
+        BNB: <span>{bnbBalance === null ? '0' : bnbBalance}</span> / {fee}
+      </div>
+      <div className={styles.assetsItem}>
+        {symbol}: <span>{balance === null ? '0' : balance}</span> / {commonAmount}
       </div>
     </div>
   }

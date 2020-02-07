@@ -44,7 +44,7 @@ class Step2 extends React.Component {
         value={apiHost}
         onChange={({ value }) => this.setState({ apiHost: value })}
       />
-      {error && <div className={styles.error}>{this.t(`errors.${error}`)}</div>}
+      <div className={styles.error}>{error && this.t(`errors.${error}`)}</div>
       <NextButton apiHost={apiHost} />      	
     </div>
   }
