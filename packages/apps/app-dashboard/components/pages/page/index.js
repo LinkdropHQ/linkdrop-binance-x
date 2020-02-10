@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './styles.module'
-import { Aside, Header } from 'components/common'
+import { Aside, Header, Button } from 'components/common'
 import { translate, actions } from 'decorators'
 import { Scrollbars } from 'react-custom-scrollbars'
 import Web3Injector from './web3-injector'
@@ -8,6 +8,7 @@ import { Loading } from '@linkdrop/binance-ui-kit'
 import NetworkNotSupported from './network-not-supported'
 import { defineNetworkName } from '@linkdrop/binance-commons'
 const ls = window.localStorage
+const ss = window.sessionStorage
 
 @actions(({ user: { currentAddress, chainId, loading, step, wcInstance } }) => ({ loading, currentAddress, chainId, step, wcInstance }))
 @translate('pages.page')
@@ -25,7 +26,10 @@ class Page extends React.Component {
       return <Web3Injector />
     }
     if (currentAddress === null && loading) {
-      return <Loading />
+      return <div>
+        <Loading />
+        <Button className={styles.button} onClick={_ => this.emptyLs()}>{this.t('titles.reoadSession')}</Button>
+      </div>
     }
     // commented out because we need to define valid network ids
     // if (!defineNetworkName({ chainId })) {
@@ -56,9 +60,8 @@ class Page extends React.Component {
   }
 
   emptyLs () {
-    ls && ls.removeItem('campaigns')
-    ls && ls.removeItem('proxyAddr')
-    ls && ls.removeItem('privateKey')
+    ss.clear()
+    ls.clear()
     window.location.reload()
   }
 }

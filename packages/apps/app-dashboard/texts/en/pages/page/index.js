@@ -1,3 +1,5 @@
 export default {
-  titles: {}
+  titles: {
+  	reoadSession: 'Reload Session'
+  }
 }
