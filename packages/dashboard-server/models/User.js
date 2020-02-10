@@ -1,8 +1,8 @@
 import { Schema, model } from 'mongoose'
 
 const userSchema = new Schema({
-  address: { type: String, required: true, unique: true },
-  apiHost: { type: String, required: true },
+  address: { type: String, required: true },
+  apiHost: { type: String, required: true, unique: true },
   topupAddress: { type: String, required: true }
 })
 
