@@ -6,7 +6,9 @@ import classNames from 'classnames'
 import { Select, Input, PageHeader, PageLoader } from 'components/common'
 import Immutable from 'immutable'
 import wallets from 'wallets'
-import { TokenAddressInput, LinksContent, NextButton } from 'components/pages/common'
+import AddBnb from './add-bnb'
+import LinksContent from './links-content'
+import NextButton from './next-button'
 
 @actions(({
   user: {
@@ -37,7 +39,9 @@ class Step1 extends React.Component {
       tokenAmount: '0',
       linksAmount: '0',
       tokenAddress: null,
-      wallet: this.WALLETS[0].value
+      wallet: this.WALLETS[0].value,
+      addBnb: false,
+      extraBnb: '0'
     }
   }
 
@@ -69,7 +73,7 @@ class Step1 extends React.Component {
   }
 
   render () {
-    const { tokenSymbol, linksAmount, tokenAmount, wallet, tokenAddress, options } = this.state
+    const { tokenSymbol, addBnb, extraBnb, linksAmount, tokenAmount, wallet, tokenAddress, options } = this.state
     const { loading } = this.props
     const tokenType = this.defineTokenType({ tokenSymbol })
     return <div className={styles.container}>
@@ -82,13 +86,17 @@ class Step1 extends React.Component {
             <Select
               options={options}
               value={tokenSymbol}
-              onChange={({ value }) => this.setField({ field: 'tokenSymbol', value })}
+              onChange={({ value }) => this.setState({
+                tokenSymbol: value,
+                extraBnb: '0',
+                tokenAmount: '0'
+              })}
             />
             <div className={styles.currentBalance}>
               {this.t('titles.balance')} {this.renderAmount({ tokenSymbol, options })}
             </div>
           </div>
-          {this.renderTokenInputs({ tokenType, tokenAddress, tokenSymbol, tokenAmount })}
+          {this.renderTokenInputs({ addBnb, tokenSymbol, tokenAmount, extraBnb })}
           <div className={styles.linksAmount}>
             <h3 className={styles.subtitle}>{this.t('titles.totalLinks')}</h3>
             <div className={styles.linksAmountContainer}>
@@ -130,6 +138,7 @@ class Step1 extends React.Component {
         tokenAmount={tokenAmount}
         linksAmount={linksAmount}
         tokenSymbol={tokenSymbol}
+        extraBnb={extraBnb}
         wallet={wallet}
       />
     </div>
@@ -143,7 +152,7 @@ class Step1 extends React.Component {
     return <div>{currentAsset.amount}</div>
   }
 
-  renderTokenInputs ({ tokenType, tokenAddress, tokenSymbol, tokenAmount }) {
+  renderTokenInputs ({ tokenSymbol, tokenAmount, addBnb, extraBnb }) {
     return <div className={styles.tokensAmount}>
       <h3 className={styles.subtitle}>{this.t('titles.amountPerLink')}</h3>
       <div className={styles.tokensAmountContainer}>
@@ -155,6 +164,10 @@ class Step1 extends React.Component {
           value={tokenAmount}
           onChange={({ value }) => this.setField({ field: 'tokenAmount', value: parseFloat(value) })}
         />
+        {tokenSymbol && tokenSymbol !== 'BNB' && <AddBnb
+          value={extraBnb}
+          addValue={({ value }) => this.setField({ field: 'extraBnb', value: parseFloat(value) })}
+        />}
       </div>
     </div>
   }
@@ -182,18 +195,8 @@ class Step1 extends React.Component {
   }
 
   setField ({ value, field }) {
-    const { tokenSymbol } = this.state
-    if (field === 'tokenAmount') {
-      return this.setState({
-        [field]: value
-      })
-    }
     this.setState({
       [field]: value
-    }, _ => {
-      if (field === 'tokenSymbol') {
-        this.actions().tokens.emptyTokenData()
-      }
     })
   }
 }

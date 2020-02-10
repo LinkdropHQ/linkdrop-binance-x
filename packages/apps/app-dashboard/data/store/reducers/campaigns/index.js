@@ -15,7 +15,10 @@ const initialState = {
   apiHost: null,
   fee: null,
   commonAmount: null,
-  error: null
+  error: null,
+  extraBnb: null,
+  commonExtraBnb: null,
+  commonBnb: null
 }
 
 export default (state = initialState, action = {}) => {
@@ -39,5 +42,8 @@ const ACTIONS = {
   'CAMPAIGNS.SET_DEFAULT_WALLET': reducers.setDefaultWallet,
   'CAMPAIGNS.SET_API_HOST': reducers.setApiHost,
   'CAMPAIGNS.SET_COMMON_AMOUNT': reducers.setCommonAmount,
-  'CAMPAIGNS.SET_ERROR': reducers.setError
+  'CAMPAIGNS.SET_ERROR': reducers.setError,
+  'CAMPAIGNS.SET_EXTRA_BNB': reducers.setExtraBnb,
+  'CAMPAIGNS.SET_COMMON_EXTRA_BNB': reducers.setCommonExtraBnb,
+  'CAMPAIGNS.SET_COMMON_BNB': reducers.setCommonBnb
 }

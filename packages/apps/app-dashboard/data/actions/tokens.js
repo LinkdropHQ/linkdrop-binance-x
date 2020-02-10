@@ -14,10 +14,6 @@ class Tokens {
   generateLink () {
     this.actions.dispatch({ type: '*TOKENS.GENERATE_LINK' })
   }
-
-  emptyTokenData () {
-    this.actions.dispatch({ type: '*TOKENS.EMPTY_DATA' })
-  }
 }
 
 export default Tokens

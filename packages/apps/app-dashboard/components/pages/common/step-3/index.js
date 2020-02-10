@@ -27,7 +27,10 @@ import { multiply, bignumber, add } from 'mathjs'
     amount,
     commonAmount,
     symbol,
-    fee:  campaignFee
+    fee: campaignFee,
+    extraBnb,
+    commonExtraBnb,
+    commonBnb
   }
 }) => ({
   linksAmount,
@@ -43,7 +46,10 @@ import { multiply, bignumber, add } from 'mathjs'
   amount,
   campaignFee,
   symbol,
-  senderAddress
+  senderAddress,
+  extraBnb,
+  commonExtraBnb,
+  commonBnb
 }))
 @translate('pages.campaignCreate')
 class Step3 extends React.Component {
@@ -98,7 +104,20 @@ class Step3 extends React.Component {
   }
 
   render () {
-    const { linksAmount, campaignFee, amount, symbol, senderAddress, commonAmount, balance, bnbBalance } = this.props
+    const {
+      linksAmount,
+      campaignFee,
+      amount,
+      symbol,
+      senderAddress,
+      commonAmount,
+      balance,
+      bnbBalance,
+      extraBnb,
+      commonExtraBnb,
+      commonBnb
+    } = this.props
+
     return <div className={styles.container}>
       <PageHeader title={this.t('titles.summaryPay')} />
       <div className={styles.main}>
@@ -132,35 +151,50 @@ class Step3 extends React.Component {
             <div
               className={styles.instruction}
               dangerouslySetInnerHTML={{
-                __html: this.t('texts.sendInstruction', {
-                  amount: String(multiply(bignumber(amount), bignumber(linksAmount))),
-                  symbol,
-                  fee: campaignFee,
-                  senderAddress
-                }
-              )}}
+                __html: this.countAmount({ extraBnb, campaignFee, commonExtraBnb, symbol, senderAddress, commonAmount })
+              }}
             />
           </div>
-          {this.renderAssets({ commonAmount, symbol, balance, bnbBalance, fee: campaignFee })}
+          {this.renderAssets({ commonAmount, commonBnb, commonExtraBnb, symbol, balance, bnbBalance })}
         </div>
       </div>
     </div>
   }
 
-  renderAssets ({ commonAmount, symbol, balance, bnbBalance, fee }) {
+  countAmount ({ commonAmount, extraBnb, commonExtraBnb, symbol, campaignFee, senderAddress }) {
+    if (!extraBnb) {
+      return this.t('texts.sendInstruction', {
+        amount: commonAmount,
+        symbol,
+        fee: campaignFee,
+        senderAddress
+      })
+    }
+
+    return this.t('texts.sendInstructionWithExtraBnb', {
+      amount: commonAmount,
+      symbol,
+      extraBnb: commonExtraBnb,
+      fee: campaignFee,
+      senderAddress
+    })
+
+  }
+
+  renderAssets ({ commonAmount, symbol, balance, bnbBalance, commonBnb }) {
     if (symbol === 'BNB') {
       return <div className={styles.assets}>
         <div className={styles.assetsItem}>
-          BNB: <span>{bnbBalance}</span> / {add(bignumber(commonAmount), bignumber(fee))}
+          BNB: <span>{bnbBalance}</span> / {commonBnb}
         </div>
       </div>
     }
     return <div className={styles.assets}>
       <div className={styles.assetsItem}>
-        BNB: <span>{bnbBalance === null ? '0' : bnbBalance}</span> / {fee}
+        BNB: <span>{bnbBalance || 0}</span> / {commonBnb}
       </div>
       <div className={styles.assetsItem}>
-        {symbol}: <span>{balance === null ? '0' : balance}</span> / {commonAmount}
+        {symbol}: <span>{balance || 0}</span> / {commonAmount}
       </div>
     </div>
   }

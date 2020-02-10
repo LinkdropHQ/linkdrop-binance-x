@@ -3,14 +3,15 @@ class Campaign {
     this.actions = actions
   }
 
-  prepareNewData ({ tokenAmount, wallet, linksAmount, tokenSymbol }) {
+  prepareNewData ({ tokenAmount, wallet, linksAmount, tokenSymbol, extraBnb }) {
     this.actions.dispatch({
       type: '*CAMPAIGNS.PREPARE_NEW_DATA',
       payload: {
         tokenAmount,
         wallet,
         linksAmount,
-        tokenSymbol
+        tokenSymbol,
+        extraBnb
       }
     })
   }

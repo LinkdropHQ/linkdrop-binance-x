@@ -11,6 +11,9 @@ import setApiHost from './set-api-host'
 import setFee from './set-fee'
 import setCommonAmount from './set-common-amount'
 import setError from './set-error'
+import setExtraBnb from './set-extra-bnb'
+import setCommonExtraBnb from './set-common-extra-bnb'
+import setCommonBnb from './set-common-bnb'
 
 export default {
   setAmount,
@@ -25,5 +28,8 @@ export default {
   setApiHost,
   setFee,
   setCommonAmount,
-  setError
+  setError,
+  setExtraBnb,
+  setCommonExtraBnb,
+  setCommonBnb
 }

@@ -7,12 +7,18 @@ import { Button } from 'components/common'
 @translate('pages.campaignCreate')
 class NextButton extends React.Component {
   render () {
-    const { wallet = 'trust', tokenSymbol, tokenAmount = 0, linksAmount = 0 } = this.props
+    const { wallet = 'trust', tokenSymbol, extraBnb = 0, tokenAmount = 0, linksAmount = 0 } = this.props
     return <div className={styles.controls}>
       <Button
         className={styles.button}
         disabled={this.defineIfButtonDisabled({ tokenAmount, linksAmount })}
-        onClick={_ => this.actions().campaigns.prepareNewData({ tokenAmount, wallet, linksAmount, tokenSymbol })}
+        onClick={_ => this.actions().campaigns.prepareNewData({
+          tokenAmount,
+          wallet,
+          linksAmount,
+          tokenSymbol,
+          extraBnb
+        })}
       >
         {this.t('buttons.next')}
       </Button>
