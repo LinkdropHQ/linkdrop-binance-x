@@ -1,4 +1,4 @@
-/* global INFURA_PK, FEE, CLAIM_HOST, DEFAULT_CHAIN_ID, LINKS_LIMIT */
+/* global INFURA_PK, FEE, CLAIM_HOST, DEFAULT_CHAIN_ID, LINKS_LIMIT, HOST */
 let config
 
 try {
@@ -12,11 +12,13 @@ const infuraPk = INFURA_PK || String(config.infuraPk)
 const linksLimit = LINKS_LIMIT || config.linksLimit || 1000
 const defaultChainId = DEFAULT_CHAIN_ID || config.defaultChainId
 const fee = FEE || config.binanceFee
+const host = HOST || config.host
 
 module.exports = {
   claimHost,
   infuraPk,
   linksLimit,
   defaultChainId,
-  fee
+  fee,
+  host
 }

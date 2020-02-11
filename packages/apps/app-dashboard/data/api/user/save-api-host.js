@@ -1,4 +1,5 @@
 import fetch from '../fetch'
+import { host } from 'app.config.js'
 
 export default ({ currentAddress, senderAddress, apiHost }) => {
 	const body = JSON.stringify({
@@ -6,5 +7,5 @@ export default ({ currentAddress, senderAddress, apiHost }) => {
 		topupAddress: senderAddress,
 		apiHost
 	})
-	return fetch(`http://rinkeby.linkdrop.io:6002/users`, { method: 'POST', body })
+	return fetch(`${host}/users`, { method: 'POST', body })
 }

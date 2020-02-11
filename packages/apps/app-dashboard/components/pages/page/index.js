@@ -28,7 +28,7 @@ class Page extends React.Component {
     if (currentAddress === null && loading) {
       return <div>
         <Loading />
-        <Button className={styles.button} onClick={_ => this.emptyLs()}>{this.t('titles.reoadSession')}</Button>
+        <Button className={styles.button} onClick={_ => this.emptyWalletconnectSession()}>{this.t('titles.reoadSession')}</Button>
       </div>
     }
     // commented out because we need to define valid network ids
@@ -59,8 +59,12 @@ class Page extends React.Component {
     </div>
   }
 
+  emptyWalletconnectSession () {
+    ls.removeItem('walletconnect')
+    window.location.reload()
+  }
+
   emptyLs () {
-    ss.clear()
     ls.clear()
     window.location.reload()
   }
