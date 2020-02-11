@@ -1,7 +1,6 @@
 import ClaimTx from '../models/ClaimTx'
 import { wrapAsync } from '../utils'
 import sdk from '@linkdrop/binance-sdk'
-import Table from 'cli-table'
 import config from '../../config'
 
 /**
@@ -28,7 +27,6 @@ const isClaimed = wrapAsync(async (req, res) => {
  * @param {String} privateKey Private key to send funds from
  * @param {String} to Address to send funds to
  * @param {String} asset Asset symbol
- * @param {String} amount Asset amount in decimal form, e.g. 1.00000000
  * @param {String} memo An optional message to send along with funds
  * @return {Promise<Object>) `{success, txHash, error}`
  */
@@ -57,10 +55,46 @@ const transfer = async ({ privateKey, to, asset, amount, memo }) => {
   }
 }
 
+/**
+ * Helper function to transfer funds
+ * @param {String} privateKey Private key to send funds from
+ * @param {String} to Address to send funds to
+ * @param {String} assets Assets array
+ * @param {String} memo An optional message to send along with funds
+ * @return {Promise<Object>) `{success, txHash, error}`
+ */
+const multiSend = async ({ privateKey, to, assets, memo }) => {
+  try {
+    const from = sdk.utils.getAddressFromPrivateKey(privateKey)
+    const sequence = await sdk.utils.getSequence(from)
+    const bncClient = await sdk.utils.initBncClient(privateKey)
+
+    let coins = []
+
+    for (const asset of assets) {
+      coins.push({
+        denom: asset.denom,
+        amount: sdk.utils.formatUnits(Number(asset.amount))
+      })
+    }
+
+    const outputs = [{ to, coins }]
+
+    const result = await bncClient.multiSend(from, outputs, memo, sequence)
+
+    if (result.status === 200) {
+      return { success: true, txHash: result.result[0].hash }
+    } else {
+      return { success: false, error: result }
+    }
+  } catch (err) {
+    throw new Error(err)
+  }
+}
+
 const claim = wrapAsync(async (req, res) => {
   const {
-    asset,
-    amount,
+    assets,
     linkId,
     verifierSignature,
     receiverAddress,
@@ -73,18 +107,14 @@ const claim = wrapAsync(async (req, res) => {
     process.env.SENDER_PRIVATE_KEY || config.SENDER_PRIVATE_KEY
   const senderAddress = sdk.utils.getAddressFromPrivateKey(SENDER_PRIVATE_KEY)
 
-  const table = new Table()
-
   // Check whether a claim tx exists in database
   const oldClaimTx = await ClaimTx.findOne({
     linkId
   })
 
   if (oldClaimTx && oldClaimTx.txHash) {
-    table.push(['Tx hash', oldClaimTx.toObject().txHash])
-
     console.log('\n✅  Submitted claim transaction')
-    console.log(table.toString(), '\n')
+    console.log('Tx hash', oldClaimTx.toObject().txHash, '\n')
 
     return res.json({
       success: true,
@@ -93,8 +123,7 @@ const claim = wrapAsync(async (req, res) => {
   } else {
     if (
       (await sdk.checkLinkParams({
-        asset,
-        amount,
+        assets,
         linkId,
         verifierAddress: VERIFIER_ADDRESS,
         verifierSignature,
@@ -106,19 +135,17 @@ const claim = wrapAsync(async (req, res) => {
       try {
         const memo = `Linkdrop Id: ${linkId}`
 
-        const { success, txHash, error } = await transfer({
+        const { success, txHash, error } = await multiSend({
           privateKey: SENDER_PRIVATE_KEY,
           to: receiverAddress,
-          asset,
-          amount: sdk.utils.formatUnits(Number(amount)),
+          assets,
           memo
         })
 
         if (success === true && txHash) {
           // Save claim tx to database
-          const claimTx = new ClaimTx({
-            asset,
-            amount,
+          let claimTx = new ClaimTx({
+            assets,
             linkId,
             senderAddress,
             receiverAddress,
@@ -128,21 +155,15 @@ const claim = wrapAsync(async (req, res) => {
 
           const document = await claimTx.save()
 
-          for (let key in claimTx.toObject()) {
-            if (key !== '_id' && key !== '__v') {
-              table.push([key, claimTx.toObject()[key]])
-            }
-          }
+          claimTx = claimTx.toObject()
 
           console.log('\n✅  Submitted claim transaction')
-          console.log(table.toString(), '\n')
-
-          asset,
-            amount,
-            linkId,
-            verifierSignature,
-            receiverAddress,
-            receiverSignature
+          for (let key in claimTx) {
+            if (key !== '_id' && (key !== '__v') & (key !== assets)) {
+              console.log({ [key]: claimTx[key] })
+            }
+          }
+          console.log('\n')
         }
 
         res.json({
