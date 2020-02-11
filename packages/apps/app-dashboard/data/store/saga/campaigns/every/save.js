@@ -22,6 +22,7 @@ const generator = function * () {
       linksAmount,
       date,
       links,
+      extraBnb,
       defaultWallet
     } = yield select(generator.selectors.campaignData)
 
@@ -30,6 +31,7 @@ const generator = function * () {
       symbol,
       defaultWallet,
       status: 'active',
+      extraBnb,
       linksAmount,
       created: date,
       links,
@@ -73,6 +75,7 @@ generator.selectors = {
       date,
       id,
       links,
+      extraBnb,
       defaultWallet = 'trust'
     }
   }) => ({

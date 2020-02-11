@@ -28,7 +28,7 @@ const generator = function * ({ payload }) {
     yield put({ type: 'CAMPAIGNS.SET_EXTRA_BNB', payload: { extraBnb: extraBnbInSingleLink } })
     // amount of common extra bnb in all links
     yield put({ type: 'CAMPAIGNS.SET_COMMON_EXTRA_BNB', payload: {  commonExtraBnb: extraBnbInAllLinks } })
-    // amount of common extra bnb in all links
+    // amount of common bnb in all links
     yield put({ type: 'CAMPAIGNS.SET_COMMON_BNB', payload: {  commonBnb: commonBnbInAllLinks } })
 
 

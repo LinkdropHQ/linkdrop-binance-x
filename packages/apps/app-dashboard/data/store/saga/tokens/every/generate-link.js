@@ -4,7 +4,7 @@ import { utils } from 'ethers'
 import { convertFromExponents } from '@linkdrop/binance-commons'
 import sdk from "@linkdrop/binance-sdk"
 import { claimHost } from 'app.config.js'
-import { multiply, bignumber, add } from 'mathjs'
+import { prepareAssets } from './helpers'
 
 const generator = function * ({ payload }) {
   try {
@@ -15,12 +15,18 @@ const generator = function * ({ payload }) {
     const amount = yield select(generator.selectors.amount)
     const apiHost = yield select(generator.selectors.apiHost)
     const links = yield select(generator.selectors.links)
-
+    const extraBnb = yield select(generator.selectors.extraBnb)
+    const assets = prepareAssets({ symbol, amount, extraBnb })
+    console.log({
+      claimHost,
+      privateKey: verifierPrivateKey,
+      assets,
+      apiHost
+    })
     const link = yield sdk.generateLink({
       claimHost,
       privateKey: verifierPrivateKey,
-      asset: symbol,
-      amount: String(multiply(bignumber(amount), bignumber(100000000))),
+      assets,
       apiHost
     })
 
@@ -40,5 +46,6 @@ generator.selectors = {
   symbol: ({ campaigns: { symbol } }) => symbol,
   links: ({ campaigns: { links } }) => links,
   defaultWallet: ({ campaigns: { defaultWallet } }) => defaultWallet,
+  extraBnb: ({ campaigns: { extraBnb } }) => extraBnb,
   verifierPrivateKey: ({ user: { verifierPrivateKey } }) => verifierPrivateKey
 }

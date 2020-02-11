@@ -1,16 +1,14 @@
-/* global API_HOST */
-let jsonRpcUrl, masterCopy, factory, claimHost, apiHost
+/* global INFURA_PK */
+let config
+
 try {
-  const config = require('../../../configs/app.config.json')
-  apiHost = String(config.apiHost)
+  config = require('../../../configs/app.config.json')
 } catch (e) {
-  apiHost = API_HOST
+  config = {}
 }
 
+const infuraPk = INFURA_PK || String(config.infuraPk)
+
 module.exports = {
-  jsonRpcUrl,
-  claimHost,
-  apiHost,
-  masterCopy,
-  factory
+  infuraPk
 }

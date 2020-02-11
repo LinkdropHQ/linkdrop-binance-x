@@ -28,7 +28,7 @@ class CampaignCreate extends React.Component {
       case 1:
         return <Step1 />
       case 2:
-        return <Step3 />
+        return <Step2 />
       case 3:
         return <Step3 />
       case 4:

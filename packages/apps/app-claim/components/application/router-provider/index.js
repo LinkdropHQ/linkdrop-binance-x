@@ -10,6 +10,7 @@ export default function RouterProvider () {
   const context = useWeb3Context()
 
   useEffect(() => {
+    console.log('here')
     context.setFirstValidConnector(['Infura'])
   }, [])
 
