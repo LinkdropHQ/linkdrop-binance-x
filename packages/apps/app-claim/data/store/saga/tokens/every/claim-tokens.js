@@ -18,7 +18,7 @@ const generator = function * ({ payload }) {
     const linkId = new ethers.Wallet(linkKey).address
     const { success, txHash } = yield sdk.claim({
       receiverSignature,
-      apiHost: host,
+      apiHost: `https://${host}`,
       linkId,
       asset,
       amount,
