@@ -162,7 +162,7 @@ class Step3 extends React.Component {
   }
 
   countAmount ({ commonAmount, extraBnb, commonExtraBnb, symbol, campaignFee, senderAddress }) {
-    if (!extraBnb) {
+    if (!Number(extraBnb)) {
       return this.t('texts.sendInstruction', {
         amount: commonAmount,
         symbol,

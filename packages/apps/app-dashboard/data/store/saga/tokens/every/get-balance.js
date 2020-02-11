@@ -10,13 +10,14 @@ const generator = function * ({ payload }) {
     const fee = yield select(generator.selectors.fee)
     const symbol = yield select(generator.selectors.symbol)
     const commonAmount = yield select(generator.selectors.commonAmount)
+    const commonBnb = yield select(generator.selectors.commonBnb)
 
     if (balances && balances.length > 0) {
       const {
         bnbBalance,
         balance,
         approved
-      } = balanceIsApproved({ symbol, balances, amount: commonAmount, fee })
+      } = balanceIsApproved({ symbol, balances, amount: commonAmount, commonBnb })
       console.log({
         bnbBalance,
         balance,
@@ -42,5 +43,6 @@ generator.selectors = {
   toAddress: ({ user: { senderAddress } }) => senderAddress,
   fee: ({ campaigns: { fee } }) => fee,
   symbol: ({ campaigns: { symbol } }) => symbol,
+  commonBnb: ({ campaigns: { commonBnb } }) => commonBnb,
   commonAmount: ({ campaigns: { commonAmount } }) => commonAmount
 }
