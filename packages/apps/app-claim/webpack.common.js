@@ -96,7 +96,7 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      API_HOST: JSON.stringify(process.env.API_HOST),
+      INFURA_PK: JSON.stringify(process.env.INFURA_PK),
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
       }
