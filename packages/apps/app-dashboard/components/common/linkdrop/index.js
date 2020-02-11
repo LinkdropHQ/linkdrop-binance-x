@@ -55,23 +55,28 @@ class Linkdrop extends React.Component {
       loading,
       chainId,
       linksAmount,
-      id
+      id,
+      commonAmount,
+      extraBnb
     } = this.props
 
     return <div className={classNames(styles.container, { [styles.containerDisabled]: status === 'canceled' })}>
       {loading && <Loading withOverlay />}
-      {this.renderTitle({ amount, symbol, linksAmount })}
+      {this.renderTitle({ commonAmount, symbol, extraBnb })}
       {this.renderStatus({ status, id, chainId })}
       {this.renderDate({ created })}
-      {this.renderLinksData({ linksAmount, amount, symbol })}
+      {this.renderLinksData({ linksAmount, amount, symbol, extraBnb })}
       <div className={styles.buttons}>
         <Button disabled={status === 'canceled'} href={status !== 'canceled' && `/#/campaigns/${id}`} transparent className={styles.button}>{this.t('links')}</Button>
       </div>
     </div>
   }
 
-  renderTitle ({ amount, symbol, linksAmount }) {
-    return <div className={styles.title}>{convertFromExponents(multiply(bignumber(amount), bignumber(linksAmount)))} {symbol}</div>
+  renderTitle ({ symbol, commonAmount, extraBnb }) {
+    if (extraBnb && Number(extraBnb) > 0) {
+      return <div className={styles.title}>{commonAmount} {symbol} + BNB</div>
+    }
+    return <div className={styles.title}>{commonAmount} {symbol}</div>
   }
 
   renderStatus ({ status, id, chainId, account }) {
@@ -139,8 +144,13 @@ class Linkdrop extends React.Component {
     </div>
   }
 
-  renderLinksData ({ linksAmount, amount, symbol }) {
+  renderLinksData ({ linksAmount, amount, symbol, extraBnb }) {
     const linksTitle = linksAmount > 1 ? this.t('linksCount') : this.t('link')
+    if (extraBnb && Number(extraBnb) > 0) {
+      return <div className={styles.links}>
+        {linksAmount} {linksTitle} / {convertFromExponents(amount)} {symbol} + {extraBnb} BNB
+      </div>
+    }
     return <div className={styles.links}>
       {linksAmount} {linksTitle} / {convertFromExponents(amount)} {symbol}
     </div>

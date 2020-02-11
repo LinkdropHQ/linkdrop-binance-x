@@ -23,7 +23,8 @@ const generator = function * () {
       date,
       links,
       extraBnb,
-      defaultWallet
+      defaultWallet,
+      commonAmount
     } = yield select(generator.selectors.campaignData)
 
     const newCampaign = {
@@ -37,6 +38,7 @@ const generator = function * () {
       links,
       chainId,
       id,
+      commonAmount,
       campaignId: id,
       currentAddress,
       senderPrivateKey,
@@ -76,14 +78,17 @@ generator.selectors = {
       id,
       links,
       extraBnb,
+      commonAmount,
       defaultWallet = 'trust'
     }
   }) => ({
     amount,
     symbol,
+    commonAmount,
     linksAmount,
     defaultWallet,
     date,
+    extraBnb,
     links,
     id
   })
