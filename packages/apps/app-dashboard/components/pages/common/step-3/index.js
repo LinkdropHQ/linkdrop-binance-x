@@ -151,7 +151,7 @@ class Step3 extends React.Component {
     if (symbol === 'BNB') {
       return <div className={styles.assets}>
         <div className={styles.assetsItem}>
-          BNB: <span>{bnbBalance}</span> / {add(bignumber(commonAmount), bignumber(fee))}
+          BNB: <span>{bnbBalance}</span> / {String(add(bignumber(commonAmount), bignumber(fee)))}
         </div>
       </div>
     }
