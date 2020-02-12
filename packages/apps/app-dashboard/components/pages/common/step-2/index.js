@@ -28,6 +28,10 @@ class Step2 extends React.Component {
 		}
 	}
 
+	componentDidMount () {
+		this.actions().campaigns.setError({ error: null })
+	}
+
   render () {
   	const { senderPrivateKey, error, verifierAddress } = this.props
   	const { apiHost } = this.state

@@ -22,6 +22,15 @@ class Campaign {
     })
   }
 
+  setError ({ error }) {
+    this.actions.dispatch({
+      type: 'CAMPAIGNS.SET_ERROR',
+      payload: {
+        error
+      }
+    })
+  }
+
   createProxyAddress ({ campaignId }) {
     this.actions.dispatch({
       type: '*CAMPAIGNS.CREATE_PROXY_ADDRESS',
