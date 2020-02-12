@@ -1,7 +1,9 @@
+import { bignumber, add } from 'mathjs'
+
 export default ({ symbol, balances, amount, fee }) => {
 	const bnbBalance = Number((balances.find(item => item.symbol === 'BNB') || { free: '0' }).free)
 	if (symbol === 'BNB') {
-		if (bnbBalance >= Number(amount) + Number(fee)) {
+		if (bnbBalance >= Number(add(bignumber(amount), bignumber(fee)))) {
 			return {
 				bnbBalance,
 				balance: 0,
