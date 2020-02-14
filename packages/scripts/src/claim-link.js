@@ -17,7 +17,11 @@ const parseUrl = url => {
   let keys = Array.from(url.searchParams.keys())
   let parsed = {}
   for (let key of keys) {
-    if (duplicates(keys).includes(key)) {
+    if (
+      duplicates(keys).includes(key) ||
+      key === 'denoms[]' ||
+      key === 'amounts[]'
+    ) {
       parsed[key.replace(/\[.*?\]/g, '')] = url.searchParams.getAll(key)
     } else {
       parsed[key] = url.searchParams.get(key)
