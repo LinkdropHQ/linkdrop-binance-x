@@ -11,14 +11,16 @@ import sdk from '@linkdrop/binance-sdk'
 ```js
 const CLAIM_HOST = 'https://binance.lindrop.io' // Claim page host url
 const VERIFIER_PRIVATE_KEY = '' // Verifier private key to sign links with
-const ASSET = 'BNB' // Asset symbol
-const AMOUNT = 10 ** 8 // Asset amount in atomic value
+const ASSETS = [
+  { denom: 'BNB', amount: '1' },
+  { denom: 'PHB-2DF', amount: '2' }
+]
 const API_HOST = 'http://localhost:5000' // Relayer service API host
 
 const { url, linkId, linkKey, verifierSignature } = await sdk.generateLink({
   apiHost: API_HOST,
   privateKey: VERIFIER_PRIVATE_KEY,
-  asset: ASSET,
+  assets: ASSETS,
   amount: AMOUNT,
   claimHost: CLAIM_HOST
 })
@@ -35,8 +37,7 @@ In order to claim link, just parse all the arguments contained in the link, sign
 ```js
 const claimParams = {
   apiHost,
-  asset,
-  amount,
+  assets,
   linkId,
   verifierSignature,
   receiverAddress,

@@ -1,8 +1,7 @@
 {
     "API_HOST": "http://localhost:5000",
     "CLAIM_HOST": "https://binance.linkdrop.io",
-    "ASSET": "PHB-2DF",
-    "AMOUNT": "450000",
+    "ASSETS": "[ {\"denom\":\"BNB\", \"amount\":\"100000\"}, {\"denom\":\"PHB-2DF\", \"amount\":\"450000\"} ]",
     "VERIFIER_PRIVATE_KEY": "",
     "LINKS_NUMBER": "20",
     "RECEIVER_ADDRESS": ""

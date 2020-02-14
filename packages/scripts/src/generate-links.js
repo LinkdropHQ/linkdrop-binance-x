@@ -8,8 +8,8 @@ const args = require('yargs').argv
 const CLAIM_HOST = args.claimHost || config.CLAIM_HOST
 const VERIFIER_PRIVATE_KEY =
   args.verifierPk || args.verifierPK || config.VERIFIER_PRIVATE_KEY
-const ASSET = args.asset || config.ASSET
-const AMOUNT = args.amount || config.AMOUNT
+let ASSETS = args.assets || config.ASSETS
+ASSETS = JSON.parse(ASSETS)
 const LINKS_NUMBER = args.n || config.LINKS_NUMBER
 const API_HOST = args.apiHost || config.API_HOST
 
@@ -21,12 +21,8 @@ if (VERIFIER_PRIVATE_KEY == null || VERIFIER_PRIVATE_KEY === '') {
   throw new Error('Please provide verifier private key')
 }
 
-if (ASSET == null || ASSET === '') {
-  throw new Error('Please provide asset symbol')
-}
-
-if (AMOUNT == null || AMOUNT === '') {
-  throw new Error('Please provide asset amount in atomic value')
+if (ASSETS == null || ASSETS === '') {
+  throw new Error('Please provide assets array')
 }
 
 if (LINKS_NUMBER == null || LINKS_NUMBER === '') {
@@ -45,8 +41,7 @@ const main = async () => {
       const { url } = await sdk.generateLink({
         claimHost: CLAIM_HOST,
         privateKey: VERIFIER_PRIVATE_KEY,
-        asset: ASSET,
-        amount: AMOUNT,
+        assets: ASSETS,
         apiHost: API_HOST
       })
 

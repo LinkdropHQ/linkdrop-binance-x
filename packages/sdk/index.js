@@ -33,20 +33,16 @@ const isClaimed = async ({ apiHost, linkId }) => {
 /**
  * Function to sign link params
  * @param {String} privateKey Private key to sign link params with
- * @param {String} asset Asset symbol
- * @param {Number} amount Asset amount in atomic value
+ * @param {Array} assets Assets array
  * @param {String} linkId Link id
  * @return {Promise<String>} Signature
  */
-const signLinkParams = async ({ privateKey, asset, amount, linkId }) => {
+const signLinkParams = async ({ privateKey, assets, linkId }) => {
   if (privateKey == null || privateKey === '') {
     throw new Error('Please provide `privateKey`')
   }
-  if (asset == null || asset === '') {
-    throw new Error('Please provide `asset`')
-  }
-  if (amount == null || amount === '') {
-    throw new Error('Please provide `amount`')
+  if (assets == null || assets === '') {
+    throw new Error('Please provide `assets`')
   }
   if (linkId == null || linkId === '') {
     throw new Error('Please provide `linkId`')
@@ -54,9 +50,17 @@ const signLinkParams = async ({ privateKey, asset, amount, linkId }) => {
 
   const signer = new ethers.Wallet(privateKey)
 
+  let paramTypes = []
+  let params = []
+
+  assets.forEach(asset => {
+    paramTypes.push('string', 'uint')
+    params.push(asset.denom, Number(asset.amount))
+  })
+
   let hash = ethers.utils.solidityKeccak256(
-    ['string', 'uint', 'address'],
-    [asset, Number(amount), linkId]
+    [...paramTypes, 'address'],
+    [...params, linkId]
   )
   let message = ethers.utils.arrayify(hash)
 
@@ -85,19 +89,15 @@ const signReceiverAddress = async ({ linkKey, receiverAddress }) => {
 /**
  * Function to construct link params
  * @param {String} privateKey Private key to sign link params with
- * @param {String} asset Asset symbol
- * @param {Number} amount Asset amount in atomic value
+ * @param {Array} assets Assets array
  * @return {Promise<Object>} Links params
  */
-const constructLink = async ({ privateKey, asset, amount }) => {
+const constructLink = async ({ privateKey, assets }) => {
   if (privateKey == null || privateKey === '') {
     throw new Error('Please provide `privateKey`')
   }
-  if (asset == null || asset === '') {
-    throw new Error('Please provide `asset`')
-  }
-  if (amount == null || amount === '') {
-    throw new Error('Please provide `amount`')
+  if (assets == null || assets === '') {
+    throw new Error('Please provide `assets`')
   }
 
   let wallet = ethers.Wallet.createRandom()
@@ -106,8 +106,7 @@ const constructLink = async ({ privateKey, asset, amount }) => {
 
   let verifierSignature = await signLinkParams({
     privateKey,
-    asset,
-    amount,
+    assets,
     linkId
   })
 
@@ -122,29 +121,19 @@ const constructLink = async ({ privateKey, asset, amount }) => {
  * Function to generate url based on passed params
  * @param {String} claimHost Claim host
  * @param {String} privateKey Private key to sign link params with
- * @param {String} asset Asset symbol
- * @param {Number} amount Asset amount in atomic value
+ * @param {Array} assets Assets array containing asset denoms and their corresponding amounts
  * @param {String} apiHost API host
  * @return {Promise<Object>} `{url, linkId, linkKey, verifierSignature}`
  */
-const generateLink = async ({
-  claimHost,
-  privateKey,
-  asset,
-  amount,
-  apiHost
-}) => {
+const generateLink = async ({ claimHost, privateKey, assets, apiHost }) => {
   if (claimHost == null || claimHost === '') {
     throw new Error('Please provide `claimHost`')
   }
   if (privateKey == null || privateKey === '') {
     throw new Error('Please provide `privateKey`')
   }
-  if (asset == null || asset === '') {
-    throw new Error('Please provide `asset`')
-  }
-  if (amount == null || amount === '') {
-    throw new Error('Please provide `amount`')
+  if (assets == null || assets === '') {
+    throw new Error('Please provide `assets`')
   }
   if (apiHost == null || apiHost === '') {
     throw new Error('Please provide `apiHost`')
@@ -152,37 +141,40 @@ const generateLink = async ({
 
   const { linkKey, linkId, verifierSignature } = await constructLink({
     privateKey,
-    asset,
-    amount
+    assets
   })
 
   // Construct url
-  let url = `${claimHost}/#/receive?asset=${asset}&amount=${amount}&linkKey=${linkKey}&verifierSignature=${verifierSignature}&apiHost=${apiHost}`
+  let url = `${claimHost}/#/receive?linkKey=${linkKey}&verifierSignature=${verifierSignature}&apiHost=${apiHost}`
+
+  let denoms = []
+  let amounts = []
+
+  assets.forEach(asset => {
+    denoms.push(asset.denom)
+    amounts.push(asset.amount)
+    url = `${url}&denoms[]=${asset.denom}&amounts[]=${asset.amount}`
+  })
 
   return { url, linkId, linkKey, verifierSignature }
 }
 
 /**
  * Function to check whether link params are signed by `verifierAddress`
- * @param {String} asset Asset symbol
- * @param {Number} amount Asset amount in atomic value
+ * @param {Array} assets Assets array
  * @param {String} linkId Link id
  * @param {String} verifierAddress Verifier address
  * @param {String} verifierSignature Verifier signature
  * @return {Promise<Boolean>} True if success
  */
 const checkVerifierSignature = async ({
-  asset,
-  amount,
+  assets,
   linkId,
   verifierAddress,
   verifierSignature
 }) => {
-  if (asset == null || asset === '') {
-    throw new Error('Please provide `asset`')
-  }
-  if (amount == null || amount === '') {
-    throw new Error('Please provide `amount`')
+  if (assets == null || assets === '') {
+    throw new Error('Please provide `assets`')
   }
   if (linkId == null || linkId === '') {
     throw new Error('Please provide `linkId`')
@@ -194,9 +186,17 @@ const checkVerifierSignature = async ({
     throw new Error('Please provide `verifierSignature`')
   }
 
+  let paramTypes = []
+  let params = []
+
+  assets.forEach(asset => {
+    paramTypes.push('string', 'uint')
+    params.push(asset.denom, Number(asset.amount))
+  })
+
   let hash = ethers.utils.solidityKeccak256(
-    ['string', 'uint', 'address'],
-    [asset, Number(amount), linkId]
+    [...paramTypes, 'address'],
+    [...params, linkId]
   )
   let message = ethers.utils.arrayify(hash)
 
@@ -237,7 +237,7 @@ const checkReceiverSignature = async ({
 
 /**
  * Function to check whether an `address` holds at least `amount` of tokens
- * @param {String} asset Asset symbol
+ * @param {String} asset Asset denom
  * @param {Number} amount Asset amount in atomic value
  * @param {String} address Address to check balance of
  * @return {Promise<Boolean} True if success
@@ -263,8 +263,7 @@ const checkBalanceAvailable = async ({ asset, amount, address }) => {
 
 /**
  * Function to check whether link params are valid
- * @param {String} asset Asset symbol
- * @param {Number} amount Asset amount in atomic value
+ * @param {Array} assets Assets array
  * @param {String} linkId Link id
  * @param {String} verifierAddress Verifier address
  * @param {String} verifierSignature Verifier signature
@@ -274,8 +273,7 @@ const checkBalanceAvailable = async ({ asset, amount, address }) => {
  * @return {Promise<Boolean>} True is success
  */
 const checkLinkParams = async ({
-  asset,
-  amount,
+  assets,
   linkId,
   verifierAddress,
   verifierSignature,
@@ -283,11 +281,8 @@ const checkLinkParams = async ({
   receiverSignature,
   senderAddress
 }) => {
-  if (asset == null || asset === '') {
-    throw new Error('Please provide `asset`')
-  }
-  if (amount == null || amount === '') {
-    throw new Error('Please provide `amount`')
+  if (assets == null || assets === '') {
+    throw new Error('Please provide `assets`')
   }
   if (linkId == null || linkId === '') {
     throw new Error('Please provide `linkId`')
@@ -308,29 +303,33 @@ const checkLinkParams = async ({
     throw new Error('Please provide `senderAddress`')
   }
 
-  // Verify that `linkId` has not been claimed on the server
+  // ? Verify that `linkId` has not been claimed on the server
 
-  // Verify that amount is positive and less than max total supply
-  if (Number(amount) <= 0 || Number(amount) > 9000000000000000000) {
-    throw new Error('Invalid amount')
-  }
+  for (const asset of assets) {
+    // Verify that amount is positive and less than max total supply
+    if (
+      Number(asset.amount) <= 0 ||
+      Number(asset.amount) > 9000000000000000000
+    ) {
+      throw new Error('Invalid amount')
+    }
 
-  // Verify that sender has enough balance to linkdrop
-  if (
-    (await checkBalanceAvailable({
-      asset,
-      amount,
-      address: senderAddress
-    })) === false
-  ) {
-    throw new Error(`Insufficient ${asset} on ${senderAddress} balance`)
+    // Verify that sender has enough balance to linkdrop
+    if (
+      (await checkBalanceAvailable({
+        asset: asset.denom,
+        amount: asset.amount,
+        address: senderAddress
+      })) === false
+    ) {
+      throw new Error(`Insufficient ${asset.denom} on ${senderAddress} balance`)
+    }
   }
 
   // Verify that link params are signed by `verifierAddress`
   if (
     (await checkVerifierSignature({
-      asset,
-      amount,
+      assets,
       linkId,
       verifierAddress,
       verifierSignature
@@ -356,8 +355,7 @@ const checkLinkParams = async ({
 /**
  Function to claim link
  * @param {String} apiHost Relayer service host, e.g. https://binance.linkdrop.io
- * @param {String} asset Asset symbol
- * @param {Number} amount Asset amount in atomic value
+ * @param {Array} assets Assets array
  * @param {String} linkId Link id
  * @param {String} receiverAddress Receiver address
  * @param {String} verifierSignature Verifier signature
@@ -366,9 +364,8 @@ const checkLinkParams = async ({
  */
 const claim = async ({
   apiHost,
-  asset,
+  assets,
   linkId,
-  amount,
   receiverAddress,
   verifierSignature,
   receiverSignature
@@ -376,11 +373,8 @@ const claim = async ({
   if (apiHost == null || apiHost === '') {
     throw new Error('Please provide `apiHost`')
   }
-  if (asset == null || asset === '') {
-    throw new Error('Please provide `asset`')
-  }
-  if (amount == null || amount === '') {
-    throw new Error('Please provide `amount`')
+  if (assets == null || assets === '') {
+    throw new Error('Please provide `assets`')
   }
   if (linkId == null || linkId === '') {
     throw new Error('Please provide `linkId`')
@@ -397,9 +391,8 @@ const claim = async ({
 
   try {
     const claimParams = {
-      asset,
+      assets,
       linkId,
-      amount,
       receiverAddress,
       verifierSignature,
       receiverSignature

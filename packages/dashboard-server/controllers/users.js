@@ -7,22 +7,20 @@ import { wrapAsync } from '../utils'
 const getUser = wrapAsync(async (req, res) => {
   const address = req.params.address
 
-  const user = await User.findOne({
+  const users = await User.find({
     address
   })
 
-  if (user && user.apiHost && user.topupAddress) {
+  if (users) {
     return res.json({
       success: true,
-      address,
-      apiHost: user.apiHost,
-      topupAddress: user.topupAddress
+      users
     })
   } else return res.json({ success: false })
 })
 
 const getUserByApiHost = wrapAsync(async (req, res) => {
-  const apiHost = req.params.address
+  const apiHost = req.params.apiHost
 
   const user = await User.findOne({
     apiHost
@@ -31,9 +29,7 @@ const getUserByApiHost = wrapAsync(async (req, res) => {
   if (user && user.apiHost) {
     return res.json({
       success: true,
-      address,
-      apiHost: user.apiHost,
-      topupAddress: user.topupAddress
+      user
     })
   } else return res.json({ success: false })
 })
