@@ -98,6 +98,7 @@ module.exports = {
       DEFAULT_CHAIN_ID: JSON.stringify(process.env.DEFAULT_CHAIN_ID),
       FEE: JSON.stringify(process.env.FEE),
       MULTISEND_FEE: JSON.stringify(process.env.MULTISEND_FEE),
+      HOST: JSON.stringify(process.env.HOST),
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
       }

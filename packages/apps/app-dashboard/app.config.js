@@ -13,6 +13,7 @@ const linksLimit = LINKS_LIMIT || config.linksLimit || 1000
 const defaultChainId = DEFAULT_CHAIN_ID || config.defaultChainId
 const fee = FEE || config.binanceFee
 const multisendFee = MULTISEND_FEE || config.binanceMultisendFee
+const host = HOST || config.host
 
 module.exports = {
   claimHost,
@@ -20,5 +21,6 @@ module.exports = {
   linksLimit,
   defaultChainId,
   fee,
-  multisendFee
+  multisendFee,
+  host
 }
