@@ -6,16 +6,27 @@ import { convertFromExponents } from '@linkdrop/binance-commons'
 @actions(({
   campaigns: {
     amount,
-    symbol
+    symbol,
+    extraBnb
   }
 }) => ({
   amount,
-  symbol
+  symbol,
+  extraBnb
 }))
 @translate('pages.campaignCreate')
 class LinkContents extends React.Component {
   render () {
-    const { amount, symbol } = this.props
+    const { amount, symbol, extraBnb } = this.props
+    if (extraBnb && Number(extraBnb)) {
+      return <p className={styles.dataContent}>
+      {this.t('titles.oneLinkContentsWithBnb', {
+        tokenAmount: amount,
+        tokenSymbol: symbol,
+        extraBnb
+      })}
+    </p>
+    }
     return <p className={styles.dataContent}>
       {this.t('titles.oneLinkContents', {
         tokenAmount: amount,

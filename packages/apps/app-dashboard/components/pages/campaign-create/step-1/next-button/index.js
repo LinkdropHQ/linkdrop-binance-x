@@ -26,7 +26,7 @@ class NextButton extends React.Component {
   }
 
   defineIfButtonDisabled ({ tokenAmount, linksAmount }) {
-    return !Number(tokenAmount)
+    return !Number(tokenAmount) || !Number(linksAmount) || Number(linksAmount) > 1000
   }
 }
 
