@@ -97,6 +97,7 @@ module.exports = {
       CLAIM_HOST: JSON.stringify(process.env.CLAIM_HOST),
       DEFAULT_CHAIN_ID: JSON.stringify(process.env.DEFAULT_CHAIN_ID),
       FEE: JSON.stringify(process.env.FEE),
+      MULTISEND_FEE: JSON.stringify(process.env.MULTISEND_FEE),
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
       }

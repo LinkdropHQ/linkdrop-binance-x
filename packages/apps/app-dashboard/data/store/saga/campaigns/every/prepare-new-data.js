@@ -1,15 +1,16 @@
 import { put, select } from 'redux-saga/effects'
-import { fee } from 'app.config.js'
+import { fee, multisendFee } from 'app.config.js'
 import { multiply, bignumber, add } from 'mathjs'
 
 const generator = function * ({ payload }) {
   try {
+    yield put({ type: 'CAMPAIGNS.SET_ERROR', payload: { error: null } })
     const { tokenAmount, linksAmount, tokenSymbol, wallet, extraBnb } = payload
+    const actualFee = Number(extraBnb) > 0 ? multisendFee : fee
     console.log({ tokenAmount, linksAmount, tokenSymbol, wallet, extraBnb })
     const id = yield select(generator.selectors.senderAddress)
     const commonAmount = String(multiply(bignumber(tokenAmount), bignumber(linksAmount)))
-    console.log({ commonAmount })
-    const commonFee = String(multiply(bignumber(fee), bignumber(linksAmount)))
+    const commonFee = String(multiply(bignumber(actualFee), bignumber(linksAmount)))
     console.log({ commonFee })
     const extraBnbInSingleLink = Number(extraBnb) === 0 ? '0' : extraBnb
     console.log({ extraBnbInSingleLink })

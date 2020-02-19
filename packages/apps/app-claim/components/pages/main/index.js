@@ -6,6 +6,7 @@ import InitialPage from './initial-page'
 import WalletChoosePage from './wallet-choose-page'
 import ClaimingProcessPage from './claiming-process-page'
 import ErrorPage from './error-page'
+import { parseAssetsFromUrl } from 'helpers'
 import ClaimingFinishedPage from './claiming-finished-page'
 import { getHashVariables } from '@linkdrop/binance-commons'
 
@@ -40,11 +41,14 @@ class Claim extends React.Component {
   renderCurrentPage () {
     const { icon, loading: userLoading, errors, alreadyClaimed, step } = this.props
     const {
-      asset,
-      amount,
       receiverAddress
     } = getHashVariables()
-    const commonData = { decimals: 18, amount, symbol: asset, icon, wallet: receiverAddress, loading: userLoading }
+    const {
+      denoms,
+      amounts
+    } = parseAssetsFromUrl({ url: window.location.href })
+
+    const commonData = { decimals: 18, amounts, denoms, icon, wallet: receiverAddress, loading: userLoading }
     if (errors && errors.length > 0) {
       // if some errors occured and can be found in redux store, then show error page
       return <ErrorPage error={errors[0]} />

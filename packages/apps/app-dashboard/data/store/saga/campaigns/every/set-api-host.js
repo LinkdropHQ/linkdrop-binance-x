@@ -17,7 +17,7 @@ const generator = function * ({ payload }) {
     const { success: saveSuccess } = yield call(saveApiHost, { apiHost, currentAddress, senderAddress })
     if (saveSuccess) {
     	yield put({ type: 'CAMPAIGNS.SET_API_HOST', payload: { apiHost } })
-    	yield put({ type: 'USER.SET_STEP', payload: { step: 3 } })
+    	return yield put({ type: 'USER.SET_STEP', payload: { step: 3 } })
     }
     yield put({ type: 'CAMPAIGNS.SET_ERROR', payload: { error: 'ERROR_OCCURED' } })
   } catch (e) {

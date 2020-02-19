@@ -5,23 +5,31 @@ import defineTrustReceiverAddress from './define-trust-receiver-address'
 
 const generator = function * ({ payload }) {
   try {
-    let { asset, amount, linkKey, verifierSignature, receiverAddress, host } = payload
+    let { denoms, amounts, linkKey, verifierSignature, receiverAddress, host } = payload
     yield put({ type: 'USER.SET_LOADING', payload: { loading: true } })
     if (!receiverAddress) {
       receiverAddress = yield defineTrustReceiverAddress()
     }
+
+    let assets = []
+
+    denoms.forEach((denom, index) => {
+      const amount = amounts[index]
+      assets.push({ denom, amount })
+    })
+
     const receiverSignature = yield sdk.signReceiverAddress({
       linkKey,
       receiverAddress
     })
 
+
     const linkId = new ethers.Wallet(linkKey).address
     const { success, txHash } = yield sdk.claim({
       receiverSignature,
-      apiHost: host,
+      apiHost: `https://${host}`,
       linkId,
-      asset,
-      amount,
+      assets,
       receiverAddress,
       verifierSignature
     })

@@ -17,7 +17,7 @@ export default {
     ethInLinks: '{{ethAmount}} {{symbol}} in {{linksAmount}} links',
     holdEth: '{{symbol}} will be stored in Linkdrop Contract',
     oneLinkContains: 'Each link contains: ',
-    oneLinkContentsWithEth: '{{tokenAmount}} {{tokenSymbol}} + {{ethAmount}} {{symbol}}',
+    oneLinkContentsWithBnb: '{{tokenAmount}} {{tokenSymbol}} + {{extraBnb}} BNB',
     oneLinkContents: '{{tokenAmount}} {{tokenSymbol}}',
     // step1
     receiverWallet: 'Receiver wallet:',

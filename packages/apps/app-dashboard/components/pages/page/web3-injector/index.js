@@ -1,10 +1,7 @@
-/* global web3 */
 import React from 'react'
 import { actions, translate } from 'decorators'
 import { Button } from 'components/common'
 import styles from './styles.module'
-import { getHashVariables, defineNetworkName } from '@linkdrop/binance-commons'
-import { infuraPk, portisDappId, formaticApiKeyTestnet, formaticApiKeyMainnet } from 'app.config.js'
 import WalletConnect from "@trustwallet/walletconnect"
 import WalletConnectQRCodeModal from "@walletconnect/qrcode-modal"
 
@@ -13,8 +10,6 @@ import WalletConnectQRCodeModal from "@walletconnect/qrcode-modal"
 class Web3Injector extends React.Component {
   constructor (props) {
     super(props)
-    const { chainId = '1' } = getHashVariables()
-    const networkName = defineNetworkName({ chainId })
     this.wc = new WalletConnect({
       bridge: "https://bridge.walletconnect.org"
     })

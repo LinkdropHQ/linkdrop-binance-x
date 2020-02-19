@@ -12,15 +12,14 @@ import classNames from 'classnames'
 class ClaimingProcessPage extends React.Component {
   componentDidMount () {
     const {
-      asset,
-      amount,
       linkKey,
       verifierSignature,
       receiverAddress,
       apiHost
     } = getHashVariables()
+    const { denoms, amounts } = this.props
 
-    this.actions().tokens.claimTokens({ asset, host: apiHost, amount, linkKey, verifierSignature, receiverAddress })
+    this.actions().tokens.claimTokens({ denoms, amounts, host: apiHost, linkKey, verifierSignature, receiverAddress })
   }
 
   componentWillReceiveProps ({ transactionId: id, transactionStatus: status }) {

@@ -15,7 +15,12 @@ class LinksContent extends React.Component {
   }
 
   render () {
-    const { tokenSymbol, tokenAmount } = this.props
+    const { tokenSymbol, tokenAmount, extraBnb } = this.props
+    if (extraBnb && Number(extraBnb) > 0) {
+      return <p className={classNames(styles.text, styles.textMargin30)}>
+        {`${this.t('titles.oneLinkContains')} ${this.t('titles.oneLinkContentsWithBnb', { tokenAmount: convertFromExponents(tokenAmount), tokenSymbol, extraBnb })}`}
+      </p>
+    }
     return <p className={classNames(styles.text, styles.textMargin30)}>
       {`${this.t('titles.oneLinkContains')} ${this.t('titles.oneLinkContents', { tokenAmount: convertFromExponents(tokenAmount), tokenSymbol })}`}
     </p>

@@ -9,6 +9,7 @@ import wallets from 'wallets'
 import AddBnb from './add-bnb'
 import LinksContent from './links-content'
 import NextButton from './next-button'
+import { multiply, bignumber } from 'mathjs'
 
 @actions(({
   user: {
@@ -75,7 +76,6 @@ class Step1 extends React.Component {
   render () {
     const { tokenSymbol, addBnb, extraBnb, linksAmount, tokenAmount, wallet, tokenAddress, options } = this.state
     const { loading } = this.props
-    const tokenType = this.defineTokenType({ tokenSymbol })
     return <div className={styles.container}>
       {loading && <PageLoader />}
       <PageHeader title={this.t('titles.setupCampaign')} />
@@ -127,10 +127,10 @@ class Step1 extends React.Component {
           <h3 className={styles.subtitle}>{this.t('titles.total')}</h3>
           {this.renderTexts({
             tokenAddress,
-            tokenType,
             linksAmount,
             tokenAmount,
-            tokenSymbol
+            tokenSymbol,
+            extraBnb
           })}
         </div>
       </div>
@@ -180,17 +180,19 @@ class Step1 extends React.Component {
     }))
   }
 
-  defineTokenType ({ tokenSymbol }) {
-    return 'erc20'
-  }
-
-  renderTexts ({ tokenAddress, linksAmount, tokenAmount, tokenSymbol, tokenType }) {
-    if (!linksAmount || !tokenAmount) {
+  renderTexts ({ tokenAddress, linksAmount, tokenAmount, tokenSymbol, extraBnb }) {
+    if (!Number(linksAmount) || !Number(tokenAmount)) {
       return <p className={classNames(styles.text, styles.textGrey)}>{this.t('titles.fillTheField')}</p>
     }
+    const tokens = String(multiply(bignumber(tokenAmount), bignumber(linksAmount)))
+    const extraBnbInLinks = Number(extraBnb) > 0 && String(multiply(bignumber(extraBnb), bignumber(linksAmount)))
     return <div>
-      <p className={classNames(styles.text, styles.textMargin15)}>{tokenAmount * linksAmount} {tokenSymbol}</p>
-      <LinksContent tokenAmount={tokenAmount} tokenSymbol={tokenSymbol} tokenType={tokenType} />
+      <p className={classNames(styles.text, styles.textMargin15)}>{tokens} {tokenSymbol} {extraBnbInLinks ? ` + ${extraBnbInLinks} BNB` : ''}</p>
+      <LinksContent
+        tokenAmount={tokenAmount}
+        tokenSymbol={tokenSymbol}
+        extraBnb={extraBnb}
+      />
     </div>
   }
 

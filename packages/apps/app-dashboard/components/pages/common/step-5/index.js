@@ -6,9 +6,7 @@ import styles from './styles.module'
 import classNames from 'classnames'
 import { Button, PageHeader, PageLoader } from 'components/common'
 import { Icons } from '@linkdrop/binance-ui-kit'
-import { defineNetworkName, convertFromExponents } from '@linkdrop/binance-commons'
 import { getImages, defineDefaultSymbol } from 'helpers'
-import { factory } from 'app.config.js'
 
 @actions(({ user: { loading, chainId }, campaigns: { items, current } }) => ({ chainId, items, current, loading }))
 @translate('pages.campaignCreate')

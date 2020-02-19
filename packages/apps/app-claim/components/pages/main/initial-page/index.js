@@ -11,13 +11,13 @@ import commonStyles from '../styles.module'
 @translate('pages.main')
 class InitialPage extends React.Component {
   render () {
-    const { onClick, amount, symbol, loading, wallet } = this.props
-    const amountFormatted = sdk.utils.formatUnits(amount || 0)
+    const { onClick, amounts, denoms, loading, wallet } = this.props
+    const amountFormatted = sdk.utils.formatUnits(amounts[0] || 0)
     const finalIcon = <img className={styles.icon} src={icon} />
     return <div className={commonStyles.container}>
       <Alert className={styles.tokenIcon} icon={finalIcon} />
       <div className={styles.title}>
-        <span>{amountFormatted}</span> {symbol}
+        <span>{amountFormatted}</span> {denoms[0]}
       </div>
       <Button loading={loading} className={styles.button} onClick={_ => onClick && onClick()}>
         {text('common.buttons.claim')}

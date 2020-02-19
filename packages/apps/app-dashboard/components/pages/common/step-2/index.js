@@ -1,5 +1,4 @@
 import React from 'react'
-import { deploymentUrl } from 'app.config.js'
 import { actions, translate } from 'decorators'
 import connectToChild from 'penpal/lib/connectToChild'
 import styles from './styles.module'
