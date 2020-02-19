@@ -1,3 +1,4 @@
 import fetch from '../fetch'
+import { host } from 'app.config.js'
 
-export default ({ apiHost }) => fetch(`http://rinkeby.linkdrop.io:6002/users/get-by-api-host/${apiHost}`)
+export default ({ apiHost }) => fetch(`${host}/users/get-by-api-host/${apiHost}`)
