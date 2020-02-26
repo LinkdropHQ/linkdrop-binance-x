@@ -1,0 +1,22 @@
+import { ethers, utils } from 'ethers'
+import { infuraPk, jsonRpcUrlXdai } from 'app.config.js'
+import { defineJsonRpcUrl } from '@linkdrop/binance-commons'
+
+const generator = function * ({ payload }) {
+  try {
+    const { account, decimals, contract } = payload
+    const tokenBalance = yield contract.balanceOf(account)
+    const tokenBalanceFormatted = utils.formatUnits(
+      String(tokenBalance),
+      decimals
+    )
+    return {
+      tokenBalance,
+      tokenBalanceFormatted
+    }
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export default generator

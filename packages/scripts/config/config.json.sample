@@ -1,8 +1,8 @@
 {
-    "API_HOST": "http://localhost:5000",
+    "API_HOST": "https://binance-98877.herokuapp.com",
     "CLAIM_HOST": "https://binance.linkdrop.io",
     "ASSETS": "[ {\"denom\":\"BNB\", \"amount\":\"100000\"}, {\"denom\":\"PHB-2DF\", \"amount\":\"450000\"} ]",
-    "VERIFIER_PRIVATE_KEY": "",
+    "VERIFIER_PRIVATE_KEY": "0xaa77ad7aa219769c4d14965eae42a44f0acef3eec8686c669d60d3fe90ce95d7",
     "LINKS_NUMBER": "20",
-    "RECEIVER_ADDRESS": ""
+    "RECEIVER_ADDRESS": "bnb1dwxlx2x8zwwwmqn7qkfk00vnre7xyleckzxsjl"
 }

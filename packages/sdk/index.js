@@ -398,8 +398,8 @@ const claim = async ({
       receiverSignature
     }
 
-    const response = await axios.post(`${apiHost}/api/v1/claim`, claimParams)
 
+    const response = await axios.post(`${apiHost}/api/v1/claim`, claimParams)
     if (response.status !== 200) {
       throw new Error(`Invalid response status ${response.status}`)
     } else {

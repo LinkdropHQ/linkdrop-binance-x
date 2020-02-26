@@ -29,7 +29,7 @@ yarn install
 ## Contributors
 
 - **Amir Jumaniyazov:** [@amiromayer](https://github.com/amiromayer)
-
+- **Haz Baikulov:** [@spacehaz](https://github.com/spacehaz)
 - **Mikhail Dobrokhvalov:** [@dobrokhvalov](https://github.com/dobrokhvalov)
 
 ## Contributing

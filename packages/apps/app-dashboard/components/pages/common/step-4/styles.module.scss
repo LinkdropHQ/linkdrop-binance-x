@@ -1,0 +1,27 @@
+.container {
+  min-height: calc(100vh - 130px);
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.content {
+  position: relative;
+  top: -130px;
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  font-size: 16px;
+  margin-bottom: 50px;
+
+  span {
+    font-family: 'Inter-Bold';
+  }
+}

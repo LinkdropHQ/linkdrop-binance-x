@@ -1,0 +1,143 @@
+@import "variables";
+
+.container {
+  min-width: 257px;
+  height: 100vh;
+  position: relative;
+  padding: 35px 0px 40px;
+  background: $blackColor;
+  display: flex;
+  flex-direction: column;
+}
+
+.logout {
+  cursor: pointer;
+}
+
+.logo {
+  cursor: pointer;
+  display: block;
+  margin: 0 auto 50px 50px;
+  width: 181px;
+}
+
+.connectorData {
+  
+  font-size: 16px;
+  max-width: 170px;
+  margin: 0 auto 20px;
+  padding-bottom: 20px;
+  position: relative;
+  border-bottom: 1px solid $dbGrey;
+  color: $textGreyColor;
+
+  span {
+    color: $whiteColor;
+    font-family: 'Inter-Medium';
+  }
+
+  .indicator {
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    top: 6px;
+    left: -16px;
+    border-radius: 8px;
+    background: $redColor;
+
+    &.active {
+      background: $greenColor;
+    }
+  }
+}
+
+.link {
+  color: $textGreyColor;
+  text-decoration: none;
+  transition: color .3s;
+
+  &:hover {
+    color: $dbBlue;
+  }
+}
+
+.soon {
+  padding: 4px;
+  border-radius: 5px;
+  border: 1px solid $textGreyColor;
+  color: $textGreyColor;
+  line-height: normal;
+  font-size: 12px;
+}
+
+.menuItem {
+  color: $whiteColor;
+  font-size: 20px;
+  margin-bottom: 26px;
+  height: 40px;
+  line-height: 40px;
+  border-left: 10px solid transparent;
+  transition: border-color .3s;
+
+  &.active {
+    border-color: $dbBlue;
+    font-family: 'Inter-Medium';
+  }
+
+  &.disabled {
+    color: $textGreyColor;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    a {
+      cursor: not-allowed;
+      color: $textGreyColor;
+      width: auto;
+      margin-right: 10px;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    color: $whiteColor;
+    padding-left: 40px;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.buttonContainer {
+  padding: 10px 50px 0px;
+}
+
+.button {
+  border: 1px solid $whiteColor;
+
+  &.buttonDisabled {
+    background: transparent!important;
+    border: 1px solid $dbGrey!important;
+    color: $dbGrey!important;
+  }
+}
+
+.footerMenu {
+  display: flex;
+  max-width: 170px;
+  margin: 0 auto 20px;
+  justify-content: space-between;
+}
+
+.mainBlock {
+  flex: 1 0;
+}
+
+.copyright {
+  max-width: 170px;
+  margin: 0 auto;
+}
+
+.copyright, .menu, .dashboard {
+  color: $dbGrey;
+  font-size: 15px;
+}
