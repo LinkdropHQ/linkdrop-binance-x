@@ -13,7 +13,7 @@
     "@binance-chain/javascript-sdk": "https://github.com/Dobrokhvalov/javascript-sdk",
     "@hapi/boom": "^7.4.2",
     "@linkdrop/sdk": "https://github.com/LinkdropProtocol/linkdrop-sdk",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "cli-table": "^0.3.1",
     "cors": "^2.8.5",
     "csvtojson": "^2.0.8",

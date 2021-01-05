@@ -11,7 +11,7 @@
     },
     "dependencies": {
         "@binance-chain/javascript-sdk": "https://github.com/Dobrokhvalov/javascript-sdk",
-        "axios": "^0.19.0",
+        "axios": "^0.21.1",
         "ethers": "^4.0.31"
     },
     "devDependencies": {
